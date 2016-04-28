@@ -12,16 +12,14 @@ class RiotAPI(object):
         for key, value in params.items():
             if key not in args:
                 args[key] = value
-        print ('FUCKO')
         response = requests.get(
             Constants.URL['base'].format(
                 proxy=self.region,
                 region=self.region,
                 url=api_url
             ),
-            params=args,
+            params=args
         )
-        print ('FUCKO 2')
         print (response.url)
         return response.json()
         
