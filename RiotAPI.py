@@ -38,6 +38,7 @@ class RiotAPI(object):
         return response.json()
         
     def _request_top_mastery(self, api_url, params={}):
+        args = params
         args = {'api_key': self.api_key}
         for key, value in params.items():
             if key not in args:
@@ -49,7 +50,6 @@ class RiotAPI(object):
             ),
             params=args
         )
-        print (args)
         print (response.url)
         return response.json()
         
@@ -67,11 +67,11 @@ class RiotAPI(object):
         )
         return self._request_mastery(api_url)
         
-    def get_top_mastery_data(self, id):
+    def get_top_mastery_data(self, id, champs):
         api_url = Constants.URL['top_x_mastery'].format(
             platformId=Constants.PLATFORMS['north_america'],
             playerId=id
         )
-        return self._request_top_mastery(api_url, {'count': 'count=10'})
+        return self._request_top_mastery(api_url, {'count': champs})
      
         

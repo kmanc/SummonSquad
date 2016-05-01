@@ -16,11 +16,12 @@ def main():
     print (summoner_id, summoner_name)
     
     # Get summoner's mastery data
-    response = api.get_summoner_mastery_data(summoner_id)
+    #response = api.get_summoner_mastery_data(summoner_id)
     #print (response)
     
     # Get summoner's top X mastery data
-    response = api.get_top_mastery_data(summoner_id)
+    champs = 10
+    response = api.get_top_mastery_data(summoner_id, champs)
     print (response)
 
 if __name__ == '__main__':
