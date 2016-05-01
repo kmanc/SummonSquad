@@ -1,8 +1,9 @@
 URL = {
     'base': 'https://{proxy}.api.pvp.net/api/lol/{region}/{url}',
     'summoner_by_name': 'v{version}/summoner/by-name/{names}',
-    'mastery_base':'https://{proxy}.api.pvp.net/',
+    'mastery_base':'https://{proxy}.api.pvp.net/{url}',
     'all_mastery':'championmastery/location/{platformId}/player/{playerId}/champions',
+    'top_x_mastery':'championmastery/location/{platformId}/player/{playerId}/topchampions',
     'mastery_by_champ':'championmastery/location/{platformId}/player/{playerId}/champion/{championId}',
 }
 
