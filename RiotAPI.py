@@ -20,7 +20,6 @@ class RiotAPI(object):
             ),
             params=args
         )
-        #print (response.url)
         return response.json()
         
     def _request_mastery(self, api_url, params={}):
@@ -50,7 +49,6 @@ class RiotAPI(object):
             ),
             params=args
         )
-        print (response.url)
         return response.json()
         
     def get_summoner_by_name(self, name):

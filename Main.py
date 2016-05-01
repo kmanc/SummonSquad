@@ -11,6 +11,8 @@ def main():
     # Parse the output
     temp = json.dumps(response)
     temp = json.loads(temp)
+    print (type(response))
+    print (type(temp))
     summoner_id = (temp['kmancxc']['id'])
     summoner_name = (temp['kmancxc']['name'])
     print (summoner_id, summoner_name)
@@ -21,7 +23,9 @@ def main():
     
     # Get summoner's top X mastery data
     champs = 10
+    i = 0
     response = api.get_top_mastery_data(summoner_id, champs)
+    print (type(response))
     print (response)
 
 if __name__ == '__main__':
