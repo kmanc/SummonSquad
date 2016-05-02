@@ -7,6 +7,7 @@ def main():
     data_dict = {}
     champList = []
     second_dict = {}
+    champIdizzle = 11
        
     # Get summoner data
     response = api.get_summoner_by_name('KmancXC')
@@ -41,7 +42,16 @@ def main():
     #print (type(response['matches']))
     for x, val in enumerate(response['matches']):
         second_dict[val['champion']] = val['lane'], val['role']
-    print (second_dict)
+    
+    result = {}
+    for key in (data_dict.keys() | second_dict.keys()):
+        if key in data_dict: result.setdefault(key, []).append(data_dict[key])
+        if key in second_dict: result.setdefault(key, []).append(second_dict[key])
+    #print (result)
+    
+    # Get the champion name
+    response = api.get_champion_name(champIdizzle)
+    print (response)
 
 if __name__ == '__main__':
     main()

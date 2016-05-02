@@ -67,6 +67,19 @@ class RiotAPI(object):
         )
         return response.json()
         
+    def _request_champion_name(self, champIdizzle):
+        args = {'api_key': self.api_key}
+        response = requests.get(
+            Constants.URL['global_base'].format(
+                region=Constants.REGIONS['north_america'],
+                version=Constants.API_VERSIONS['global'],
+                championId=champIdizzle
+            ),
+            params=args
+        )
+        print (response.url)
+        return response.json()
+        
     def get_summoner_by_name(self, name):
         api_url = Constants.URL['summoner_by_name'].format(
             version=Constants.API_VERSIONS['summoner'],
@@ -95,6 +108,10 @@ class RiotAPI(object):
         )
         champList = ','.join(map(str, champList))
         return self._request_champion_role(api_url, {'championIds': champList})
+        
+    def get_champion_name(self, champIdizzle):
+        #api_url =
+        return self._request_champion_name(champIdizzle)
      
      
      

@@ -5,14 +5,16 @@ URL = {
     'all_mastery':'championmastery/location/{platformId}/player/{playerId}/champions',
     'top_x_mastery':'championmastery/location/{platformId}/player/{playerId}/topchampions',
     'mastery_by_champ':'championmastery/location/{platformId}/player/{playerId}/champion/{championId}',
-    'matchlist':'v{version}/matchlist/by-summoner/{playerId}'
+    'matchlist':'v{version}/matchlist/by-summoner/{playerId}',
+    'global_base':'https://global.api.pvp.net/api/lol/static-data/{region}/v{version}/champion/{championId}'
 }
 
 API_VERSIONS = {
     'champion': '1.2',
     'matchlist': '2.2',
     'stats': '1.3',
-    'summoner': '1.4'
+    'summoner': '1.4',
+    'global': '1.2'
 }
 
 REGIONS = {
