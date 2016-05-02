@@ -51,6 +51,22 @@ class RiotAPI(object):
         )
         return response.json()
         
+    def _request_champion_role(self, api_url, params={}):
+        args = params
+        args = {'api_key': self.api_key}
+        for key, value in params.items():
+            if key not in args:
+                args[key] = value
+        response = requests.get(
+            Constants.URL['base'].format(
+                proxy=self.region,
+                region=self.region,
+                url=api_url
+            ),
+            params=args
+        )
+        return response.json()
+        
     def get_summoner_by_name(self, name):
         api_url = Constants.URL['summoner_by_name'].format(
             version=Constants.API_VERSIONS['summoner'],
@@ -71,5 +87,16 @@ class RiotAPI(object):
             playerId=id
         )
         return self._request_top_mastery(api_url, {'count': champs})
+        
+    def get_champion_role(self, id, champList):
+        api_url = Constants.URL['matchlist'].format(
+            version=Constants.API_VERSIONS['matchlist'],
+            playerId=id
+        )
+        champList = ','.join(map(str, champList))
+        return self._request_champion_role(api_url, {'championIds': champList})
      
+     
+     
+# If request isn't working, check "print (response.url)" first!!!
         

@@ -3,8 +3,10 @@ import json
 
 def main():
     api = RiotAPI('e6e27f9f-d47d-4b3f-96d4-3aab2c2b8cee')
-    
-    
+    champs = 10
+    data_dict = {}
+    champList = []
+       
     # Get summoner data
     response = api.get_summoner_by_name('KmancXC')
     
@@ -22,12 +24,18 @@ def main():
     #print (response)
     
     # Get a summoner's top X mastery data
-    champs = 10
-    data_dict = {}
     response = api.get_top_mastery_data(summoner_id, champs)
+    # Compile the stuff I care about into a dictionary
     for x, val in enumerate(response):
         data_dict[val['championId']] = val['championPoints']
-    print (data_dict)
+    #For troubleshooting
+    #print (data_dict)
+    
+    # Find out what lane the champion is being played in
+    for key in data_dict:
+        champList.append(key)
+    response = api.get_champion_role(summoner_id, champList)
+    print (response)
 
 if __name__ == '__main__':
     main()
