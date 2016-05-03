@@ -1,5 +1,6 @@
 from RiotAPI import RiotAPI
 import json
+import operator
 
 def main():
     api = RiotAPI('e6e27f9f-d47d-4b3f-96d4-3aab2c2b8cee')
@@ -8,11 +9,9 @@ def main():
     champList = []
     second_dict = {}
     champIdizzle = 11
-    class MyStruct():
-    def __init__(self, championId=0, championRole='unknown', championPoints=0):
-        self.championId = championId
-        self.championRole = championRole
-        self.championRole = championPoints
+    structured_data = {}
+    incrementer = ('','',1)
+    fucktard = {}
        
     # Get summoner data
     summoner_response = api.get_summoner_by_name('KmancXC')
@@ -23,7 +22,10 @@ def main():
     summoner_id = (temp['kmancxc']['id'])
     summoner_name = (temp['kmancxc']['name'])
     
-    #For troubleshooting
+    # Create top level key
+    structured_data[summoner_id] = {}
+    
+    # For troubleshooting
     print (summoner_id, summoner_name)
     
     # Get all of a summoner's mastery data
@@ -36,16 +38,25 @@ def main():
     # Compile the stuff I care about into a dictionary
     for x, val in enumerate(mastery_response):
         data_dict[val['championId']] = val['championPoints']
+        # Create top level key
+        structured_data[summoner_id][val['championId']] = val['championPoints']
+    #print (structured_data)
     
     # Find out what lane the champion is being played in
     for key in data_dict:
         champList.append(key)
+        #structured_data[summoner_id][key].append()
     lane_response = api.get_champion_role(summoner_id, champList)
     
     # Process the champion list data
-    #print (type(response['matches']))
     for x, val in enumerate(lane_response['matches']):
-        second_dict[val['champion']] = val['lane'], val['role']
+        key_test = val['champion']
+        if key_test not in second_dict:
+            second_dict[val['champion']] = (val['lane'], val['role'], 0)
+        else:
+            second_dict[val['champion']] = tuple(map(operator.add, second_dict[val['champion']], incrementer))
+            
+    #print (second_dict)
     
     combined_dict = {}
     for key in (data_dict.keys() | second_dict.keys()):
@@ -56,8 +67,5 @@ def main():
     champion_response = api.get_champion_name(champIdizzle)
     champion_name = champion_response['name']
     
-    champion_name = MyStruct()
-    
-
 if __name__ == '__main__':
     main()
