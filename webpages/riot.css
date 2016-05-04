@@ -1,0 +1,252 @@
+
+
+div.middle
+{
+  width: 100%;
+  max-width: 830px;
+  margin: 50px auto;
+}
+
+div.results
+{
+  width: 65%;
+  margin: auto;
+  background-color: #c1c1c1;
+}
+
+div.tbl 
+{
+  width: 14%;
+  margin: 3px;
+  background-color: lightgrey;
+  display: inline-block;
+}
+
+
+
+
+h1 {
+	font-family: 'Gentium Basic', serif;
+	font-size: 35px;
+	background-color: #145B5F;
+	background: linear-gradient(#187277,#0d2d2f);
+	display: block;
+	margin-left: auto;
+	margin-right: auto;
+	width: auto;
+	text-align: center;
+	color: #EEEEEE;
+}
+
+h2 {
+	font-family: 'Gentium Basic', serif;
+	font-size: 32px;
+	display: block;
+	margin-left: auto;
+	margin-right: auto;
+	width: auto;
+	text-align: center;
+	color: #808080;
+}
+
+
+h3
+{
+  font-family: 'Gentium Basic', serif;
+  font-size: 28px;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  width: auto;
+  text-align: center;
+  color: #616161;
+}
+
+h4
+{
+  font-family: 'Gentium Basic', serif;
+  font-size: 24px;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 30px;
+  margin-bottom: 50px;
+  width: auto;
+  text-align: center;
+  color: #808080;
+}
+
+p
+{
+  font-family: 'Gentium Basic', serif;
+  font-size: 12px;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 30px;
+  margin-bottom: 50px;
+  width: auto;
+  text-align: center;
+  color: #808080;
+}
+
+
+
+body 
+{
+  background-image: url('../imgs/parchment.png');
+  background-repeat: repeat;
+}
+
+
+input[type="submit"] {
+  font-family: 'Gentium Basic', serif;
+  background-color: transparent;
+  margin: auto;
+  border: 1px;
+  border-radius: 3px;
+  color: #111;
+  padding: 2px 5px;
+  text-align: center;
+  display: block;
+  font-size: 40px;
+  transition-duration: .4s;
+  cursor: pointer;
+}
+
+
+
+
+input[type="submit"]:hover{
+  font-family: 'Gentium Basic', serif;
+  background-color: transparent;
+  border: 1px;
+  border-radius: 3px;
+  color: #6495ED;
+  text-align: center;
+  display: block;
+  font-size: 40px;
+  transition-duration: .4s;
+  cursor: pointer;
+}
+
+#green input[type="submit"]:hover{
+  color: #145B5F;
+}
+
+#red input[type="submit"]:hover{
+  color: #CD5C5C; 
+}
+
+#blue input[type="submit"]:hover{
+  color: #6495ED; 
+}
+
+#yellow input[type="submit"]:hover{
+  color: #FFD700; 
+}
+
+#purple input[type="submit"]:hover{
+  color: #9370DB; 
+}
+
+input.student {
+  font-family: 'Gentium Basic', serif;
+  background-color: transparent;
+  display:block;
+  margin:auto;
+  border: 1px;
+  border-radius: 3px;
+  padding: 2px 5px;
+  text-align: center;
+  font-size: 30px;
+  cursor: pointer;
+}
+
+
+
+input.box {
+  font-family: 'Gentium Basic', serif;
+  display:block;
+  padding: 0px;
+  width: 300px;
+  height: 50px;
+  margin:auto;
+  background-color: transparent;
+  border-color: rgba(20, 91, 95, .5);
+  border-radius: 0px;
+  border-right-style: solid;
+  border-right-width: 150px;
+  border-left-style: solid;
+  border-left-width: 150px;
+  border-top-style: solid;
+  border-top-width: 0px;
+  border-bottom-style: solid;
+  border-bottom-width: 0px;
+  text-align: center;
+  font-size: 18px;
+  cursor: pointer;
+  transition-duration: .4s;
+}
+
+/*
+input.box:hover {
+  font-family: 'Gentium Basic', serif;
+  display:block;
+  width: 300px;
+  height: 50px;
+  margin:auto;
+  background-color: transparent;
+  border: 1px solid;
+  border-right-style: solid;
+  border-left-style: solid;
+  border-top-style: solid;
+  border-right-width: 0%;
+  border-left-width: 0%;
+  border-top-width: 1px;
+  border-bottom-width: 1px;
+  border-color: #40a0a5;
+  border-radius: 1px;
+  text-align: center;
+  font-size: 24px;
+  transition-duration: .4s;
+}
+*/
+
+button {
+  font-family: 'Gentium Basic', serif;
+  background-color: transparent;
+  display:block;
+  margin:auto;
+  border: 1px;
+  border-radius: 3px;
+  padding: 2px 5px;
+  text-align: center;
+  font-size: 40px;
+  transition-duration: .4s;
+  cursor: pointer;
+}
+
+.buttonDelete:hover {
+        color: #CD5C5C;
+        transition-duration: .4s;
+}
+
+.buttonAdd:hover {
+        color: #3CB371;
+        transition-duration: .4s;
+}
+
+.buttonSearch:hover {
+        color: #6495ED;
+        transition-duration: .4s;
+}
+.buttonReqs:hover {
+        color: #FFD700;
+        transition-duration: .4s;
+}
+
+.buttonUpdate:hover {
+        color: #9370DB;
+        transition-duration: .4s;
+}

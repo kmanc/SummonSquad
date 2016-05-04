@@ -1,0 +1,35 @@
+<html>
+<head>
+  <meta charset="utf-8">
+  <link href='https://fonts.googleapis.com/css?family=Gentium+Basic:400,700italic' rel='stylesheet' type='text/css'>
+  <link href='riot.css' rel='stylesheet' type='text/css'>
+  <script type="text/javascript" src="info.js"></script>
+  <title>Champion Mastery</title>
+
+</head>
+<body>
+	<a href="http://jquery.com/">jQuery</a>
+    <script src="../scripts/jquery.js"></script>
+    <script>
+		$( "a" ).click(function( event ) {
+ 
+    	event.preventDefault();
+	 
+	    $( this ).hide( "slow" );
+ 
+});
+    </script>
+	<h1>Welcome to the Summoner Strategy page</h1>
+	<br>
+	<br>
+	<h3>Who are your summoners?</h3>
+	<form action="summoner_mastery_results.php" method="post" id="green">
+		<input type="text" onClick="this.value=''" value="Summoner 1" name="s1" class="box"><br>
+		<input type="text" onClick="this.value=''" value="Summoner 2" name="s2" class="box"><br>
+		<input type="text" onClick="this.value=''" value="Summoner 3" name="s3" class="box"><br>
+		<input type="text" onClick="this.value=''" value="Summoner 4" name="s4" class="box"><br>
+		<input type="text" onClick="this.value=''" value="Summoner 5" name="s5" class="box"><br>
+		<input type="submit" value="Master your roles">
+    </form>
+</body>
+</html>
