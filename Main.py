@@ -69,11 +69,7 @@ def main():
             role_games += second_dict[id_key][role_key]
         for role_key in second_dict[id_key]:
             second_dict[id_key][role_key] /= role_games
-    
-    #print (second_dict)
-    #print (structured_data)
-        
-    
+          
     #combined_dict = {}
     #for key in (data_dict.keys() | second_dict.keys()):
     #    if key in data_dict: combined_dict.setdefault(key, []).append(data_dict[key])
@@ -84,6 +80,12 @@ def main():
         champion_response = api.get_champion_name(champIdizzle)
         champion_name[champIdizzle] = (champion_response['name'])
         
+    print (structured_data)
+    print ()
+    print ()
+    print (second_dict)
+    print ()
+    print ()
     print (champion_name)
     
 if __name__ == '__main__':
