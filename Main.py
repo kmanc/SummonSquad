@@ -64,8 +64,7 @@ def main():
             role_games += second_dict[id_key][role_key]
         for role_key in second_dict[id_key]:
             second_dict[id_key][role_key] /= role_games
-        #print (second_dict[id_key]['lane'])
-          
+                
     #combined_dict = {}
     #for key in (data_dict.keys() | second_dict.keys()):
     #    if key in data_dict: combined_dict.setdefault(key, []).append(data_dict[key])
@@ -85,14 +84,14 @@ def main():
         
     # Put role as a third level key with mastery points * percentage of games in that role as the value
     for second_champ_id, data_champ_id in zip(second_dict, data_dict):
-        for role_key in second_dict[second_champ_id]:
-            structured_data[summoner_id][second_champ_id].append({'role goes here': 
+        for role_key, role in zip(second_dict[second_champ_id], second_dict[second_champ_id]):
+            structured_data[summoner_id][second_champ_id].append({role: 
                                                 second_dict[second_champ_id][role_key] * data_dict[data_champ_id]})
-    
-    print (structured_data)
-    #print (data_dict)
-    #print ()
-    #print (second_dict)
+                                                
+    # Check to make sure each champion has at least a value for points, and add a 0 if not
+    for x, champion_id in enumerate(structured_data[summoner_id]):
+        if (len(structured_data[summoner_id][champion_id]) == 1):
+            structured_data[summoner_id][champion_id].append({'NONE': 0.0})
     
 if __name__ == '__main__':
     main()
