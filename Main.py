@@ -21,11 +21,8 @@ def main():
     summoner_id = (temp['kmancxc']['id'])
     summoner_name = (temp['kmancxc']['name'])
     
-    # Create top level key
-    structured_data[summoner_id] = {}
-    
     # For troubleshooting
-    print (summoner_id, summoner_name)
+    #print (summoner_id, summoner_name)
     
     # Get all of a summoner's mastery data
     #response = api.get_summoner_mastery_data(summoner_id)
@@ -37,8 +34,6 @@ def main():
     # Compile the stuff I care about into a dictionary
     for x, val in enumerate(mastery_response):
         data_dict[val['championId']] = val['championPoints']
-        # Create top level key
-        structured_data[summoner_id][val['championId']] = val['championPoints']
     
     # Find out what lane the champion is being played in
     for key in data_dict:
@@ -62,13 +57,14 @@ def main():
             else:
                 second_dict[key_test][role] = 0
                 
-    # Get percentage of games played in each role per champ
+    # Get percentage of games played in each role per champIdizzle
     for id_key in second_dict:
         role_games = 0
         for role_key in second_dict[id_key]:
             role_games += second_dict[id_key][role_key]
         for role_key in second_dict[id_key]:
             second_dict[id_key][role_key] /= role_games
+        #print (second_dict[id_key]['lane'])
           
     #combined_dict = {}
     #for key in (data_dict.keys() | second_dict.keys()):
@@ -80,13 +76,23 @@ def main():
         champion_response = api.get_champion_name(champIdizzle)
         champion_name[champIdizzle] = (champion_response['name'])
         
+    # Put summoner id as a first level key
+    structured_data[summoner_id] = {}
+    
+    # Put champion id as a second level key, with the name and another dictionary as the value
+    for champion_id in champion_name:
+        structured_data[summoner_id][champion_id] = [champion_name[champion_id]]
+        
+    # Put role as a third level key with mastery points * percentage of games in that role as the value
+    for second_champ_id, data_champ_id in zip(second_dict, data_dict):
+        for role_key in second_dict[second_champ_id]:
+            structured_data[summoner_id][second_champ_id].append({'role goes here': 
+                                                second_dict[second_champ_id][role_key] * data_dict[data_champ_id]})
+    
     print (structured_data)
-    print ()
-    print ()
-    print (second_dict)
-    print ()
-    print ()
-    print (champion_name)
+    #print (data_dict)
+    #print ()
+    #print (second_dict)
     
 if __name__ == '__main__':
     main()
