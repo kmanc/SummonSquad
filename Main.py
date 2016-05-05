@@ -2,12 +2,15 @@ from RiotAPI import RiotAPI
 import json
 import operator
 from GetData import GetData
+import sys
 
 def main():
     
-    summoners = ['Kmancxc', 'berkfleriosa', 'Corduroys', 'AshtreeLee', 'fierceinvalid']
+    #summoners = ['Kmancxc', 'berkfleriosa', 'Corduroys', 'AshtreeLee', 'fierce invalid']
+    summoners = [sys.argv[1], sys.argv[2], sys.argv[3], sys.argv[4], sys.argv[5]]
     for x in range(len(summoners)):
         summoners[x] = summoners[x].lower()
+        summoners[x] = summoners[x].replace(" ", "")
 
     summonerList = []
     data_grabber = GetData()
