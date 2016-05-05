@@ -5,7 +5,10 @@ from GetData import GetData
 
 def main():
     
-    summoners = ['kmancxc','berkfleriosa']
+    summoners = ['Kmancxc','berkfleriosa']
+    for x in range(len(summoners)):
+        summoners[x] = summoners[x].lower()
+
     myList = []
     data_grabber = GetData()
     for player in summoners:

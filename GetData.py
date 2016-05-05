@@ -102,4 +102,4 @@ class GetData(object):
         return structured_data
                 
 if __name__ == '__main__':
-    main()
+    _gimme_data('kmancxc')
