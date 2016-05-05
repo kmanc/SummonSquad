@@ -109,7 +109,6 @@ class RiotAPI(object):
         return self._request_champion_role(api_url, {'championIds': champList})
         
     def get_champion_name(self, champIdizzle):
-        #api_url =
         return self._request_champion_name(champIdizzle)
      
      
