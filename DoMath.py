@@ -47,7 +47,7 @@ class DoMath(object):
                             summoner_zero_role = role0
                             summoner_zero_champ = x0
                             summoner_zero_champ_name = champ_info0[:1]
-                            if (summoner_zero_role == 'NONE' or summoner_zero_role == 'DUO'):
+                            if (summoner_zero_role == 'NONE' or summoner_zero_role == 'SOLO' or summoner_zero_role == 'DUO'):
                                 continue
                             roleList.append(summoner_zero_role)
                             champList.append(summoner_zero_champ)
@@ -62,7 +62,7 @@ class DoMath(object):
                                             summoner_one_role = role1
                                             summoner_one_champ = x1
                                             summoner_one_champ_name = champ_info1[:1]
-                                            if (summoner_one_role == 'NONE' or summoner_one_role == 'DUO' or summoner_one_role in roleList or len(roleList) == 0 or summoner_one_champ in champList):
+                                            if (summoner_one_role == 'NONE' or summoner_one_role == 'SOLO' or summoner_one_role == 'DUO' or summoner_one_role in roleList or len(roleList) == 0 or summoner_one_champ in champList):
                                                 continue
                                             roleList.append(summoner_one_role)
                                             champList.append(summoner_one_champ)
@@ -78,7 +78,7 @@ class DoMath(object):
                                                             summoner_two_role = role2
                                                             summoner_two_champ = x2
                                                             summoner_two_champ_name = champ_info2[:1]
-                                                            if (summoner_two_role == 'NONE' or summoner_two_role == 'DUO' or summoner_two_role in roleList or len(roleList) <= 1 or summoner_two_champ in champList):
+                                                            if (summoner_two_role == 'NONE' or summoner_two_role == 'SOLO' or summoner_two_role == 'DUO' or summoner_two_role in roleList or len(roleList) <= 1 or summoner_two_champ in champList):
                                                                 continue
                                                             roleList.append(summoner_two_role)
                                                             champList.append(summoner_two_champ)
@@ -93,7 +93,7 @@ class DoMath(object):
                                                                             summoner_three_role = role3
                                                                             summoner_three_champ = x3
                                                                             summoner_three_champ_name = champ_info3[:1]
-                                                                            if (summoner_three_role == 'NONE' or summoner_three_role == 'DUO' or summoner_three_role in roleList or len(roleList) <= 2 or summoner_three_champ in champList):
+                                                                            if (summoner_three_role == 'NONE' or summoner_three_role == 'SOLO' or summoner_three_role == 'DUO' or summoner_three_role in roleList or len(roleList) <= 2 or summoner_three_champ in champList):
                                                                                 continue
                                                                             champList.append(summoner_three_champ)
                                                                             roleList.append(summoner_three_role)
@@ -108,7 +108,7 @@ class DoMath(object):
                                                                                             summoner_four_role = role4
                                                                                             summoner_four_champ = x4
                                                                                             summoner_four_champ_name = champ_info4[:1]
-                                                                                            if (summoner_four_role == 'NONE' or summoner_four_role == 'DUO' or summoner_four_role in roleList or len(roleList) <= 3 or summoner_four_champ in champList):
+                                                                                            if (summoner_four_role == 'NONE' or summoner_four_role == 'SOLO' or summoner_four_role == 'DUO' or summoner_four_role in roleList or len(roleList) <= 3 or summoner_four_champ in champList):
                                                                                                 continue
                                                                                             else:
                                                                                                 # Clean up the lists of exclusion for the next run-through
@@ -133,11 +133,11 @@ class DoMath(object):
                                                                                                 current_team_power = specific_mastery0 + specific_mastery1 + specific_mastery2 + specific_mastery3 + specific_mastery4
                                                                                                 if current_team_power >= best_team_power:
                                                                                                     best_team_power = current_team_power
-                                                                                                    final_champ_zero = str(summoner_zero_champ_name).replace('[', '').replace(']', '').replace("'", "")
-                                                                                                    final_champ_one = str(summoner_one_champ_name).replace('[', '').replace(']', '').replace("'", "")
-                                                                                                    final_champ_two = str(summoner_two_champ_name).replace('[', '').replace(']', '').replace("'", "")
-                                                                                                    final_champ_three = str(summoner_three_champ_name).replace('[', '').replace(']', '').replace("'", "")
-                                                                                                    final_champ_four = str(summoner_four_champ_name).replace('[', '').replace(']', '').replace("'", "")
+                                                                                                    final_champ_zero = str(summoner_zero_champ_name).replace('[', '').replace(']', '').replace("'", "").replace('"', '')
+                                                                                                    final_champ_one = str(summoner_one_champ_name).replace('[', '').replace(']', '').replace("'", "").replace('"', '')
+                                                                                                    final_champ_two = str(summoner_two_champ_name).replace('[', '').replace(']', '').replace("'", "").replace('"', '')
+                                                                                                    final_champ_three = str(summoner_three_champ_name).replace('[', '').replace(']', '').replace("'", "").replace('"', '')
+                                                                                                    final_champ_four = str(summoner_four_champ_name).replace('[', '').replace(']', '').replace("'", "").replace('"', '"')
                                                                                                     final_role_zero = str(summoner_zero_role)
                                                                                                     final_role_one = str(summoner_one_role)
                                                                                                     final_role_two = str(summoner_two_role)
