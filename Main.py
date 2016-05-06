@@ -23,8 +23,6 @@ def main():
 
     dream_team = computations._compute_team(summonerList, summoners)
     
-    print ('The dream team has been found!!!!')
-    print ()
     print (dream_team)    
     
 if __name__ == '__main__':
