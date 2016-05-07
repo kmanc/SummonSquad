@@ -1,0 +1,29 @@
+<html>
+<head>
+  <meta charset="utf-8">
+  <link href='https://fonts.googleapis.com/css?family=Gentium+Basic:400,700italic' rel='stylesheet' type='text/css'>
+  <link href='/webpages/riot.css' rel='stylesheet' type='text/css'>
+  <title>Champion Mastery</title>
+	<script src="/scripts/jquery.js"></script>
+	<script src="/scripts/summoner_stuff.js"></script>
+</head>
+<body>
+	<h1>SummonSquad</h1>
+	<br>
+	<br>
+	<h3>Who are your summoners?</h3>
+	<form action="webpages/summoner_mastery_results.php" method="post" id="green">
+		<input type="text" onClick="this.value=''" value="Summoner 1" name="sum1" class="box" id="s1"><br>
+		<input type="text" onClick="this.value=''" value="Summoner 2" name="sum2" class="box" id="s2"><br>
+		<input type="text" onClick="this.value=''" value="Summoner 3" name="sum3" class="box" id="s3"><br>
+		<input type="text" onClick="this.value=''" value="Summoner 4" name="sum4" class="box" id="s4"><br>
+		<input type="text" onClick="this.value=''" value="Summoner 5" name="sum5" class="box" id="s5"><br>
+		<input type="submit" value="Summon the Squad">
+		<p> May take up to a minute to fetch the data, we crunchin some serious numbers fam </p>
+    </form>
+    <br>
+    <br>
+    <br>
+    <a href="webpages/about.html"><button class="buttonAdd" href="webpages/about.html" onClick="webpages/about.html">How do we pick your dream team?</button></a>
+</body>
+</html>
