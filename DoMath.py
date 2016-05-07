@@ -4,8 +4,10 @@ class DoMath(object):
     
         total_mastery0 = total_mastery1 = total_mastery2 = total_mastery3 = total_mastery4 = 0
         specific_mastery0 = specific_mastery1 = specific_mastery2 = specific_mastery3 = specific_mastery4 = 0
-        current_team_power = best_team_power = 0
+        current_team_power = 0
+        best_team_power = -1
         final_champ_zero = final_champ_one = final_champ_two = final_champ_three = final_champ_four = ''
+        final_role_zero = final_role_one = final_role_two = final_role_three = final_role_four = ''
         
         # Find total mastery points per summoner    
         for x0, mastered_champs0 in summonerList[0].items():
@@ -132,7 +134,7 @@ class DoMath(object):
                                                                                                 specific_mastery3 = int(list(role_info3.values())[0]) / total_mastery3
                                                                                                 specific_mastery4 = int(list(role_info4.values())[0]) / total_mastery4
                                                                                                 current_team_power = specific_mastery0 + specific_mastery1 + specific_mastery2 + specific_mastery3 + specific_mastery4
-                                                                                                if current_team_power >= best_team_power:
+                                                                                                if current_team_power > best_team_power:
                                                                                                     best_team_power = current_team_power
                                                                                                     final_champ_zero = str(summoner_zero_champ_name).replace('[', '').replace(']', '').replace("'", "").replace('"', '')
                                                                                                     final_champ_one = str(summoner_one_champ_name).replace('[', '').replace(']', '').replace("'", "").replace('"', '')
