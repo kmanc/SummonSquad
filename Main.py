@@ -7,7 +7,7 @@ from DoMath import DoMath
 def main():
     
     # This will likely get moved to a user-entered variable instead of hard coded
-    champs = 15
+    champs = 10
     
     # Grab arguments and make sure that they are all there
     try:
@@ -28,11 +28,14 @@ def main():
         try:
             summoner_data = data_grabber._gimme_data(player, champs)
         except:
-            sys.exit('Summoner name does not exist')
+            sys.exit('Summoner name' + player + 'does not exist')
         summonerList.append(summoner_data)
 
     # Get squad
-    dream_team = computations._compute_team(summonerList, summoners)
+    try:
+        dream_team = computations._compute_team(summonerList, summoners)
+    except:
+        sys.exit('You woke up, the dream is gone')
     
     # Output for the website
     print (dream_team)    
