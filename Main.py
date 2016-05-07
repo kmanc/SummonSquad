@@ -28,7 +28,7 @@ def main():
         try:
             summoner_data = data_grabber._gimme_data(player, champs)
         except:
-            sys.exit('Summoner name' + player + 'does not exist')
+            sys.exit('Summoner name ' + player + ' does not exist')
         summonerList.append(summoner_data)
 
     # Get squad
