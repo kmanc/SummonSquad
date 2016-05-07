@@ -111,8 +111,6 @@ class RiotAPI(object):
         
     def get_champion_name(self, champIdizzle):
         return self._request_champion_name(champIdizzle)
-     
-     
-     
+               
 # If request isn't working, check "print (response.url)" first!!!
         

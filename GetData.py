@@ -4,10 +4,9 @@ import operator
 
 class GetData(object):
     
-    def _gimme_data(self, current_summoner):
+    def _gimme_data(self, current_summoner, champs):
         
         api = RiotAPI('e6e27f9f-d47d-4b3f-96d4-3aab2c2b8cee')
-        champs = 10
         data_dict = {}
         champList = []
         second_dict = {}
@@ -102,4 +101,4 @@ class GetData(object):
         return structured_data
                 
 if __name__ == '__main__':
-    _gimme_data('kmancxc')
+    _gimme_data('Sneaky', 'Dyrus', 'Bjergsen', 'Meteos', 'Hai')
