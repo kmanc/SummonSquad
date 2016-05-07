@@ -8,6 +8,38 @@ div.about, .about2
   padding: 20px;
 }
 
+body 
+{
+  margin: 0 0 0 0;
+}
+
+button {
+  font-family: 'Gentium Basic', serif;
+  background-color: transparent;
+  display:block;
+  margin:auto;
+  color: #888888;
+  outline: none;
+  border: 1px;
+  border-radius: 3px;
+  text-align: center;
+  font-size: 28px;
+  transition-duration: .45s;
+  cursor: pointer;
+}
+
+.buttonAdd:hover {
+  color: #3CB371;
+  transition-duration: .4s;
+}
+
+div.middle
+{
+  width: 100%;
+  max-width: 830px;
+  margin: 50px auto;
+}
+
 div.readText 
 {
   display: block;
@@ -23,6 +55,13 @@ div.readText
   z-index: 1;
 }
 
+div.results
+{
+  width: 65%;
+  margin: auto;
+  background-color: #c1c1c1;
+}
+
 div.summoners
 {
   width: 100%;
@@ -32,11 +71,7 @@ div.summoners
   bottom: 0;
   left: 0;
 }
-p #bot_text
-{
-  position: absolute;
-  bottom: 0;
-}
+
 div#summ1, #summ2, #summ3, #summ4, #summ5
 {
   display: inline-block;
@@ -51,49 +86,6 @@ div#summ1, #summ2, #summ3, #summ4, #summ5
   z-index: 0;
 }
 
-
-div.middle
-{
-  width: 100%;
-  max-width: 830px;
-  margin: 50px auto;
-}
-
-div.results
-{
-  width: 65%;
-  margin: auto;
-  background-color: #c1c1c1;
-}
-
-div.tbl 
-{
-  width: 14%;
-  margin: 3px;
-  background-color: lightgrey;
-  display: inline-block;
-}
-
-
-a:visited
-{
-  text-decoration: none;
-}
-
-a:hover
-{
-  text-decoration: none;
-}
-
-a:link
-{
-  text-decoration: none;
-}
-
-a:active
-{
-  text-decoration: none;
-}
 h1 {
   font-family: 'Gentium Basic', serif;
   font-size: 35px;
@@ -119,7 +111,7 @@ h2 {
   margin-right: auto;
   width: auto;
   text-align: center;
-  color: #808080;
+  color: #888888;
 }
 
 
@@ -132,7 +124,7 @@ h3
   margin-right: auto;
   width: auto;
   text-align: center;
-  color: #616161;
+  color: #888888;
 }
 
 h4
@@ -146,42 +138,17 @@ h4
   margin-bottom: 50px;
   width: auto;
   text-align: center;
-  color: #808080;
+  color: #888888;
 }
-
-p
-{
-  font-family: 'Gentium Basic', serif;
-  font-size: 18px;
-  display: block;
-  margin-left: auto;
-  margin-right: auto;
-  margin-top: 30px;
-  margin-bottom: 50px;
-  padding: 5px;
-  width: auto;
-  text-align: center;
-  color: #808080;
-}
-
-
 
 html
 {
   background-image: url('../imgs/parchment.png');
 }
 
-
-body 
+input[type="submit"] 
 {
-  margin: 0 0 0 0;
-}
-
-
-
-input[type="submit"] {
   font-family: 'Gentium Basic', serif;
-  background-color: transparent;
   margin: auto;
   outline: none;
   border: 0px;
@@ -193,13 +160,13 @@ input[type="submit"] {
   cursor: pointer;
 }
 
-
-
-input[type="focus"] {
+input[type="text"]:focus 
+{
   font-family: 'Gentium Basic', serif;
-  background-color: transparent;
   margin: auto;
+  background-color: #FFF;
   border: 0px;
+  outline: none;
   padding: 2px 5px;
   text-align: center;
   display: block;
@@ -208,10 +175,11 @@ input[type="focus"] {
   cursor: pointer;
 }
 
-input[type="submit"]:hover{
+input[type="submit"]
+{
   font-family: 'Gentium Basic', serif;
+  color: #888888;
   background-color: transparent;
-  color: #6495ED;
   border: 0px;
   text-align: center;
   display: block;
@@ -220,18 +188,28 @@ input[type="submit"]:hover{
   cursor: pointer;
 }
 
-#green input[type="submit"]:hover{
-  color: #145B5F;
+input[type="submit"]:hover
+{
+  font-family: 'Gentium Basic', serif;
+  color: #3CB371;
+  border: 0px;
+  text-align: center;
+  display: block;
+  font-size: 40px;
+  transition-duration: .4s;
+  cursor: pointer;
 }
 
-
-input.box {
+input.box 
+{
   font-family: 'Gentium Basic', serif;
   display:block;
   padding: 0px;
   width: 300px;
   height: 50px;
+  outline: none;
   margin:auto;
+  color: #DDDDDD;
   background-color: transparent;
   border-color: rgba(20, 91, 95, .5);
   border-radius: 1px;
@@ -249,21 +227,24 @@ input.box {
   transition-duration: .2s;
 }
 
-button {
+p
+{
   font-family: 'Gentium Basic', serif;
-  background-color: transparent;
-  display:block;
-  margin:auto;
-  border: 1px;
-  border-radius: 3px;
+  font-size: 18px;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 30px;
+  margin-bottom: 50px;
+  padding: 5px;
+  width: auto;
   text-align: center;
-  font-size: 28px;
-  transition-duration: .45s;
-  cursor: pointer;
+  color: #808080;
 }
 
-
-.buttonAdd:hover {
-        color: #3CB371;
-        transition-duration: .4s;
+p #bot_text
+{
+  position: absolute;
+  bottom: 0;
 }
+
