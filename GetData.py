@@ -99,6 +99,3 @@ class GetData(object):
                 structured_data[summoner_id][champion_id].append({'NONE': 0.0})
         
         return structured_data
-                
-if __name__ == '__main__':
-    _gimme_data('Sneaky', 'Dyrus', 'Bjergsen', 'Meteos', 'Hai')
