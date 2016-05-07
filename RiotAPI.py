@@ -105,13 +105,12 @@ class RiotAPI(object):
             version=Constants.API_VERSIONS['matchlist'],
             playerId=id
         )
+        queues = 'TEAM_BUILDER_DRAFT_RANKED_5x5,RANKED_SOLO_5x5,RANKED_TEAM_5x5'
         champList = ','.join(map(str, champList))
-        return self._request_champion_role(api_url, {'championIds': champList})
+        return self._request_champion_role(api_url, {'championIds': champList, 'rankedQueues': queues})
         
     def get_champion_name(self, champIdizzle):
         return self._request_champion_name(champIdizzle)
-     
-     
-     
+               
 # If request isn't working, check "print (response.url)" first!!!
         
