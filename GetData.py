@@ -103,3 +103,7 @@ class GetData(object):
                 
 if __name__ == '__main__':
     _gimme_data('kmancxc')
+    
+    
+    
+# FINAL_CHAMP_ZERO SOMETIMES HAS A BUG BECAUSE IT GETS REFERENCED BEFORE ASSIGNMENT
