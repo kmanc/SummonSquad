@@ -5,6 +5,7 @@ class DoMath(object):
         total_mastery0 = total_mastery1 = total_mastery2 = total_mastery3 = total_mastery4 = 0
         specific_mastery0 = specific_mastery1 = specific_mastery2 = specific_mastery3 = specific_mastery4 = 0
         current_team_power = best_team_power = 0
+        final_champ_zero = final_champ_one = final_champ_two = final_champ_three = final_champ_four = ''
         
         # Find total mastery points per summoner    
         for x0, mastered_champs0 in summonerList[0].items():
@@ -143,7 +144,8 @@ class DoMath(object):
                                                                                                     final_role_two = str(summoner_two_role)
                                                                                                     final_role_three = str(summoner_three_role)
                                                                                                     final_role_four = str(summoner_four_role)
-                                                                                                else: continue
                                                                                             
         return (summoners[0] + ',' + final_champ_zero + ',' + final_role_zero + ',' + summoners[1] + ',' + final_champ_one + ',' + final_role_one + ',' + summoners[2] + ',' + final_champ_two + ','
-                             + final_role_two + ',' + summoners[3] + ',' + final_champ_three + ',' + final_role_three + ',' + summoners[4] + ',' + final_champ_four + ',' + final_role_four)                                                                                            
+                             + final_role_two + ',' + summoners[3] + ',' + final_champ_three + ',' + final_role_three + ',' + summoners[4] + ',' + final_champ_four + ',' + final_role_four)     
+                             
+# FINAL_CHAMP_ZERO SOMETIMES HAS A BUG BECAUSE IT GETS REFERENCED BEFORE ASSIGNMENT                                                                                       
