@@ -20,7 +20,7 @@ class GetData(object):
         try:
             summoner_response = api.get_summoner_by_name(current_summoner)
         except:
-            sys.exit('Summoner name ' + player + ' does not exist')
+            sys.exit('Summoner name ' + current_summoner + ' does not exist')
     
         # Parse the output
         temp = json.dumps(summoner_response)
@@ -39,14 +39,14 @@ class GetData(object):
         try:
             mastery_response = api.get_top_mastery_data(summoner_id, champs)
         except:
-            sys.exit('Could not get champion mastery data for ' + player)
+            sys.exit('Could not get champion mastery data for ' + current_summoner)
     
         # Compile the stuff I care about into a dictionary
         for x, val in enumerate(mastery_response):
             try:
                 champ_points_pair[val['championId']] = val['championPoints']
             except:
-                sys.exit('We encountered a problem parsing champion mastery data for ' + player +
+                sys.exit('We encountered a problem parsing champion mastery data for ' + current_summoner +
                         ' on champion ID ' + val['championId'])
     
         # Find out what lane the champion is being played in
@@ -55,7 +55,7 @@ class GetData(object):
         try:
             lane_response = api.get_champion_role(summoner_id, champList)
         except:
-            sys.exit('Error trying to determine what lane one of the champions was played in by ' + player)
+            sys.exit('Error trying to determine what lane one of the champions was played in by ' + current_summoner)
     
         # Figure out what roles the champion is being played in, and for how many games
         for x, val in enumerate(lane_response['matches']):
@@ -118,6 +118,6 @@ class GetData(object):
                     structured_data[summoner_id][champion_id].append({'NONE': 0.0})
 
         except:
-            sys.exit('Error structuing the champion data for ' + player)
+            sys.exit('Error structuing the champion data for ' + current_summoner)
         
         return structured_data
