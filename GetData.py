@@ -1,14 +1,14 @@
 from RiotAPI import RiotAPI
 import json
 import operator
-import os
+import KeyAPI as Key
 
 
 class GetData(object):
     
     def _gimme_data(self, current_summoner, champs):
         
-        api = RiotAPI(os.environ.get('RIOT_API_KEY'))
+        api = RiotAPI(Key.KEY['key'])
         data_dict = {}
         champList = []
         second_dict = {}

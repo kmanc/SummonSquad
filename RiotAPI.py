@@ -3,6 +3,7 @@ import requests
 
 class RiotAPI(object):
     
+    number = 0
     def __init__(self, api_key, region=Constants.REGIONS['north_america']):
         self.api_key = api_key
         self.region = region

@@ -36,7 +36,7 @@ def main():
         dream_team = computations._compute_team(summonerList, summoners)
     except:
         sys.exit('You woke up, the dream is gone')
-    
+        
     # Output for the website
     print (dream_team)    
     
