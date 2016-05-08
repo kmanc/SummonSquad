@@ -4,13 +4,6 @@ a
   outline: none;
   text-decoration: none;
 }
-div.about, .about2
-{
-  display: block;
-  width: 600px;
-  margin: 0 auto;
-  padding: 20px;
-}
 
 body 
 {
@@ -35,6 +28,14 @@ button {
 .buttonAdd:hover {
   color: #3CB371;
   transition-duration: .4s;
+}
+
+div.about, .about2
+{
+  display: block;
+  width: 800px;
+  margin: 0 auto;
+  padding: 20px;
 }
 
 div.middle
