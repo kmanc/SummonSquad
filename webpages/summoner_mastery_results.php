@@ -16,6 +16,7 @@
 					$sani[$i] = str_replace(' ','',$_POST["sum$i"]);
 				}
 
+
 				$path = '/var/www/html/Main.py';
 				$python = '/usr/bin/python3.4';
 				$script = $python . " " . $path . " " . $sani[1] . " " . $sani[2] . " " . $sani[3] . " " . $sani[4] . " " . $sani[5];
@@ -54,51 +55,51 @@
 			<div class="summoners">
 				<h2 class="error"><?php 
 					if ($status != 0) {
-						echo 'Something went wrong.<br> Make sure all of your summoner names are spelled correctly.<br> Press the back button or click <a href="../index.html"><button class="buttonAdd">   Here   </button></a> to go back';
+						echo 'Status error:' . $status . '. Something went wrong.<br> Make sure all of your summoner names are spelled correctly.<br> Press the back button or click <a href="../index.html"><button class="buttonAdd">   Here   </button></a> to go back';
 					}
 					?>
 				</h2>
 				<div class="readText">
 					<div id="summ1">
-						<span style="position: absolute; bottom: 0;">
 							<?php
+								echo '<p class="bot_text">';
 								echo $_POST['sum1'];
 								echo '<br>' . $fix_quote[1];
 								echo '<br>' . $role[1];
+								echo '</p>';
 							?>
-						</span>
 					</div><div id="summ2">
-						<span style="position: absolute; bottom: 0;">
 							<?php
+								echo '<p class="bot_text">';
 								echo $_POST['sum2'];
 								echo '<br>' . $fix_quote[2];
 								echo '<br>' . $role[2];
+								echo '</p>';
 							?>
-						</span>
 					</div><div id="summ3">
-						<span style="position: absolute; bottom: 0;">
 							<?php
+								echo '<p class="bot_text">';
 								echo $_POST['sum3'];
 								echo '<br>' . $fix_quote[3];
 								echo '<br>' . $role[3];
+								echo '</p>';
 							?>
-						</span>
 					</div><div id="summ4">
-						<span style="position: absolute; bottom: 0;">
 							<?php
+								echo '<p class="bot_text">';
 								echo $_POST['sum4'];
 								echo '<br>' . $fix_quote[4];
 								echo '<br>' . $role[4];
+								echo '</p>';
 							?>
-						</span>
 					</div><div id="summ5">
-						<span style="position: absolute; bottom: 0;">
 							<?php
+								echo '<p class="bot_text">';
 								echo $_POST['sum5'];
 								echo '<br>' . $fix_quote[5];
 								echo '<br>' . $role[5];
+								echo '</p>';
 							?>
-						</span>
 					</div>
 				</div>
 			</div>
@@ -109,7 +110,7 @@
 	    $('div#summ1').hover(function(){
 	   		$('html').css({
 				'background' : 'url(../bg/<?php echo $champ[1]; ?>.jpg) no-repeat center center fixed',
-				'background-position' : '50% 90%',
+				'background-position' : '50% 10%',
 				'-webkit-background-size' : 'cover',
 				'-moz-background-size' : 'cover',
 				'-o-background-size' : 'cover',
@@ -121,7 +122,7 @@
 	    $('div#summ2').hover(function(){
 	   		$('html').css({
 				'background' : 'url(../bg/<?php echo $champ[2]; ?>.jpg) no-repeat center center fixed',
-				'background-position' : '50% 70%',
+				'background-position' : '50% 10%',
 				'-webkit-background-size' : 'cover',
 				'-moz-background-size' : 'cover',
 				'-o-background-size' : 'cover',
@@ -132,7 +133,7 @@
 	    $('div#summ3').hover(function(){
 	   		$('html').css({
 				'background' : 'url(../bg/<?php echo $champ[3]; ?>.jpg) no-repeat center center fixed',
-				'background-position' : '50% 50%',
+				'background-position' : '50% 10%',
 				'-webkit-background-size' : 'cover',
 				'-moz-background-size' : 'cover',
 				'-o-background-size' : 'cover',
@@ -143,7 +144,7 @@
 	    $('div#summ4').hover(function(){
 	   		$('html').css({
 				'background' : 'url(../bg/<?php echo $champ[4]; ?>.jpg) no-repeat center center fixed',
-				'background-position' : '50% 30%',
+				'background-position' : '50% 10%',
 				'-webkit-background-size' : 'cover',
 				'-moz-background-size' : 'cover',
 				'-o-background-size' : 'cover',
@@ -166,7 +167,7 @@
 	$(window).load(function(){
    		$('html').css({
 			'background' : 'url(../bg/<?php echo $champ[1]; ?>.jpg) no-repeat center center fixed',
-			'background-position' : '50% 90%',
+			'background-position' : '50% 10%',
 			'-webkit-background-size' : 'cover',
 			'-moz-background-size' : 'cover',
 			'-o-background-size' : 'cover',

@@ -72,6 +72,8 @@ div.summoners
   width: 100%;
   height: 100%;
   position: absolute;
+  border-top: 1px;
+  border-color: ;
   padding: 0;
   bottom: 0;
   left: 0;
@@ -83,7 +85,7 @@ div#summ1, #summ2, #summ3, #summ4, #summ5
   width: 20%;
   height: 100%;
   margin: 0;
-  padding: 0;
+  padding: auto;
   text-align: center;
   vertical-align: bottom;
   background-color: transparent;
@@ -249,9 +251,12 @@ p
   color: #808080;
 }
 
-p #bot_text
+p.bot_text
 {
-  position: absolute;
-  bottom: 0;
+  font-weight: bold;
+  margin: auto;
+  text-align: center;
+  line-height: 50px; 
+  color: #DDDDDD;
 }
 
