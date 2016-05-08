@@ -7,9 +7,9 @@ import sys
 
 class GetData(object):
     
-    def _gimme_data(self, current_summoner, champs):
+    def _gimme_data(self, current_summoner, champs, region):
         
-        api = RiotAPI(Key.KEY['key'])
+        api = RiotAPI(Key.KEY['key'], region)
         champ_points_pair = {}
         champList = []
         champ_role_timeinrole = {}
@@ -44,8 +44,7 @@ class GetData(object):
             try:
                 champ_points_pair[val['championId']] = val['championPoints']
             except:
-                sys.exit('We encountered a problem parsing champion mastery data for ' + current_summoner +
-                        ' on champion ID ' + val['championId'])
+                sys.exit('We encountered a problem parsing champion mastery data for ' + current_summoner)
     
         # Get data about regarding the lane the champion is being played in by checking the summoner's arnked history
         for key in champ_points_pair:
@@ -56,25 +55,28 @@ class GetData(object):
             sys.exit('Error trying to determine what lane one of the champions was played in by ' + current_summoner)
     
         # Figure out what roles the champion is being played in, and for how many games (eg. mid 10 times, support 4 times)
-        for x, val in enumerate(lane_response['matches']):
-            key_test = val['champion']
-            if (val['queue'] != 'CUSTOM'):
-                if (val['lane'] == 'BOTTOM'):
-                    role = val['role']
-                else:
-                    role = val['lane']
-                if (val['lane'] == 'MID' and val['role'] == 'DUO_SUPPORT'):
-                    role = 'NONE'
-                if (val['lane'] == 'TOP' and val['role'] == 'DUO_SUPPORT'):
-                    role = 'NONE'
-                if key_test not in champ_role_timeinrole:
-                    champ_role_timeinrole[key_test] = {}
-                    champ_role_timeinrole[key_test][role] = 0
-                else:
-                    if role in champ_role_timeinrole[key_test]:
-                        champ_role_timeinrole[key_test][role] += 1
+        match_check = 'matches'
+        if match_check in lane_response:
+            for x, val in enumerate(lane_response['matches']):
+                key_test = val['champion']
+                lane_check = 'lane'
+                if (lane_check in val):
+                    if (val['lane'] == 'BOTTOM'):
+                        role = val['role']
                     else:
+                        role = val['lane']
+                    if (val['lane'] == 'MID' and val['role'] == 'DUO_SUPPORT'):
+                        role = 'NONE'
+                    if (val['lane'] == 'TOP' and val['role'] == 'DUO_SUPPORT'):
+                        role = 'NONE'
+                    if key_test not in champ_role_timeinrole:
+                        champ_role_timeinrole[key_test] = {}
                         champ_role_timeinrole[key_test][role] = 0
+                    else:
+                        if role in champ_role_timeinrole[key_test]:
+                            champ_role_timeinrole[key_test][role] += 1
+                        else:
+                            champ_role_timeinrole[key_test][role] = 0
                 
         # Get percentage of games played in each role per champion (eg 33% top, 50% jungle, 17% support)
         # Bonus points if you can tell us what champions might fit that above percentage distribution

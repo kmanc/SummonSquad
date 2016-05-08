@@ -6,14 +6,15 @@ from DoMath import DoMath
 
 def main():
     
-    # This will likely get moved to a user-entered variable instead of hard coded
-    champs = 10
-    
     # Grab arguments (summoner names) and make sure that they are all there
     try:
         summoners = [sys.argv[1], sys.argv[2], sys.argv[3], sys.argv[4], sys.argv[5]]
     except:
         sys.exit('At least one summoner name was not entered')
+        
+    # These will likely get moved to a user-entered variable instead of hard coded
+    champs = 10
+    region = sys.argv[6]
     
     # Normalize summoner names (no spaces, no upper case) because the api can get cranky if you don't
     for x in range(len(summoners)):
@@ -26,7 +27,7 @@ def main():
     
     # Get a list of the summoners and their respective champion/mastery data
     for player in summoners:
-        summoner_data = data_grabber._gimme_data(player, champs)
+        summoner_data = data_grabber._gimme_data(player, champs, region)
         summonerList.append(summoner_data)
 
     # Get squad

@@ -4,9 +4,41 @@ import requests
 class RiotAPI(object):
     
     number = 0
-    def __init__(self, api_key, region=Constants.REGIONS['north_america']):
+    def __init__(self, api_key, region):
         self.api_key = api_key
-        self.region = region
+        if (region == 'NA'):
+            self.region = Constants.REGIONS['north_america']
+            self.platform = Constants.PLATFORMS['north_america']
+        elif (region == 'BR'):
+            self.region = Constants.REGIONS['brazil']
+            self.platform = Constants.PLATFORMS['brazil']
+        elif (region == 'EUNE'):
+            self.region = Constants.REGIONS['eu_nordic']
+            self.platform = Constants.PLATFORMS['eu_nordic']
+        elif (region == 'EUW'):
+            self.region = Constants.REGIONS['eu_west']
+            self.platform = Constants.PLATFORMS['eu_west']
+        elif (region == 'JP'):
+            self.region = Constants.REGIONS['japan']
+            self.platform = Constants.PLATFORMS['japan']
+        elif (region == 'KR'):
+            self.region = Constants.REGIONS['korea']
+            self.platform = Constants.PLATFORMS['korea']
+        elif (region == 'LAN'):
+            self.region = Constants.REGIONS['latin_america_north']
+            self.platform = Constants.PLATFORMS['latin_america_north']
+        elif (region == 'LAS'):
+            self.region = Constants.REGIONS['latin_america_south']
+            self.platform = Constants.PLATFORMS['latin_america_south']
+        elif (region == 'OCE'):
+            self.region = Constants.REGIONS['oceania']
+            self.platform = Constants.PLATFORMS['oceania']
+        elif (region == 'TR'):
+            self.region = Constants.REGIONS['turkey']
+            self.platform = Constants.PLATFORMS['turkey']
+        elif (region == 'RU'):
+            self.region = Constants.REGIONS['russia']
+            self.platform = Constants.PLATFORMS['russia']
         
     def _request_summoner(self, api_url, params={}):
         args = {'api_key': self.api_key}
@@ -91,7 +123,7 @@ class RiotAPI(object):
     def get_summoner_mastery_data(self, id):
         # Get all summoner mastery data
         api_url = Constants.URL['all_mastery'].format(
-            platformId=Constants.PLATFORMS['north_america'],
+            platformId=self.platform,
             playerId=id
         )
         return self._request_mastery(api_url)
@@ -99,7 +131,7 @@ class RiotAPI(object):
     def get_top_mastery_data(self, id, champs):
         # Get mastery data for the top X champions, where X is the length of the list 'champs'
         api_url = Constants.URL['top_x_mastery'].format(
-            platformId=Constants.PLATFORMS['north_america'],
+            platformId=self.platform,
             playerId=id
         )
         return self._request_top_mastery(api_url, {'count': champs})
