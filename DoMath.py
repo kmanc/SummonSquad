@@ -145,7 +145,7 @@ class DoMath(object):
                                                                                                 current_team_power = specific_mastery0 + specific_mastery1 + specific_mastery2 + specific_mastery3 + specific_mastery4
                                                                                                 if current_team_power > best_team_power:
                                                                                                     best_team_power = current_team_power
-                                                                                                    print (best_team_power)
+                                                                                                    #print (best_team_power)
                                                                                                     final_champ_zero = str(summoner_zero_champ_name).replace('[', '').replace(']', '').replace("'", "").replace('"', '')
                                                                                                     final_champ_one = str(summoner_one_champ_name).replace('[', '').replace(']', '').replace("'", "").replace('"', '')
                                                                                                     final_champ_two = str(summoner_two_champ_name).replace('[', '').replace(']', '').replace("'", "").replace('"', '')
@@ -157,7 +157,7 @@ class DoMath(object):
                                                                                                     final_role_three = str(summoner_three_role)
                                                                                                     final_role_four = str(summoner_four_role)
                                                                                             
-        print ('number of valid teams found is ', teams)
+        #print ('number of valid teams found is ', teams)
         return (summoners[0] + ',' + final_champ_zero + ',' + final_role_zero + ',' + summoners[1] + ',' + final_champ_one + ',' + final_role_one + ',' + summoners[2] + ',' + final_champ_two + ','
                              + final_role_two + ',' + summoners[3] + ',' + final_champ_three + ',' + final_role_three + ',' + summoners[4] + ',' + final_champ_four + ',' + final_role_four)     
                              
