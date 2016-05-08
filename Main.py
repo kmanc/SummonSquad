@@ -25,10 +25,7 @@ def main():
     
     # Get a list of the summoners and their respective champion/mastery data, or return error if something goes wrong
     for player in summoners:
-        try:
-            summoner_data = data_grabber._gimme_data(player, champs)
-        except:
-            sys.exit('Summoner name ' + player + ' does not exist')
+        summoner_data = data_grabber._gimme_data(player, champs)
         summonerList.append(summoner_data)
 
     # Get squad
