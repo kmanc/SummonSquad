@@ -16,32 +16,30 @@ class GetData(object):
         structured_data = {}
         champion_name = {}
        
-        # Get summoner data
+        # Get summoner data, or tell us it couldn't be found
         try:
             summoner_response = api.get_summoner_by_name(current_summoner)
         except:
             sys.exit('Summoner name ' + current_summoner + ' does not exist')
     
-        # Parse the output
+        # Parse the output and make sure we have both a person's summoner name and id
         temp = json.dumps(summoner_response)
         temp = json.loads(temp)
         summoner_id = (temp[current_summoner]['id'])
         summoner_name = (temp[current_summoner]['name'])
     
-        # For troubleshooting
-        #print (summoner_id, summoner_name)
-    
+        # NOT USED FOR THIS PROJECT AT THIS TIME
         # Get all of a summoner's mastery data
         #response = api.get_summoner_mastery_data(summoner_id)
         #print (response)
     
-        # Get a summoner's top X mastery data
+        # Get a summoner's top X champion mastery data
         try:
             mastery_response = api.get_top_mastery_data(summoner_id, champs)
         except:
             sys.exit('Could not get champion mastery data for ' + current_summoner)
     
-        # Compile the stuff I care about into a dictionary
+        # Compile the stuff we care about into a dictionary (namely that champion id and its associated score)
         for x, val in enumerate(mastery_response):
             try:
                 champ_points_pair[val['championId']] = val['championPoints']
@@ -49,7 +47,7 @@ class GetData(object):
                 sys.exit('We encountered a problem parsing champion mastery data for ' + current_summoner +
                         ' on champion ID ' + val['championId'])
     
-        # Find out what lane the champion is being played in
+        # Get data about regarding the lane the champion is being played in by checking the summoner's arnked history
         for key in champ_points_pair:
             champList.append(key)
         try:
@@ -57,7 +55,7 @@ class GetData(object):
         except:
             sys.exit('Error trying to determine what lane one of the champions was played in by ' + current_summoner)
     
-        # Figure out what roles the champion is being played in, and for how many games
+        # Figure out what roles the champion is being played in, and for how many games (eg. mid 10 times, support 4 times)
         for x, val in enumerate(lane_response['matches']):
             key_test = val['champion']
             if (val['queue'] != 'CUSTOM'):
@@ -78,7 +76,8 @@ class GetData(object):
                     else:
                         champ_role_timeinrole[key_test][role] = 0
                 
-        # Get percentage of games played in each role per champIdizzle
+        # Get percentage of games played in each role per champion (eg 33% top, 50% jungle, 17% support)
+        # Bonus points if you can tell us what champions might fit that above percentage distribution
         for id_key in champ_role_timeinrole:
             role_games = 0
             for role_key in champ_role_timeinrole[id_key]:
@@ -89,7 +88,7 @@ class GetData(object):
                 else:
                     champ_role_timeinrole[id_key][role_key] /= 1
     
-        # Get the champion name for later use
+        # Get the champion name for later use, because 'champion 34' doesn't mean much to people
         for champIdizzle in champ_points_pair:
             try:
                 champion_response = api.get_champion_name(champIdizzle)
@@ -97,6 +96,7 @@ class GetData(object):
             except:
                 sys.exit('Could not get the name of the champ with id ' + champIdizzle)
         
+        # Compile all the data that we have pulled so far into one place
         try:
             # Put summoner id as a first level key
             structured_data[summoner_id] = {}
@@ -112,7 +112,7 @@ class GetData(object):
                                                     champ_role_timeinrole[second_champ_id][role_key] * 
                                                     champ_points_pair[data_champ_id]})
                                                 
-            # Check to make sure each champion has at least a value for points, and add a 0 if not
+            # Check to make sure each champion has at least a value for points; if it doesn't, make it 0
             for x, champion_id in enumerate(structured_data[summoner_id]):
                 if (len(structured_data[summoner_id][champion_id]) == 1):
                     structured_data[summoner_id][champion_id].append({'NONE': 0.0})

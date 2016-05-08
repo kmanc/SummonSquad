@@ -9,12 +9,13 @@ def main():
     # This will likely get moved to a user-entered variable instead of hard coded
     champs = 10
     
-    # Grab arguments and make sure that they are all there
+    # Grab arguments (summoner names) and make sure that they are all there
     try:
         summoners = [sys.argv[1], sys.argv[2], sys.argv[3], sys.argv[4], sys.argv[5]]
     except:
         sys.exit('At least one summoner name was not entered')
     
+    # Normalize summoner names (no spaces, no upper case) because the api can get cranky if you don't
     for x in range(len(summoners)):
         summoners[x] = summoners[x].lower()
         summoners[x] = summoners[x].replace(" ", "")
@@ -23,12 +24,14 @@ def main():
     data_grabber = GetData()
     computations = DoMath()
     
-    # Get a list of the summoners and their respective champion/mastery data, or return error if something goes wrong
+    # Get a list of the summoners and their respective champion/mastery data
     for player in summoners:
         summoner_data = data_grabber._gimme_data(player, champs)
         summonerList.append(summoner_data)
 
     # Get squad
+    # Build the dream
+    # ASSSSSSEMBLEEEEEEEEE
     try:
         dream_team = computations._compute_team(summonerList, summoners)
     except:

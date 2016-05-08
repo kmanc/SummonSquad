@@ -81,6 +81,7 @@ class RiotAPI(object):
         return response.json()
         
     def get_summoner_by_name(self, name):
+        # Get summoner ID for use later
         api_url = Constants.URL['summoner_by_name'].format(
             version=Constants.API_VERSIONS['summoner'],
             names=name
@@ -88,6 +89,7 @@ class RiotAPI(object):
         return self._request_summoner(api_url)
        
     def get_summoner_mastery_data(self, id):
+        # Get all summoner mastery data
         api_url = Constants.URL['all_mastery'].format(
             platformId=Constants.PLATFORMS['north_america'],
             playerId=id
@@ -95,6 +97,7 @@ class RiotAPI(object):
         return self._request_mastery(api_url)
         
     def get_top_mastery_data(self, id, champs):
+        # Get mastery data for the top X champions, where X is the length of the list 'champs'
         api_url = Constants.URL['top_x_mastery'].format(
             platformId=Constants.PLATFORMS['north_america'],
             playerId=id
@@ -102,6 +105,7 @@ class RiotAPI(object):
         return self._request_top_mastery(api_url, {'count': champs})
         
     def get_champion_role(self, id, champList):
+        # Figure out which roles the champion is being played in based off of ranked games
         api_url = Constants.URL['matchlist'].format(
             version=Constants.API_VERSIONS['matchlist'],
             playerId=id
@@ -111,6 +115,7 @@ class RiotAPI(object):
         return self._request_champion_role(api_url, {'championIds': champList, 'rankedQueues': queues})
         
     def get_champion_name(self, champIdizzle):
+        # Get champion name from champion ID so we can tell a player they should play 'Thresh', not 'champion 412'
         return self._request_champion_name(champIdizzle)
                
 # If request isn't working, check "print (response.url)" first!!!
