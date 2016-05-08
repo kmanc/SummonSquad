@@ -52,7 +52,10 @@ class GetData(object):
         # Find out what lane the champion is being played in
         for key in champ_points_pair:
             champList.append(key)
-        lane_response = api.get_champion_role(summoner_id, champList)
+        try:
+            lane_response = api.get_champion_role(summoner_id, champList)
+        except:
+            sys.exit('Error trying to determine what lane one of the champions was played in by ' + player)
     
         # Figure out what roles the champion is being played in, and for how many games
         for x, val in enumerate(lane_response['matches']):
@@ -85,33 +88,36 @@ class GetData(object):
                     champ_role_timeinrole[id_key][role_key] /= role_games
                 else:
                     champ_role_timeinrole[id_key][role_key] /= 1
-                
-        #combined_dict = {}
-        #for key in (champ_points_pair.keys() | champ_role_timeinrole.keys()):
-        #    if key in champ_points_pair: combined_dict.setdefault(key, []).append(champ_points_pair[key])
-        #    if key in champ_role_timeinrole: combined_dict.setdefault(key, []).append(champ_role_timeinrole[key])
     
         # Get the champion name for later use
         for champIdizzle in champ_points_pair:
-            champion_response = api.get_champion_name(champIdizzle)
-            champion_name[champIdizzle] = (champion_response['name'])
+            try:
+                champion_response = api.get_champion_name(champIdizzle)
+                champion_name[champIdizzle] = (champion_response['name'])
+            except:
+                sys.exit('Could not get the name of the champ with id ' + champIdizzle)
         
-        # Put summoner id as a first level key
-        structured_data[summoner_id] = {}
+        try:
+            # Put summoner id as a first level key
+            structured_data[summoner_id] = {}
     
-        # Put champion id as a second level key, with the name and another dictionary as the value
-        for champion_id in champion_name:
-            structured_data[summoner_id][champion_id] = [champion_name[champion_id]]
+            # Put champion id as a second level key, with the name and another dictionary as the value
+            for champion_id in champion_name:
+                structured_data[summoner_id][champion_id] = [champion_name[champion_id]]
         
-        # Put role as a third level key with mastery points * percentage of games in that role as the value
-        for second_champ_id, data_champ_id in zip(champ_role_timeinrole, champ_points_pair):
-            for role_key, role in zip(champ_role_timeinrole[second_champ_id], champ_role_timeinrole[second_champ_id]):
-                structured_data[summoner_id][second_champ_id].append({role: 
-                                                    champ_role_timeinrole[second_champ_id][role_key] * champ_points_pair[data_champ_id]})
+            # Put role as a third level key with mastery points * percentage of games in that role as the value
+            for second_champ_id, data_champ_id in zip(champ_role_timeinrole, champ_points_pair):
+                for role_key, role in zip(champ_role_timeinrole[second_champ_id], champ_role_timeinrole[second_champ_id]):
+                    structured_data[summoner_id][second_champ_id].append({role: 
+                                                    champ_role_timeinrole[second_champ_id][role_key] * 
+                                                    champ_points_pair[data_champ_id]})
                                                 
-        # Check to make sure each champion has at least a value for points, and add a 0 if not
-        for x, champion_id in enumerate(structured_data[summoner_id]):
-            if (len(structured_data[summoner_id][champion_id]) == 1):
-                structured_data[summoner_id][champion_id].append({'NONE': 0.0})
+            # Check to make sure each champion has at least a value for points, and add a 0 if not
+            for x, champion_id in enumerate(structured_data[summoner_id]):
+                if (len(structured_data[summoner_id][champion_id]) == 1):
+                    structured_data[summoner_id][champion_id].append({'NONE': 0.0})
+
+        except:
+            sys.exit('Error structuing the champion data for ' + player)
         
         return structured_data
