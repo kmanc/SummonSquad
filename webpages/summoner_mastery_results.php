@@ -61,7 +61,6 @@
 				</h2>
 				<div class="readText">
 					<div id="summ1">
-						<span style="position: absolute; bottom: 0;">
 							<?php
 								echo '<p class="bot_text">';
 								echo $_POST['sum1'];
@@ -69,9 +68,7 @@
 								echo '<br>' . $role[1];
 								echo '</p>';
 							?>
-						</span>
 					</div><div id="summ2">
-						<span style="position: absolute; bottom: 0;">
 							<?php
 								echo '<p class="bot_text">';
 								echo $_POST['sum2'];
@@ -79,9 +76,7 @@
 								echo '<br>' . $role[2];
 								echo '</p>';
 							?>
-						</span>
 					</div><div id="summ3">
-						<span style="position: absolute; bottom: 0;">
 							<?php
 								echo '<p class="bot_text">';
 								echo $_POST['sum3'];
@@ -89,9 +84,7 @@
 								echo '<br>' . $role[3];
 								echo '</p>';
 							?>
-						</span>
 					</div><div id="summ4">
-						<span style="position: absolute; bottom: 0;">
 							<?php
 								echo '<p class="bot_text">';
 								echo $_POST['sum4'];
@@ -99,9 +92,7 @@
 								echo '<br>' . $role[4];
 								echo '</p>';
 							?>
-						</span>
 					</div><div id="summ5">
-						<span style="position: absolute; bottom: 0;">
 							<?php
 								echo '<p class="bot_text">';
 								echo $_POST['sum5'];
@@ -109,7 +100,6 @@
 								echo '<br>' . $role[5];
 								echo '</p>';
 							?>
-						</span>
 					</div>
 				</div>
 			</div>

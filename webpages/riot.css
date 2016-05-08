@@ -85,7 +85,7 @@ div#summ1, #summ2, #summ3, #summ4, #summ5
   width: 20%;
   height: 100%;
   margin: 0;
-  padding: 0;
+  padding: auto;
   text-align: center;
   vertical-align: bottom;
   background-color: transparent;
@@ -253,11 +253,10 @@ p
 
 p.bot_text
 {
-  position: absolute;
   font-weight: bold;
-  line-height: 2;
-  margin: 10px;
+  margin: auto;
+  text-align: center;
+  line-height: 50px; 
   color: #DDDDDD;
-  bottom: 0;
 }
 
