@@ -8,11 +8,13 @@ class DoMath(object):
         best_team_power = -1
         final_champ_zero = final_champ_one = final_champ_two = final_champ_three = final_champ_four = ''
         final_role_zero = final_role_one = final_role_two = final_role_three = final_role_four = ''
+        valid_roles = ['MID', 'TOP', 'JUNGLE', 'DUO_CARRY', 'DUO_SUPPORT']
         
         # Find total mastery points per summoner    
         for x0, mastered_champs0 in summonerList[0].items():
             for x0, champ_info0 in mastered_champs0.items():
                 for role_info0 in champ_info0[1:]:
+                    print (champ_info0[:1], int(list(role_info0.values())[0]))
                     total_mastery0 += int(list(role_info0.values())[0])
     
         for x1, mastered_champs1 in summonerList[1].items():
@@ -50,7 +52,7 @@ class DoMath(object):
                             summoner_zero_role = role0
                             summoner_zero_champ = x0
                             summoner_zero_champ_name = champ_info0[:1]
-                            if (summoner_zero_role == 'NONE' or summoner_zero_role == 'SOLO' or summoner_zero_role == 'DUO'):
+                            if (summoner_zero_role not in valid_roles):
                                 continue
                             roleList.append(summoner_zero_role)
                             champList.append(summoner_zero_champ)
@@ -65,7 +67,7 @@ class DoMath(object):
                                             summoner_one_role = role1
                                             summoner_one_champ = x1
                                             summoner_one_champ_name = champ_info1[:1]
-                                            if (summoner_one_role == 'NONE' or summoner_one_role == 'SOLO' or summoner_one_role == 'DUO' or summoner_one_role in roleList or len(roleList) == 0 or summoner_one_champ in champList):
+                                            if (summoner_one_role not in valid_roles or summoner_one_role in roleList or len(roleList) == 0 or summoner_one_champ in champList):
                                                 continue
                                             roleList.append(summoner_one_role)
                                             champList.append(summoner_one_champ)
@@ -81,7 +83,7 @@ class DoMath(object):
                                                             summoner_two_role = role2
                                                             summoner_two_champ = x2
                                                             summoner_two_champ_name = champ_info2[:1]
-                                                            if (summoner_two_role == 'NONE' or summoner_two_role == 'SOLO' or summoner_two_role == 'DUO' or summoner_two_role in roleList or len(roleList) <= 1 or summoner_two_champ in champList):
+                                                            if (summoner_two_role not in valid_roles or summoner_two_role in roleList or len(roleList) <= 1 or summoner_two_champ in champList):
                                                                 continue
                                                             roleList.append(summoner_two_role)
                                                             champList.append(summoner_two_champ)
@@ -96,7 +98,7 @@ class DoMath(object):
                                                                             summoner_three_role = role3
                                                                             summoner_three_champ = x3
                                                                             summoner_three_champ_name = champ_info3[:1]
-                                                                            if (summoner_three_role == 'NONE' or summoner_three_role == 'SOLO' or summoner_three_role == 'DUO' or summoner_three_role in roleList or len(roleList) <= 2 or summoner_three_champ in champList):
+                                                                            if (summoner_three_role not in valid_roles or summoner_three_role in roleList or len(roleList) <= 2 or summoner_three_champ in champList):
                                                                                 continue
                                                                             champList.append(summoner_three_champ)
                                                                             roleList.append(summoner_three_role)
@@ -111,7 +113,7 @@ class DoMath(object):
                                                                                             summoner_four_role = role4
                                                                                             summoner_four_champ = x4
                                                                                             summoner_four_champ_name = champ_info4[:1]
-                                                                                            if (summoner_four_role == 'NONE' or summoner_four_role == 'SOLO' or summoner_four_role == 'DUO' or summoner_four_role in roleList or len(roleList) <= 3 or summoner_four_champ in champList):
+                                                                                            if (summoner_four_role not in valid_roles or summoner_four_role in roleList or len(roleList) <= 3 or summoner_four_champ in champList):
                                                                                                 continue
                                                                                             else:
                                                                                                 # Clean up the lists of exclusion for the next run-through
