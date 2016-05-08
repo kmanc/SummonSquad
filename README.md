@@ -1,0 +1,3 @@
+# Riot_Challenge_2016
+
+This project's goal is to find you and 4 friends your "optimum" team based on champion mastery.  It currently takes each summoners top 10 champions by mastery score (that number may be customizable in the future), and tests each possible team combination for those champs (That's 100,000 possible teams!).  We first filter out any team that doesn't have one champion in each of the 5 standard positions, because we don't want to suggest that you play with 4 mid laners and a jungler.  Based on a scoring algorithm we developed, it assigns each of those teams a score, and at the end, we give you the team that scored highest on our index!  
