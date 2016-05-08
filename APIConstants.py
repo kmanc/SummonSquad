@@ -18,9 +18,29 @@ API_VERSIONS = {
 }
 
 REGIONS = {
-    'north_america': 'na'
+    'north_america': 'na',
+    'brazil': 'br',
+    'eu_nordic': 'eune',
+    'eu_west': 'euw',
+    'japan': 'jp',
+    'korea': 'kr',
+    'latin_america_north': 'lan',
+    'latin_america_south': 'las',
+    'oceania': 'oce',
+    'turkey': 'tr',
+    'russia': 'ru'
 }
 
 PLATFORMS = {
-    'north_america': 'NA1'
+    'north_america': 'NA1',
+    'brazil': 'BR1',
+    'eu_nordic': 'EUN1',
+    'eu_west': 'EUW1',
+    'japan': 'JP1',
+    'korea': 'KR',
+    'latin_america_north': 'LA1',
+    'latin_america_south': 'LA2',
+    'oceania': 'OC1',
+    'turkey': 'TR1',
+    'russia': 'RU'
 }
