@@ -50,6 +50,10 @@ class GetData(object):
                 role = val['role']
             else:
                 role = val['lane']
+            if (val['lane'] == 'MID' and val['role'] == 'DUO_SUPPORT'):
+                role = 'NONE'
+            if (val['lane'] == 'TOP' and val['role'] == 'DUO_SUPPORT'):
+                role = 'NONE'
             if key_test not in second_dict:
                 second_dict[key_test] = {}
                 second_dict[key_test][role] = 0
