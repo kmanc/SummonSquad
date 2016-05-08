@@ -8,6 +8,5 @@ In the future we want to do a few things to make our tool more realistic.  For i
 
 There are a few issues that we are working through, and hope to have solved soon(ish):
 
-    -Right now we only support NA
     -You have to have played ranked in order for us to know what role you play a champion in (because the api does not give               us role information for normal games)
     -We made this in 10 days, so bugs pop up now and then.  We could actually really sue your help...if you see one, let us               know so we can squash it!!
