@@ -9,183 +9,106 @@
 <body>
 		<h1>SummonSquad</h1>
 		<h4><?php
-				$sum1sani = str_replace(' ','',$_POST['sum1']);
-				$sum2sani = str_replace(' ','',$_POST['sum2']);
-				$sum3sani = str_replace(' ','',$_POST['sum3']);
-				$sum4sani = str_replace(' ','',$_POST['sum4']);
-				$sum5sani = str_replace(' ','',$_POST['sum5']);
-				$python = '/usr/bin/python3.4 ';
-				$path = '/var/www/html/scripts/Main.py ';
-				$script = "/usr/bin/python3.4 /var/www/html/scripts/Main.py " . $sum1sani . " " . $sum2sani . " " . $sum3sani . " " . $sum4sani . " " . $sum5sani;
-				//kmancxc, apajunky, raker, ashtreelee, iamjerbear
+
+				//make sure input to python script is formatted correctly
+
+				for ($i = 1; $i <= 5; $i += 1) {
+					$sani[$i] = str_replace(' ','',$_POST["sum$i"]);
+				}
+
+				$path = '/var/www/html/Main.py';
+				$python = '/usr/bin/python3.4';
+				$script = $python . " " . $path . " " . $sani[1] . " " . $sani[2] . " " . $sani[3] . " " . $sani[4] . " " . $sani[5];
 				$command = escapeshellcmd($script);
 				$results = exec($command, $my_output, $status);
 				$data_array = explode(",", $results);
-				$champ1 = str_replace(array('"', ' '), '' , $data_array[1]);
-				$champ2 = str_replace(array('"', ' '), '' , $data_array[4]);
-				$champ3 = str_replace(array('"', ' '), '' , $data_array[7]);
-				$champ4 = str_replace(array('"', ' '), '' , $data_array[10]);	
-				$champ5 = str_replace(array('"', ' '), '' , $data_array[13]);
 
-				$role1 = ucfirst(strtolower(preg_replace('/DUO_/', '', $data_array[2])));
-				$role2 = ucfirst(strtolower(preg_replace('/DUO_/', '', $data_array[5])));
-				$role3 = ucfirst(strtolower(preg_replace('/DUO_/', '', $data_array[8])));
-				$role4 = ucfirst(strtolower(preg_replace('/DUO_/', '', $data_array[11])));
-				$role5 = ucfirst(strtolower(preg_replace('/DUO_/', '', $data_array[14])));
+				//get the properly formatted bgs for the champions
+
+				$j = 1;
+				for ($i = 1; $i <= 13; $i += 3) {
+					$champ[$j] = str_replace(array('"', ' '), '' , $data_array[$i]);
+					$j++;
+				}
+
+				//temp fix to get rid of double quotes around KogMaw's name (rito pls)
+				
+				$k = 1;
+				for ($i = 1; $i <= 13; $i += 3) {
+					$pattern = "/\"/"; 
+					$replace = ""; 
+					$fix_quote[$k] = preg_replace($pattern,$replace,$data_array[$i]);
+					$k++;
+				}
+
+				//standardize role names, e.g. DUO_CARRY turns to Carry, JUNGLE turns to Jungle
+
+				$m = 1;
+				for ($i = 2; $i <=14; $i += 3){
+					$role[$m] = ucfirst(strtolower(preg_replace('/DUO_/', '', $data_array[$i])));
+					$m++;
+				}
+
 				?>
 			 </h4>
 			<div class="summoners">
+				<h2 class="error"><?php 
+					if ($status != 0) {
+						echo 'Something went wrong.<br> Make sure all of your summoner names are spelled correctly.<br> Press the back button or click <a href="../index.html"><button class="buttonAdd">   Here   </button></a> to go back';
+					}
+					?>
+				</h2>
 				<div class="readText">
 					<div id="summ1">
 						<span style="position: absolute; bottom: 0;">
 							<?php
 								echo $_POST['sum1'];
-								echo '<br>' . $data_array[1];
-								echo '<br>' . $role1;
+								echo '<br>' . $fix_quote[1];
+								echo '<br>' . $role[1];
 							?>
 						</span>
 					</div><div id="summ2">
 						<span style="position: absolute; bottom: 0;">
 							<?php
 								echo $_POST['sum2'];
-								echo '<br>' . $data_array[4];
-								echo '<br>' . $role2;
+								echo '<br>' . $fix_quote[2];
+								echo '<br>' . $role[2];
 							?>
 						</span>
 					</div><div id="summ3">
 						<span style="position: absolute; bottom: 0;">
 							<?php
 								echo $_POST['sum3'];
-								echo '<br>' . $data_array[7];
-								echo '<br>' . $role3;
+								echo '<br>' . $fix_quote[3];
+								echo '<br>' . $role[3];
 							?>
 						</span>
 					</div><div id="summ4">
 						<span style="position: absolute; bottom: 0;">
 							<?php
 								echo $_POST['sum4'];
-								echo '<br>' . $data_array[10];
-								echo '<br>' . $role4;
+								echo '<br>' . $fix_quote[4];
+								echo '<br>' . $role[4];
 							?>
 						</span>
 					</div><div id="summ5">
 						<span style="position: absolute; bottom: 0;">
 							<?php
 								echo $_POST['sum5'];
-								echo '<br>' . $data_array[13];
-								echo '<br>' . $role5;
+								echo '<br>' . $fix_quote[5];
+								echo '<br>' . $role[5];
 							?>
 						</span>
 					</div>
 				</div>
 			</div>
-
 <script>
-	$(document).ready(function(){
-	    $("#s1").mouseenter(function(){
-	   		$('#s1').css({
-				'border-color': '#40a0a5',
-				'border-radius': 1,
-				'border-right-width': 0,
-				'border-left-width': 0,
-				'border-top-width': 1,
-				'border-bottom-width': 1,
-		    });
-		}); 
-	    $('#s1').mouseleave(function(){
-	    	$('#s1').css({
-				'border-color': 'rgba(20, 91, 95, .5)',
-				'border-radius': 1,
-				'border-right-width': '2',
-				'border-left-width': '2',
-				'border-top-width': '2',
-				'border-bottom-width': '2',
-			});
-	    });
-	    $("#s2").mouseenter(function(){
-	   		$('#s2').css({
-				'border-color': '#40a0a5',
-				'border-radius': 1,
-				'border-right-width': 0,
-				'border-left-width': 0,
-				'border-top-width': 1,
-				'border-bottom-width': 1,
-		    });
-		}); 
-	    $('#s2').mouseleave(function(){
-	    	$('#s2').css({
-				'border-color': 'rgba(20, 91, 95, .5)',
-				'border-radius': 1,
-				'border-right-width': '2',
-				'border-left-width': '2',
-				'border-top-width': '2',
-				'border-bottom-width': '2',
-			});
-	    });
-	    $("#s3").mouseenter(function(){
-	   		$('#s3').css({
-				'border-color': '#40a0a5',
-				'border-radius': 1,
-				'border-right-width': 0,
-				'border-left-width': 0,
-				'border-top-width': 1,
-				'border-bottom-width': 1,
-		    });
-		}); 
-	    $('#s3').mouseleave(function(){
-	    	$('#s3').css({
-				'border-color': 'rgba(20, 91, 95, .5)',
-				'border-radius': 1,
-				'border-right-width': '2',
-				'border-left-width': '2',
-				'border-top-width': '2',
-				'border-bottom-width': '2',
-			});
-	    });
-	    $("#s4").mouseenter(function(){
-	   		$('#s4').css({
-				'border-color': '#40a0a5',
-				'border-radius': 1,
-				'border-right-width': 0,
-				'border-left-width': 0,
-				'border-top-width': 1,
-				'border-bottom-width': 1,
-		    });
-		}); 
-	    $('#s4').mouseleave(function(){
-	    	$('#s4').css({
-				'border-color': 'rgba(20, 91, 95, .5)',
-				'border-radius': 1,
-				'border-right-width': '2',
-				'border-left-width': '2',
-				'border-top-width': '2',
-				'border-bottom-width': '2',
-			});
-	    });
-	    $("#s5").mouseenter(function(){
-	   		$('#s5').css({
-				'border-color': '#40a0a5',
-				'border-radius': 1,
-				'border-right-width': 0,
-				'border-left-width': 0,
-				'border-top-width': 1,
-				'border-bottom-width': 1,
-		    });
-		}); 
-	    $('#s5').mouseleave(function(){
-	    	$('#s5').css({
-				'border-color': 'rgba(20, 91, 95, .5)',
-				'border-radius': 1,
-				'border-right-width': '2',
-				'border-left-width': '2',
-				'border-top-width': '2',
-				'border-bottom-width': '2',
-			});
-	    });
 
+	//jquery for changing the background on hover for champions
+	$(document).ready(function(){
 	    $('div#summ1').hover(function(){
 	   		$('html').css({
-				'background' : 'url(../bg/<?php echo $champ1; ?>.jpg) no-repeat center center fixed',
+				'background' : 'url(../bg/<?php echo $champ[1]; ?>.jpg) no-repeat center center fixed',
 				'background-position' : '50% 90%',
 				'-webkit-background-size' : 'cover',
 				'-moz-background-size' : 'cover',
@@ -197,7 +120,7 @@
 
 	    $('div#summ2').hover(function(){
 	   		$('html').css({
-				'background' : 'url(../bg/<?php echo $champ2; ?>.jpg) no-repeat center center fixed',
+				'background' : 'url(../bg/<?php echo $champ[2]; ?>.jpg) no-repeat center center fixed',
 				'background-position' : '50% 70%',
 				'-webkit-background-size' : 'cover',
 				'-moz-background-size' : 'cover',
@@ -208,7 +131,7 @@
 		}); 
 	    $('div#summ3').hover(function(){
 	   		$('html').css({
-				'background' : 'url(../bg/<?php echo $champ3; ?>.jpg) no-repeat center center fixed',
+				'background' : 'url(../bg/<?php echo $champ[3]; ?>.jpg) no-repeat center center fixed',
 				'background-position' : '50% 50%',
 				'-webkit-background-size' : 'cover',
 				'-moz-background-size' : 'cover',
@@ -219,7 +142,7 @@
 		}); 
 	    $('div#summ4').hover(function(){
 	   		$('html').css({
-				'background' : 'url(../bg/<?php echo $champ4; ?>.jpg) no-repeat center center fixed',
+				'background' : 'url(../bg/<?php echo $champ[4]; ?>.jpg) no-repeat center center fixed',
 				'background-position' : '50% 30%',
 				'-webkit-background-size' : 'cover',
 				'-moz-background-size' : 'cover',
@@ -230,7 +153,7 @@
 		}); 
 	    $('div#summ5').hover(function(){
 	   		$('html').css({
-				'background' : 'url(../bg/<?php echo $champ5; ?>.jpg) no-repeat center center fixed',
+				'background' : 'url(../bg/<?php echo $champ[5]; ?>.jpg) no-repeat center center fixed',
 				'background-position' : '50% 10%',
 				'-webkit-background-size' : 'cover',
 				'-moz-background-size' : 'cover',
@@ -242,7 +165,7 @@
 	});
 	$(window).load(function(){
    		$('html').css({
-			'background' : 'url(../bg/<?php echo $champ1; ?>.jpg) no-repeat center center fixed',
+			'background' : 'url(../bg/<?php echo $champ[1]; ?>.jpg) no-repeat center center fixed',
 			'background-position' : '50% 90%',
 			'-webkit-background-size' : 'cover',
 			'-moz-background-size' : 'cover',
@@ -251,7 +174,6 @@
 			'transition-duration': '.3s' 
 	    });
 	}); 
-
 
 </script>
 </body>

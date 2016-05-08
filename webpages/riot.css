@@ -1,5 +1,9 @@
 
-
+a 
+{
+  outline: none;
+  text-decoration: none;
+}
 div.about, .about2
 {
   display: block;
@@ -103,10 +107,11 @@ h1 {
   color: #DDDDDD;
 }
 
-h2 {
+h2.error {
   font-family: 'Gentium Basic', serif;
   font-size: 32px;
   display: block;
+  margin-top: 300px;
   margin-left: auto;
   margin-right: auto;
   width: auto;
@@ -164,7 +169,8 @@ input[type="text"]:focus
 {
   font-family: 'Gentium Basic', serif;
   margin: auto;
-  background-color: #FFF;
+  background-color: transparent;
+  color: rgba(20, 91, 95, .5);
   border: 0px;
   outline: none;
   padding: 2px 5px;
