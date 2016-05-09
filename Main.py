@@ -12,9 +12,12 @@ def main():
     except:
         sys.exit('At least one summoner name was not entered')
         
-    # These will likely get moved to a user-entered variable instead of hard coded
-    champs = 10
     region = sys.argv[6]
+    champs = sys.argv[7]
+    if champs < 5:
+        champs = 5
+    if champs > 100:
+        champs = 100
     
     # Normalize summoner names (no spaces, no upper case) because the api can get cranky if you don't
     for x in range(len(summoners)):
