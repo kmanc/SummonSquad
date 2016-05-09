@@ -77,7 +77,7 @@ class GetData(object):
                             champ_role_timeinrole[key_test][role] += 1
                         else:
                             champ_role_timeinrole[key_test][role] = 0
-                
+    
         # Get percentage of games played in each role per champion (eg 33% top, 50% jungle, 17% support)
         # Bonus points if you can tell us what champions might fit that above percentage distribution
         for id_key in champ_role_timeinrole:
@@ -89,7 +89,7 @@ class GetData(object):
                     champ_role_timeinrole[id_key][role_key] /= role_games
                 else:
                     champ_role_timeinrole[id_key][role_key] /= 1
-    
+                    
         # Get the champion name for later use, because 'champion 34' doesn't mean much to people
         for champIdizzle in champ_points_pair:
             try:
@@ -108,11 +108,11 @@ class GetData(object):
                 structured_data[summoner_id][champion_id] = [champion_name[champion_id]]
         
             # Put role as a third level key with mastery points * percentage of games in that role as the value
-            for second_champ_id, data_champ_id in zip(champ_role_timeinrole, champ_points_pair):
-                for role_key, role in zip(champ_role_timeinrole[second_champ_id], champ_role_timeinrole[second_champ_id]):
-                    structured_data[summoner_id][second_champ_id].append({role: 
-                                                    champ_role_timeinrole[second_champ_id][role_key] * 
-                                                    champ_points_pair[data_champ_id]})
+            for second_champ_id in champ_role_timeinrole:
+                for role in champ_role_timeinrole[second_champ_id]:
+                    structured_data[summoner_id][second_champ_id].append(
+                                                    {role: champ_role_timeinrole[second_champ_id][role] * 
+                                                    champ_points_pair[second_champ_id]})
                                                 
             # Check to make sure each champion has at least a value for points; if it doesn't, make it 0
             for x, champion_id in enumerate(structured_data[summoner_id]):
@@ -121,5 +121,5 @@ class GetData(object):
 
         except:
             sys.exit('Error structuing the champion data for ' + current_summoner)
-        
+
         return structured_data

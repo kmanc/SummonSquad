@@ -36,6 +36,18 @@ class DoMath(object):
             for x4, champ_info4 in mastered_champs4.items():
                 for role_info4 in champ_info4[1:]:
                     total_mastery4 += int(list(role_info4.values())[0])
+                    
+        # First we make sure we don't divide by zero at any point down the road
+        if total_mastery0 == 0:
+            total_mastery0 = 1
+        if total_mastery1 == 0:
+            total_mastery1 = 1
+        if total_mastery2 == 0:
+            total_mastery2 = 1
+        if total_mastery3 == 0:
+            total_mastery3 = 1
+        if total_mastery4 == 0:
+            total_mastery4 = 1
 
         # Iterate through team combinations and find the "valid" ones (ones with each of the 5 positions)
         for x0, mastered_champs0 in summonerList[0].items():
@@ -108,21 +120,16 @@ class DoMath(object):
                                                                                             if (summoner_four_role not in valid_roles or summoner_four_role in roleList or len(roleList) <= 3 or summoner_four_champ in champList):
                                                                                                 continue
                                                                                             else:
+                                                                                                #if summoner_four_champ == 75:
+                                                                                                 #   print ('Nasus', total_mastery4)
+                                                                                                  #  print ('Nasus', role4, int(list(role_info4.values())[0]))
+                                                                                                #if summoner_four_champ == 31:
+                                                                                                 #   print ('Cho', total_mastery4)
+                                                                                                  #  print ('Cho', role4, int(list(role_info4.values())[0]))
                                                                                                 # We found a team of 5 champions that fills each of the meta roles!!
                                                                                                 champList.append(summoner_four_champ)
                                                                                                 roleList.append(summoner_four_role)
                                                                                                 # Do math to see if the team should be played
-                                                                                                # First we make sure we don't divide by zero
-                                                                                                if total_mastery0 == 0:
-                                                                                                    total_mastery0 = 1
-                                                                                                if total_mastery1 == 0:
-                                                                                                    total_mastery1 = 1
-                                                                                                if total_mastery2 == 0:
-                                                                                                    total_mastery2 = 1
-                                                                                                if total_mastery3 == 0:
-                                                                                                    total_mastery3 = 1
-                                                                                                if total_mastery4 == 0:
-                                                                                                    total_mastery4 = 1
                                                                                                 # Each champion gets its final point value determined by the following
                                                                                                 # (Total points earned on that champion) * (Percentage of games played in that role) / (Total mastery points earned for the top X champions that we are testing)
                                                                                                 specific_mastery0 = int(list(role_info0.values())[0]) / total_mastery0
