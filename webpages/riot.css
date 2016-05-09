@@ -45,6 +45,12 @@ div.middle
   margin: 50px auto;
 }
 
+div#options
+{
+  text-align: center;
+  vertical-align: bottom;
+}
+
 div.readText 
 {
   display: block;
@@ -184,6 +190,23 @@ input[type="text"]:focus
   cursor: pointer;
 }
 
+input#champnum[type="number"]
+{
+  font-family: 'Gentium Basic', serif;
+  margin: auto;
+  width: 200px;
+  background-color: transparent;
+  color: rgba(20, 91, 95, .5);
+  border: 0px;
+  outline: none;
+  padding: 2px 5px;
+  text-align: center;
+  display: inline-block;
+  font-size: 40px;
+  transition-duration: .4s;
+  cursor: pointer;
+}
+
 input[type="submit"]
 {
   font-family: 'Gentium Basic', serif;
@@ -260,3 +283,16 @@ p.bot_text
   color: #DDDDDD;
 }
 
+select
+{
+  font-family: 'Gentium Basic', serif;
+  font-size: 18px;
+  background: transparent;
+  outline-color: rgba(20, 91, 95, 1);;
+  display: inline-block;
+  margin: auto;
+  text-align: center;
+  padding: 5px;
+  width: auto;
+  color: #808080;
+}

@@ -19,7 +19,7 @@
 
 				$path = '/var/www/html/Main.py';
 				$python = '/usr/bin/python3.4';
-				$script = $python . " " . $path . " " . $sani[1] . " " . $sani[2] . " " . $sani[3] . " " . $sani[4] . " " . $sani[5];
+				$script = $python . " " . $path . " " . $sani[1] . " " . $sani[2] . " " . $sani[3] . " " . $sani[4] . " " . $sani[5] . " " . $_POST["region"] . " " . $_POST["champnum"];
 				$command = escapeshellcmd($script);
 				$results = exec($command, $my_output, $status);
 				$data_array = explode(",", $results);

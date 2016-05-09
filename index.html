@@ -18,8 +18,27 @@
 		<input type="text" value="Summoner 3" name="sum3" class="box" id="s3"><br>
 		<input type="text" value="Summoner 4" name="sum4" class="box" id="s4"><br>
 		<input type="text" value="Summoner 5" name="sum5" class="box" id="s5"><br>
+		<div id="options">
+			<p style="width: 40%; margin: 5px auto">Pick your region and number of champions you would like to include in the team search, per summoner.  The larger the value, the longer it will take, exponentially. Minimum is 5, recommended is 7,<br> max is 100(lol its like watching paint dry)
+			</p>
+			<select name="region">
+				<option value="BR">BR</option>
+				<option value="EUNE">EUNE</option>
+				<option value="EUW">EUW</option>
+				<option value="JP">JP</option>
+				<option value="KR">KR</option>
+				<option value="LAN">LAN</option>
+				<option value="LAS">LAS</option>
+				<option value="NA">NA</option>
+				<option value="OCE">OCE</option>
+				<option value="TR">TR</option>
+				<option value="RU">RU</option>
+			</select>
+			<input class="box" id="champnum" type="number" value="7" name="champnum">
+		</div>
+
 		<input type="submit" value="Summon the Squad">
-		<p> Simply enter the name of 5 League of Legends summoners who have some sort of mastery and have played ranked, and we will generate a team with everyone in the most efficent spot.<br>
+		<p style="width: 40%;"> Simply enter the name of 5 League of Legends summoners who have some sort of mastery and have played ranked, and we will generate a team with everyone in the most efficent spot.<br>
 			Example summoners: FORCIN it, I am Jerbear, APA JUNKY, KmancXC, Raker</p>
 		<p> May take up to a minute to fetch the data, we crunchin some serious numbers fam </p>
     </form>
