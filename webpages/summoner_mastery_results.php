@@ -52,13 +52,35 @@
 
 				?>
 			 </h4>
+			<h2 class="error"><?php 
+				if ($status != 0) {
+					echo 'Status error:' . $status . '. Something went wrong.<br> Make sure all of your summoner names are spelled correctly.<br> Press the back button or click <a href="../index.html"><button class="buttonAdd">   Here   </button></a> to go back';
+				}
+				?>
+			</h2>
 			<div class="summoners">
-				<h2 class="error"><?php 
-					if ($status != 0) {
-						echo 'Status error:' . $status . '. Something went wrong.<br> Make sure all of your summoner names are spelled correctly.<br> Press the back button or click <a href="../index.html"><button class="buttonAdd">   Here   </button></a> to go back';
-					}
-					?>
-				</h2>
+				<div class="player1">
+					<p class="p1">
+						<?php echo strip_tags($_POST['sum1']); ?>
+					</p>
+				</div><div class="player2">
+					<p class="p2">
+						<?php echo strip_tags($_POST['sum2']); ?>
+					</p>
+				</div><div class="player3">
+					<p class="p3">
+						<?php echo strip_tags($_POST['sum3']); ?>
+					</p>
+				</div><div class="player4">
+					<p class="p4">
+						<?php echo strip_tags($_POST['sum4']); ?>
+					</p>
+				</div><div class="player5">
+					<p class="p5">
+						<?php echo strip_tags($_POST['sum5']); ?>
+					</p>
+				</div>
+			</div>
 				<div class="readText">
 					<div id="summ1">
 							<?php
@@ -119,6 +141,97 @@
 		    });
 		}); 
 
+	    $('div#summ1').mouseenter(function(){
+	   		$('p.p1').css({
+	   			'color' : 'rgba(230,230,230,1)',
+				'transition-duration': '.4s', 
+		    });
+		    $('div.player1').css({
+		    	'background-color' : 'rgba(0,0,0,.4)',
+		    })
+		}); 
+	    $('div#summ1').mouseleave(function(){
+	    	$('p.p1').css({
+	    		'color' : 'rgba(0,0,0,0)',
+				'transition-duration': '.4s', 
+			});
+		    $('div.player1').css({
+		    	'background-color' : 'rgba(0,0,0,0)',
+		    })
+	    });
+
+	    $('div#summ2').mouseenter(function(){
+	   		$('p.p2').css({
+	   			'color' : 'rgba(230,230,230,1)',
+				'transition-duration': '.4s', 
+		    });
+		    $('div.player2').css({
+		    	'background-color' : 'rgba(0,0,0,.4)',
+		    })
+		}); 
+	    $('div#summ2').mouseleave(function(){
+	    	$('p.p2').css({
+	    		'color' : 'rgba(0,0,0,0)',
+				'transition-duration': '.4s', 
+			});
+		    $('div.player2').css({
+		    	'background-color' : 'rgba(0,0,0,0)',
+		    })
+	    });
+	    $('div#summ3').mouseenter(function(){
+	   		$('p.p3').css({
+	   			'color' : 'rgba(230,230,230,1)',
+				'transition-duration': '.4s', 
+		    });
+		    $('div.player3').css({
+		    	'background-color' : 'rgba(0,0,0,.4)',
+		    })
+		}); 
+	    $('div#summ3').mouseleave(function(){
+	    	$('p.p3').css({
+	    		'color' : 'rgba(0,0,0,0)',
+				'transition-duration': '.4s', 
+			});
+		    $('div.player3').css({
+		    	'background-color' : 'rgba(0,0,0,0)',
+		    })
+	    });
+	    $('div#summ4').mouseenter(function(){
+	   		$('p.p4').css({
+	   			'color' : 'rgba(230,230,230,1)',
+				'transition-duration': '.4s', 
+		    });
+		    $('div.player4').css({
+		    	'background-color' : 'rgba(0,0,0,.4)',
+		    })
+		}); 
+	    $('div#summ4').mouseleave(function(){
+	    	$('p.p4').css({
+	    		'color' : 'rgba(0,0,0,0)',
+				'transition-duration': '.4s', 
+			});
+		    $('div.player4').css({
+		    	'background-color' : 'rgba(0,0,0,0)',
+		    })
+	    });
+	    $('div#summ5').mouseenter(function(){
+	   		$('p.p5').css({
+	   			'color' : 'rgba(230,230,230,1)',
+				'transition-duration': '.4s', 
+		    });
+		    $('div.player5').css({
+		    	'background-color' : 'rgba(0,0,0,.4)',
+		    })
+		}); 
+	    $('div#summ5').mouseleave(function(){
+	    	$('p.p5').css({
+	    		'color' : 'rgba(0,0,0,0)',
+				'transition-duration': '.4s',  
+			});
+		    $('div.player5').css({
+		    	'background-color' : 'rgba(0,0,0,0)',
+		    })
+	    });
 	    $('div#summ2').hover(function(){
 	   		$('html').css({
 				'background' : 'url(../bg/<?php echo $champ[2]; ?>.jpg) no-repeat center center fixed',

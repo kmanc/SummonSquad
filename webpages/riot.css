@@ -45,16 +45,32 @@ div.middle
   margin: 50px auto;
 }
 
+div.name_wrapper
+{
+  display:block;
+}
+
 div#options
 {
   text-align: center;
   vertical-align: bottom;
 }
 
+div.player1, .player2, .player3, .player4, .player5
+{
+  display: block;
+  position: absolute;
+  height: 90px;
+  margin-bottom: 0px;
+  background-color: transparent;
+  width: 100%;
+  transition-duration: .4s;
+}
+
 div.readText 
 {
   display: block;
-  position: fixed;
+  position: absolute;
   bottom: 0;
   width: 100%;
   height: 150px;
@@ -75,11 +91,13 @@ div.results
 
 div.summoners
 {
-  width: 100%;
-  height: 100%;
+  display: block;
   position: absolute;
-  border-top: 1px;
-  border-color: ;
+  bottom: 0px;
+  width: 100%;
+  height: 90px;
+  margin-bottom: 150px;
+  vertical-align: bottom;
   padding: 0;
   bottom: 0;
   left: 0;
@@ -120,9 +138,10 @@ h2.error {
   font-family: 'Gentium Basic', serif;
   font-size: 32px;
   display: block;
-  margin-top: 300px;
+  margin-top: 100px;
   margin-left: auto;
   margin-right: auto;
+  margin-bottom: 0px;
   width: auto;
   text-align: center;
   color: #888888;
@@ -274,7 +293,7 @@ input.box
   text-align: center;
   font-size: 24px;
   cursor: pointer;
-  transition-duration: .2s;
+  transition-duration: .4s;
 }
 
 p
@@ -300,6 +319,18 @@ p.bot_text
   line-height: 50px; 
   color: #DDDDDD;
 }
+
+p.p1, .p2, .p3, .p4, .p5
+{
+  font-weight: bold;
+  font-size: 70px;
+  margin: 0;
+  color: rgba(0,0,0,0);
+  background-color: transparent;
+  transition-duration: .4s;
+}
+
+
 
 select
 {

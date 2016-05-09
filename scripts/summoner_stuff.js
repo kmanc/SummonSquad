@@ -107,6 +107,9 @@ $(document).ready(function(){
 			'border-bottom-width': 0,
 		});
     });
+
+
+
 	// input box pretty stuff
 
 	$('input:text').one('focus', function(){
