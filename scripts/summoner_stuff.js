@@ -89,6 +89,24 @@ $(document).ready(function(){
 			'border-bottom-width': 0,
 		});
     });
+    $('#champnum').mouseenter(function(){
+   		$('#champnum').css({
+			'border-color': '#40a0a5',			
+			'border-right-width': 3,
+			'border-left-width': 3,
+			'border-top-width': 1,
+			'border-bottom-width': 1,
+	    });
+	}); 
+    $('#champnum').mouseleave(function(){
+    	$('#champnum').css({
+			'border-color': 'rgba(20, 91, 95, .5)',	
+			'border-right-width': 10,
+			'border-left-width': 10,
+			'border-top-width': 0,
+			'border-bottom-width': 0,
+		});
+    });
 	// input box pretty stuff
 
 	$('input:text').one('focus', function(){

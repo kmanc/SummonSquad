@@ -13,7 +13,7 @@ def main():
         sys.exit('At least one summoner name was not entered')
         
     region = sys.argv[6]
-    champs = sys.argv[7]
+    champs = int(sys.argv[7])
     if champs < 5:
         champs = 5
     if champs > 100:

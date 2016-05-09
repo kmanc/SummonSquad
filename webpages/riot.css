@@ -190,21 +190,39 @@ input[type="text"]:focus
   cursor: pointer;
 }
 
+
 input#champnum[type="number"]
 {
+
   font-family: 'Gentium Basic', serif;
   margin: auto;
   width: 200px;
   background-color: transparent;
   color: rgba(20, 91, 95, .5);
-  border: 0px;
+  border-radius: 1px; 
+  border-color: rgba(20, 91, 95, .5);
+  border-right-style: solid;
+  border-right-width: 100px;
+  border-left-style: solid;
+  border-left-width: 100px;
+  border-top-style: solid;
+  border-top-width: 0px;
+  border-bottom-style: solid;
+  border-bottom-width: 0px;
   outline: none;
-  padding: 2px 5px;
   text-align: center;
   display: inline-block;
   font-size: 40px;
   transition-duration: .4s;
   cursor: pointer;
+}
+
+input[type="number"]::-webkit-inner-spin-button, 
+input[type="number"]::-webkit-outer-spin-button
+{
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
 }
 
 input[type="submit"]
@@ -295,4 +313,5 @@ select
   padding: 5px;
   width: auto;
   color: #808080;
+  margin-right: 5px;
 }
