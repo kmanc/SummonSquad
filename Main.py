@@ -16,8 +16,8 @@ def main():
     champs = int(sys.argv[7])
     if champs < 5:
         champs = 5
-    if champs > 100:
-        champs = 100
+    if champs > 25:
+        champs = 25
     
     # Normalize summoner names (no spaces, no upper case) because the api can get cranky if you don't
     for x in range(len(summoners)):
