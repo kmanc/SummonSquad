@@ -5,12 +5,17 @@ import sys
 from DoMath import DoMath
 
 def main():
+
+    # This can be used to jump to recalc, but there is a better way if I can pass
+    # variables to and from the js that runs the python scripts
+    if len(sys.argv) == 9:
+        print (sys.argv[8])
     
     # Grab arguments (summoner names) and make sure that they are all there
     try:
         summoners = [sys.argv[1], sys.argv[2], sys.argv[3], sys.argv[4], sys.argv[5]]
     except:
-        sys.exit('At least one summoner name was not entered')
+        sys.exit('At least one summoner name was not entered, or was entered incorrectly')
         
     region = sys.argv[6]
     champs = int(sys.argv[7])
@@ -33,7 +38,7 @@ def main():
         summoner_data = data_grabber._gimme_data(player, champs, region)
         summonerList.append(summoner_data)
 
-    # Get squad
+    # Get the squad
     # Build the dream
     # ASSSSSSEMBLEEEEEEEEE
     try:
@@ -42,7 +47,8 @@ def main():
         sys.exit('You woke up, the dream is gone')
         
     # Output for the website
-    print (dream_team)    
+    print (dream_team)
+    return (summonerList, summoners)    
     
 if __name__ == '__main__':
     main()
