@@ -8,7 +8,9 @@
 </head>
 <body>
 		<h1>SummonSquad</h1>
-		<h4><?php
+		<h4>
+
+			<?php
 
 				//make sure input to python script is formatted correctly
 
@@ -56,6 +58,9 @@
 				if ($status != 0) {
 					echo 'Status error:' . $status . '. Something went wrong.<br> Make sure all of your summoner names are spelled correctly.<br> Press the back button or click <a href="../index.html"><button class="buttonAdd">   Here   </button></a> to go back';
 				}
+//				else {
+//					echo '<button class="buttonAdd" onClick="exec($summonerList, $summoners, $lockedList, $banList">Recalculate</button>'
+//				}
 				?>
 			</h2>
 			<div class="summoners">
@@ -86,7 +91,7 @@
 							<?php
 								echo '<p class="bot_text">';
 								echo $_POST['sum1'];
-								echo '<br>' . $fix_quote[1];
+								echo '<br>' . $fix_quote[1] . ' ' . '<a href="#test1" class="check" onClick="picked.push($champid1)">&#10004;</a> <a href="#clicked" class="exed" onClick="banned.push($champid1)">&#10006;</a>';
 								echo '<br>' . $role[1];
 								echo '</p>';
 							?>
@@ -94,7 +99,7 @@
 							<?php
 								echo '<p class="bot_text">';
 								echo $_POST['sum2'];
-								echo '<br>' . $fix_quote[2];
+								echo '<br>' . $fix_quote[2] . ' ' . '<a href="#test2" class="check" onClick="picked.push($champid2)">&#10004;</a> <a href="#clicked" class="exed" onClick="banned.push($champid2)">&#10006;</a>';
 								echo '<br>' . $role[2];
 								echo '</p>';
 							?>
@@ -102,7 +107,7 @@
 							<?php
 								echo '<p class="bot_text">';
 								echo $_POST['sum3'];
-								echo '<br>' . $fix_quote[3];
+								echo '<br>' . $fix_quote[3] . ' ' . '<a class="check" onClick="picked.push($champid3)">&#10004;</a> <a href="#clicked" class="exed" onClick="banned.push($champid3)">&#10006;</a>';
 								echo '<br>' . $role[3];
 								echo '</p>';
 							?>
@@ -110,7 +115,7 @@
 							<?php
 								echo '<p class="bot_text">';
 								echo $_POST['sum4'];
-								echo '<br>' . $fix_quote[4];
+								echo '<br>' . $fix_quote[4] . ' ' . '<a class="check" onClick="picked.push($champid4)">&#10004;</a> <a href="#clicked" class="exed" onClick="banned.push($champid4)">&#10006;</a>';
 								echo '<br>' . $role[4];
 								echo '</p>';
 							?>
@@ -118,7 +123,7 @@
 							<?php
 								echo '<p class="bot_text">';
 								echo $_POST['sum5'];
-								echo '<br>' . $fix_quote[5];
+								echo '<br>' . $fix_quote[5] . ' ' . '<a class="check" onClick="picked.push($champid5)">&#10004;</a> <a href="#clicked" class="exed" class="buttonBanned" onClick="banned.push($champid5)">&#10006;</a>';
 								echo '<br>' . $role[5];
 								echo '</p>';
 							?>
@@ -126,7 +131,8 @@
 				</div>
 			</div>
 <script>
-
+	var picked = new Array();
+	var banned = new Array();
 	//jquery for changing the background on hover for champions
 	$(document).ready(function(){
 	    $('div#summ1').hover(function(){
@@ -140,7 +146,6 @@
 				'transition-duration': '.3s' 
 		    });
 		}); 
-
 	    $('div#summ1').mouseenter(function(){
 	   		$('p.p1').css({
 	   			'color' : 'rgba(230,230,230,1)',

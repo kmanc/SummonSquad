@@ -10,7 +10,8 @@ body
   margin: 0 0 0 0;
 }
 
-button {
+button
+{
   font-family: 'Gentium Basic', serif;
   background-color: transparent;
   display:block;
@@ -25,9 +26,37 @@ button {
   cursor: pointer;
 }
 
-.buttonAdd:hover {
+.buttonAdd:hover 
+{
   color: #3CB371;
   transition-duration: .4s;
+}
+
+.buttonBanned:hover 
+{
+  color: #EA4C44;
+  transition-duration: .4s;
+}
+
+a.check:link, .exed:link
+{
+  color: #DDDDDD;
+  outline:none;
+}
+
+a.check:visited 
+{
+  color: #3CB371;
+  outline: none;
+
+  transition-duration: .45s;
+}
+
+a.exed:visited 
+{
+  color: #EA4C44;
+  outline: none;
+  transition-duration: .45s;
 }
 
 div.about, .about2
@@ -269,6 +298,13 @@ input[type="submit"]:hover
   cursor: pointer;
 }
 
+input[type="button"]
+{
+  background-color: rgba(0,0,0,.7);
+  color: #DDDDDD;
+  transition-duration: .4s;
+}
+
 input.box 
 {
   font-family: 'Gentium Basic', serif;
@@ -277,7 +313,7 @@ input.box
   width: 300px;
   height: 50px;
   outline: none;
-  margin:auto;
+  margin: auto;
   color: #DDDDDD;
   background-color: transparent;
   border-color: rgba(20, 91, 95, .5);
