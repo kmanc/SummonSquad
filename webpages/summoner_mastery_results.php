@@ -8,7 +8,9 @@
 </head>
 <body>
 		<h1>SummonSquad</h1>
-		<h4><?php
+		<h4>
+
+			<?php
 
 				//make sure input to python script is formatted correctly
 
@@ -45,9 +47,15 @@
 				//standardize role names, e.g. DUO_CARRY turns to Carry, JUNGLE turns to Jungle
 
 				$m = 1;
-				for ($i = 2; $i <=14; $i += 3){
+				for ($i = 2; $i <= 14; $i += 3){
 					$role[$m] = ucfirst(strtolower(preg_replace('/DUO_/', '', $data_array[$i])));
 					$m++;
+				}
+
+				$c = 1;
+				for ($i = 15; $i <= 19; $i++){
+					$champID[$c] = $data_array[$i];
+					$c++;
 				}
 
 				?>
@@ -56,6 +64,9 @@
 				if ($status != 0) {
 					echo 'Status error:' . $status . '. Something went wrong.<br> Make sure all of your summoner names are spelled correctly.<br> Press the back button or click <a href="../index.html"><button class="buttonAdd">   Here   </button></a> to go back';
 				}
+//				else {
+//					echo '<button class="buttonAdd" onClick="exec($summonerList, $summoners, $lockedList, $banList">Recalculate</button>'
+//				}
 				?>
 			</h2>
 			<div class="summoners">
@@ -86,7 +97,7 @@
 							<?php
 								echo '<p class="bot_text">';
 								echo $_POST['sum1'];
-								echo '<br>' . $fix_quote[1];
+								echo '<br>' . $fix_quote[1] . ' ' . '<input type="button" class="champButton" id="pick1" value="&#10004;"> <input type="button" class="champButton" id="banned1" value="&#10006;">';
 								echo '<br>' . $role[1];
 								echo '</p>';
 							?>
@@ -94,7 +105,7 @@
 							<?php
 								echo '<p class="bot_text">';
 								echo $_POST['sum2'];
-								echo '<br>' . $fix_quote[2];
+								echo '<br>' . $fix_quote[2] . ' ' . '<input type="button" class="champButton" id="pick2" value="&#10004;"> <input type="button" class="champButton" id="banned2" value="&#10006;">';
 								echo '<br>' . $role[2];
 								echo '</p>';
 							?>
@@ -102,7 +113,7 @@
 							<?php
 								echo '<p class="bot_text">';
 								echo $_POST['sum3'];
-								echo '<br>' . $fix_quote[3];
+								echo '<br>' . $fix_quote[3] . ' ' . '<input type="button" class="champButton" id="pick3" value="&#10004;"> <input type="button" class="champButton" id="banned3" value="&#10006;">';
 								echo '<br>' . $role[3];
 								echo '</p>';
 							?>
@@ -110,7 +121,7 @@
 							<?php
 								echo '<p class="bot_text">';
 								echo $_POST['sum4'];
-								echo '<br>' . $fix_quote[4];
+								echo '<br>' . $fix_quote[4] . ' ' . '<input type="button" class="champButton" id="pick4" value="&#10004;"> <input type="button" class="champButton" id="banned4" value="&#10006;">';
 								echo '<br>' . $role[4];
 								echo '</p>';
 							?>
@@ -118,7 +129,7 @@
 							<?php
 								echo '<p class="bot_text">';
 								echo $_POST['sum5'];
-								echo '<br>' . $fix_quote[5];
+								echo '<br>' . $fix_quote[5] . ' ' . '<input type="button" class="champButton" id="pick5" value="&#10004;"> <input type="button" class="champButton" id="banned5" value="&#10006;">';
 								echo '<br>' . $role[5];
 								echo '</p>';
 							?>
@@ -126,7 +137,8 @@
 				</div>
 			</div>
 <script>
-
+	var picked = new Array();
+	var banned = new Array();
 	//jquery for changing the background on hover for champions
 	$(document).ready(function(){
 	    $('div#summ1').hover(function(){
@@ -140,7 +152,6 @@
 				'transition-duration': '.3s' 
 		    });
 		}); 
-
 	    $('div#summ1').mouseenter(function(){
 	   		$('p.p1').css({
 	   			'color' : 'rgba(230,230,230,1)',
@@ -277,6 +288,76 @@
 		    });
 		}); 
 	});
+	$('input#pick1').click(function(){
+	   		$('input#pick1').css({
+				'color' : '#3CB371',
+				'transition-duration' : '.3s' 
+		    });
+		    picked.push("<?php echo $champID[1]; ?>");
+		}); 
+	$('input#banned1').click(function(){
+	   		$('input#banned1').css({
+				'color' : '#EA4C44',
+				'transition-duration' : '.3s' 
+		    });
+		    banned.push("<?php echo $champID[1]; ?>");
+		}); 
+	$('input#pick2').click(function(){
+	   		$('input#pick2').css({
+				'color' : '#3CB371',
+				'transition-duration' : '.3s' 
+		    });
+		    picked.push("<?php echo $champID[2]; ?>");
+		}); 
+	$('input#banned2').click(function(){
+	   		$('input#banned2').css({
+				'color' : '#EA4C44',
+				'transition-duration' : '.3s' 
+		    });
+		    banned.push("<?php echo $champID[2]; ?>");
+		}); 
+	$('input#pick3').click(function(){
+	   		$('input#pick3').css({
+				'color' : '#3CB371',
+				'transition-duration' : '.3s' 
+		    });
+		    picked.push("<?php echo $champID[3]; ?>");
+		}); 
+	$('input#banned3').click(function(){
+	   		$('input#banned3').css({
+				'color' : '#EA4C44',
+				'transition-duration' : '.3s' 
+		    });
+		    banned.push("<?php echo $champID[3]; ?>");
+		}); 
+	$('input#pick4').click(function(){
+	   		$('input#pick4').css({
+				'color' : '#3CB371',
+				'transition-duration' : '.3s' 
+		    });
+		    picked.push("<?php echo $champID[4]; ?>");
+		}); 
+	$('input#banned4').click(function(){
+	   		$('input#banned4').css({
+				'color' : '#EA4C44',
+				'transition-duration' : '.3s' 
+		    });
+		    banned.push("<?php echo $champID[4]; ?>");
+		}); 
+	$('input#pick5').click(function(){
+	   		$('input#pick5').css({
+				'color' : '#3CB371',
+				'transition-duration' : '.3s' 
+		    });
+		    picked.push("<?php echo $champID[5]; ?>");
+		}); 
+	$('input#banned5').click(function(){
+	   		$('input#banned5').css({
+				'color' : '#EA4C44',
+				'transition-duration' : '.3s' 
+		    });
+		    banned.push("<?php echo $champID[5]; ?>");
+		}); 
 	$(window).load(function(){
    		$('html').css({
 			'background' : 'url(../bg/<?php echo $champ[1]; ?>.jpg) no-repeat center center fixed',
