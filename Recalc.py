@@ -172,9 +172,16 @@ class Recalc(object):
                                                                                                         final_role_two = str(summoner_two_role)
                                                                                                         final_role_three = str(summoner_three_role)
                                                                                                         final_role_four = str(summoner_four_role)
+                                                                                                        # If it needs to be run again
+                                                                                                        champ_id_array[0] = summoner_zero_champ
+                                                                                                        champ_id_array[1] = summoner_one_champ
+                                                                                                        champ_id_array[2] = summoner_two_champ
+                                                                                                        champ_id_array[3] = summoner_three_champ
+                                                                                                        champ_id_array[4] = summoner_four_champ
 
         if best_team_power > 0:
             return (summoners[0] + ',' + final_champ_zero + ',' + final_role_zero + ',' + summoners[1] + ',' + final_champ_one + ',' + final_role_one + ',' + summoners[2] + ',' + final_champ_two + ','
-                                + final_role_two + ',' + summoners[3] + ',' + final_champ_three + ',' + final_role_three + ',' + summoners[4] + ',' + final_champ_four + ',' + final_role_four)
+                                + final_role_two + ',' + summoners[3] + ',' + final_champ_three + ',' + final_role_three + ',' + summoners[4] + ',' + final_champ_four + ',' + final_role_four + ',' 
+                                + str(champ_id_array[0]) + ',' + str(champ_id_array[1]) + ',' + str(champ_id_array[2]) + ',' + str(champ_id_array[3]) + ',' + str(champ_id_array[4]))
         else:
-            return ('An ideal team could not be found')
+            return ('A new ideal team could not be found - try re-running from scratch with a higher champion count')

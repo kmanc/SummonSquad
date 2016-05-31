@@ -161,6 +161,7 @@ class DoMath(object):
                                                                                                     final_role_two = str(summoner_two_role)
                                                                                                     final_role_three = str(summoner_three_role)
                                                                                                     final_role_four = str(summoner_four_role)
+                                                                                                    # For use with recalc.py
                                                                                                     champ_id_array[0] = summoner_zero_champ
                                                                                                     champ_id_array[1] = summoner_one_champ
                                                                                                     champ_id_array[2] = summoner_two_champ
