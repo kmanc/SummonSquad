@@ -26,6 +26,14 @@ button
   cursor: pointer;
 }
 
+.champButton
+{
+  color: #DDDDDD;
+  background: transparent;
+  outline: none;
+  text-decoration: none;
+}
+
 .buttonAdd:hover 
 {
   color: #3CB371;
@@ -36,27 +44,6 @@ button
 {
   color: #EA4C44;
   transition-duration: .4s;
-}
-
-a.check:link, .exed:link
-{
-  color: #DDDDDD;
-  outline:none;
-}
-
-a.check:visited 
-{
-  color: #3CB371;
-  outline: none;
-
-  transition-duration: .45s;
-}
-
-a.exed:visited 
-{
-  color: #EA4C44;
-  outline: none;
-  transition-duration: .45s;
 }
 
 div.about, .about2
@@ -263,6 +250,15 @@ input#champnum[type="number"]
   font-size: 40px;
   transition-duration: .4s;
   cursor: pointer;
+}
+
+input#pick1, #pick2, #pick3, #pick4, #pick5, #banned1, #banned2, #banned3, #banned4, #banned5
+{
+  color: #DDDDDD;
+  outline:none;
+  text-decoration: none;
+  border: none;
+  background-color: transparent;
 }
 
 input[type="number"]::-webkit-inner-spin-button, 
