@@ -167,10 +167,9 @@ class DoMath(object):
                                                                                                     champ_id_array[3] = summoner_three_champ
                                                                                                     champ_id_array[4] = summoner_four_champ
 
-        print (champ_id_array[0], champ_id_array[1], champ_id_array[2], champ_id_array[3], champ_id_array[4])
         if best_team_power > 0:
             return (summoners[0] + ',' + final_champ_zero + ',' + final_role_zero + ',' + summoners[1] + ',' + final_champ_one + ',' + final_role_one + ',' + summoners[2] + ',' + final_champ_two + ','
-                                + final_role_two + ',' + summoners[3] + ',' + final_champ_three + ',' + final_role_three + ',' + summoners[4] + ',' + final_champ_four + ',' + final_role_four + ',' + str(champ_id_array[0]) + ','
-                                + str(champ_id_array[1]) + ',' + str(champ_id_array[2]) + ',' + str(champ_id_array[3]) + ',' + str(champ_id_array[4]))
+                                + final_role_two + ',' + summoners[3] + ',' + final_champ_three + ',' + final_role_three + ',' + summoners[4] + ',' + final_champ_four + ',' + final_role_four + ',' 
+                                + str(champ_id_array[0]) + ',' + str(champ_id_array[1]) + ',' + str(champ_id_array[2]) + ',' + str(champ_id_array[3]) + ',' + str(champ_id_array[4]))
         else:
             return ('An ideal team could not be found')                                                                                   
