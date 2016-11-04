@@ -51,6 +51,7 @@ class GetData(object):
             champList.append(key)
         try:
             lane_response = api.get_champion_role(summoner_id, champList)
+            #print(lane_response)
         except:
             sys.exit('Error trying to determine what lane one of the champions was played in by ' + current_summoner)
     
@@ -59,8 +60,7 @@ class GetData(object):
         if match_check in lane_response:
             for x, val in enumerate(lane_response['matches']):
                 key_test = val['champion']
-                lane_check = 'lane'
-                if (lane_check in val):
+                if ('lane' in val):
                     if (val['lane'] == 'BOTTOM'):
                         role = val['role']
                     else:
@@ -71,15 +71,24 @@ class GetData(object):
                         role = 'NONE'
                     if key_test not in champ_role_timeinrole:
                         champ_role_timeinrole[key_test] = {}
-                        champ_role_timeinrole[key_test][role] = 0
                     else:
                         if role in champ_role_timeinrole[key_test]:
                             champ_role_timeinrole[key_test][role] += 1
                         else:
-                            champ_role_timeinrole[key_test][role] = 0
+                            champ_role_timeinrole[key_test][role] = 1
     
         # Get percentage of games played in each role per champion (eg 33% top, 50% jungle, 17% support)
         # Bonus points if you can tell us what champions might fit that above percentage distribution
+        
+        #########################################
+        #### UNCOMMENT THE BELOW FOR SOME INSIGHT INTO THE CRASHES.  SOMETIMES A SUMMONER WILL HAVE NO CHAMPION/MASTERY PAIRS
+        #########################################
+        #print(champ_role_timeinrole)
+        if not champ_role_timeinrole:
+            print()
+            print('SOMEBODYs FUCKING CHAMP DICTIONARY IS FUCKING EMPTY...WHY')
+            print(current_summoner)
+            print()
         for id_key in champ_role_timeinrole:
             role_games = 0
             for role_key in champ_role_timeinrole[id_key]:
