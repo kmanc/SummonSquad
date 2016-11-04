@@ -52,12 +52,8 @@ class GetData(object):
             champList.append(key)
         try:
             lane_response = api.get_champion_role(summoner_id, champList)
-            print()
-            print(current_summoner)
-            print(lane_response)
-            print()
             while lane_response == {'status': {'status_code': 429, 'message': '429'}}:
-                print('429 code')
+                #print('429 code')
                 time.sleep(5)
                 lane_response = api.get_champion_role(summoner_id, champList)
 
@@ -92,7 +88,7 @@ class GetData(object):
         #########################################
         #### UNCOMMENT THE BELOW FOR SOME INSIGHT INTO THE CRASHES.  SOMETIMES A SUMMONER WILL HAVE NO CHAMPION/MASTERY PAIRS
         #########################################
-        print(champ_role_timeinrole)
+        #print(champ_role_timeinrole)
         if not champ_role_timeinrole:
             print()
             print('SOMEBODYs FUCKING CHAMP DICTIONARY IS FUCKING EMPTY...WHY')
