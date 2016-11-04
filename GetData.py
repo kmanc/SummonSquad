@@ -3,6 +3,7 @@ import json
 import operator
 import KeyAPI as Key
 import sys
+import time
 
 
 class GetData(object):
@@ -55,6 +56,11 @@ class GetData(object):
             print(current_summoner)
             print(lane_response)
             print()
+            while lane_response == {'status': {'status_code': 429, 'message': '429'}}:
+                print('429 code')
+                time.sleep(5)
+                lane_response = api.get_champion_role(summoner_id, champList)
+
         except:
             sys.exit('Error trying to determine what lane one of the champions was played in by ' + current_summoner)
     
