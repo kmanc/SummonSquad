@@ -51,7 +51,10 @@ class GetData(object):
             champList.append(key)
         try:
             lane_response = api.get_champion_role(summoner_id, champList)
-            #print(lane_response)
+            print()
+            print(current_summoner)
+            print(lane_response)
+            print()
         except:
             sys.exit('Error trying to determine what lane one of the champions was played in by ' + current_summoner)
     
@@ -83,7 +86,7 @@ class GetData(object):
         #########################################
         #### UNCOMMENT THE BELOW FOR SOME INSIGHT INTO THE CRASHES.  SOMETIMES A SUMMONER WILL HAVE NO CHAMPION/MASTERY PAIRS
         #########################################
-        #print(champ_role_timeinrole)
+        print(champ_role_timeinrole)
         if not champ_role_timeinrole:
             print()
             print('SOMEBODYs FUCKING CHAMP DICTIONARY IS FUCKING EMPTY...WHY')
