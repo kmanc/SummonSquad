@@ -40,7 +40,6 @@ def main():
 
     # Get the squad
     # Build the dream
-    # ASSSSSSEMBLEEEEEEEEE
     try:
         dream_team = computations._compute_team(summonerList, summoners)
     except:
