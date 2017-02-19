@@ -103,7 +103,7 @@ class GetData(object):
         for champIdizzle in champ_points_pair:
             try:
                 champion_response = api.get_champion_name(champIdizzle)
-                champion_name[champIdizzle] = (champion_response['name'])
+                champion_name[champIdizzle] = str((champion_response['name']))
             except:
                 exit('Could not get the name of the champ with id {}'.format(champIdizzle))
         
