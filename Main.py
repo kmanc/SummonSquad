@@ -1,33 +1,33 @@
-from RiotAPI import RiotAPI
-import json
 from GetData import GetData
-import sys
 from DoMath import DoMath
+import argparse
 
 def main():
 
-    # This can be used to jump to recalc, but there is a better way if I can pass
-    # variables to and from the js that runs the python scripts
-    if len(sys.argv) == 9:
-        print (sys.argv[8])
+    parser = argparse.ArgumentParser(usage=' Main.py -s <list of five summoners> -r <region> -c <number of champs>')
+    parser.add_argument('-s', dest='summoners', type=str, nargs='+', help='summoners to build a team for')
+    parser.add_argument('-r', dest='region', type=str, help='region (NA, EUW, etc)')
+    parser.add_argument('-c', dest='champs', type=int, help='number of top champions to check')
+    args = parser.parse_args()
     
-    # Grab arguments (summoner names) and make sure that they are all there
-    try:
-        summoners = [sys.argv[1], sys.argv[2], sys.argv[3], sys.argv[4], sys.argv[5]]
-    except:
-        sys.exit('At least one summoner name was not entered, or was entered incorrectly')
-        
-    region = sys.argv[6]
-    champs = int(sys.argv[7])
+    # Make sure the inputs are there 
+    if len(args.summoners) != 5 or args.region == None or args.champs == None:
+        print(parser.usage)
+        exit(0)
+    summoners = args.summoners
+    region = args.region
+    champs = args.champs
+
+    # Set max and min for champs
     if champs < 5:
         champs = 5
     if champs > 25:
         champs = 25
     
     # Normalize summoner names (no spaces, no upper case) because the api can get cranky if you don't
-    for x in range(len(summoners)):
-        summoners[x] = summoners[x].lower()
-        summoners[x] = summoners[x].replace(" ", "")
+    for name in range(len(summoners)):
+        summoners[name] = summoners[name].lower()
+        summoners[name] = summoners[name].replace(" ", "")
 
     summonerList = []
     data_grabber = GetData()
@@ -44,7 +44,7 @@ def main():
     try:
         dream_team = computations._compute_team(summonerList, summoners)
     except:
-        sys.exit('You woke up, the dream is gone')
+        exit('You woke up, the dream is gone')
         
     # Output for the website
     print (dream_team)
