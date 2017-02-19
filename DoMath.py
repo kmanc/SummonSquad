@@ -11,7 +11,7 @@ class DoMath(object):
         final_role_zero = final_role_one = final_role_two = final_role_three = final_role_four = ''
         valid_roles = ['MID', 'TOP', 'JUNGLE', 'DUO_CARRY', 'DUO_SUPPORT']
         champ_id_array = [0, 0, 0, 0, 0]
-        
+
         # Find total mastery points per summoner (take the total points for each champion, and sum them)    
         for x0, mastered_champs0 in summonerList[0].items():
             for x0, champ_info0 in mastered_champs0.items():
@@ -188,4 +188,32 @@ class DoMath(object):
                 print('Got summoner 3s champ')
             if summoner_four_champ:
                 print('Got summoner 4s champ')
-            return ('An ideal team could not be found')                                                                                   
+            return ('An ideal team could not be found')    
+
+
+
+
+"""# Iterate through team combinations and find the "valid" ones (ones with each of the 5 positions)
+        # summonerList is a dictionary that maps a summoner ID to a list of champions.  x0 is the summoner ID, mastered_champs is a list of {champion id: [champsion name], {role, points}}
+        for x0, mastered_champs0 in summonerList[0].items():
+            #print (mastered_champs0)
+            for x0, champ_info0 in mastered_champs0.items():
+                    #print (champ_info0[1:]) -- {role: points}
+                    #print (champ_info0[:1]) -- champ name
+                    #print(x0) -- champ id
+                    for role_info0 in champ_info0[1:]:
+                        #print (role_info0) -- {role:points}
+                        for role0 in role_info0:
+                            #print ('summoner 0', x0, role0) -- summoner, champ id, role
+                            # Empty any existing list of 'taken' roles and champions
+                            roleList = []
+                            champList = []
+                            # Skip if the role isn't a real role
+                            if (role0 not in valid_roles):
+                                continue
+                            # Otherwise, add it to a list of taken roles, and champs, and continue for the next summoner
+                            summoner_zero_role = role0
+                            summoner_zero_champ = x0
+                            summoner_zero_champ_name = champ_info0[:1]
+                            roleList.append(summoner_zero_role)
+                            champList.append(summoner_zero_champ)"""                                                                               

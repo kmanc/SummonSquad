@@ -38,6 +38,7 @@ def main():
         summoner_data = data_grabber._gimme_data(player, champs, region)
         summonerList.append(summoner_data)
 
+    print(summonerList)
     # Get the squad
     # Build the dream
     try:

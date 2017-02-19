@@ -84,20 +84,20 @@ class GetData(object):
         #### UNCOMMENT THE BELOW FOR SOME INSIGHT INTO THE CRASHES.  SOMETIMES A SUMMONER WILL HAVE NO CHAMPION/MASTERY PAIRS
         #########################################
         #print(champ_role_timeinrole)
-        if not champ_role_timeinrole:
+        """if not champ_role_timeinrole:
             print('SOMEBODYs FUCKING CHAMP DICTIONARY IS FUCKING EMPTY...WHY')
             print()
             print(current_summoner)
-            print()
+            print()"""
         for id_key in champ_role_timeinrole:
             role_games = 0
             for role_key in champ_role_timeinrole[id_key]:
                 role_games += champ_role_timeinrole[id_key][role_key]
             for role_key in champ_role_timeinrole[id_key]:
                 if role_games > 0:
-                    champ_role_timeinrole[id_key][role_key] /= role_games
+                    champ_role_timeinrole[id_key][role_key] /= float(role_games)
                 else:
-                    champ_role_timeinrole[id_key][role_key] /= 1
+                    champ_role_timeinrole[id_key][role_key] /= float(1)
                     
         # Get the champion name for later use, because 'champion 34' doesn't mean much to people
         for champIdizzle in champ_points_pair:
@@ -111,22 +111,16 @@ class GetData(object):
         try:
             # Put summoner id as a first level key
             structured_data[summoner_id] = {}
-    
-            # Put champion id as a second level key, with the name and another dictionary as the value
-            for champion_id in champion_name:
-                structured_data[summoner_id][champion_id] = [champion_name[champion_id]]
-        
-            # Put role as a third level key with mastery points * percentage of games in that role as the value
-            for second_champ_id in champ_role_timeinrole:
-                for role in champ_role_timeinrole[second_champ_id]:
-                    structured_data[summoner_id][second_champ_id].append(
-                                                    {role: champ_role_timeinrole[second_champ_id][role] * 
-                                                    champ_points_pair[second_champ_id]})
-                                                
-            # Check to make sure each champion has at least a value for points; if it doesn't, make it 0
-            for x, champion_id in enumerate(structured_data[summoner_id]):
-                if (len(structured_data[summoner_id][champion_id]) == 1):
-                    structured_data[summoner_id][champion_id].append({'NONE': 0.0})
+            # Put champion id as a second level key and the champion name as third level
+            # Then put role as the fourth level and the points as the final value
+            for champion_id in champ_role_timeinrole.keys():
+                structured_data[summoner_id][champion_id] = {}
+                structured_data[summoner_id][champion_id][champion_name[champion_id]] = {}
+                for role in champ_role_timeinrole[champion_id]:
+                    structured_data[summoner_id][champion_id][champion_name[champion_id]][str(role)] = \
+                    champ_role_timeinrole[champion_id][role] * champ_points_pair[champion_id]
+                if (len(structured_data[summoner_id][champion_id][champion_name[champion_id]].keys())) == 0:
+                    structured_data[summoner_id][champion_id][champion_name[champion_id]] = {'None': 0}
 
         except:
             exit('Error structuing the champion data for {}'.format(current_summoner))
