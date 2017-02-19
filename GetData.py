@@ -1,6 +1,5 @@
 from RiotAPI import RiotAPI
 import KeyAPI as Key
-import json
 import time
 
 
