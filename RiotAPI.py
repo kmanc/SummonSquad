@@ -1,11 +1,12 @@
 import APIConstants as Constants
+import KeyAPI as Key
 import requests
 
 class RiotAPI(object):
     
     number = 0
-    def __init__(self, api_key, region):
-        self.api_key = api_key
+    def __init__(self, region):
+        self.api_key = Key.key
         if (region == 'NA'):
             self.region = Constants.REGIONS['north_america']
             self.platform = Constants.PLATFORMS['north_america']

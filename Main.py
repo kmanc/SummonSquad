@@ -21,8 +21,8 @@ def main():
     # Set max and min for champs
     if champs < 5:
         champs = 5
-    if champs > 25:
-        champs = 25
+    if champs > 20:
+        champs = 20
     
     # Normalize summoner names (no spaces, no upper case) because the api can get cranky if you don't
     for name in range(len(summoners)):
@@ -31,16 +31,17 @@ def main():
 
     summoner_data = {}
     data_grabber = GetData()
-    computations = DoMath()
+    data_grabber._setup(region)
+    buildTeam = DoMath()
     
     # Create a dict of the summoners and their respective champion/mastery data
     for player in summoners:
-        summoner_data[player] = data_grabber._gimme_data(player, champs, region)
+        summoner_data[player] = data_grabber._gimme_data(player, champs)
 
     # Get the squad
     # Build the dream
     try:
-        dream_team = computations._compute_team(summoner_data)
+        dream_team = buildTeam._compute_team(summoner_data)
     except:
         exit('You woke up, the dream is gone')
         
