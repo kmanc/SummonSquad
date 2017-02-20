@@ -1,12 +1,10 @@
-import copy
-
 class DoMath(object):
     
     def _compute_team(self, summonerDict):
     
         # A couple of initializations for later use
+        self.valid_roles = ['MID', 'TOP', 'JUNGLE', 'DUO_CARRY', 'DUO_SUPPORT']
         best_team_power = -1
-        valid_roles = ['MID', 'TOP', 'JUNGLE', 'DUO_CARRY', 'DUO_SUPPORT']
         summonerExperienceDict = {}
 
         # Find total mastery points per summoner (take the total points for each champion, and sum them)    
@@ -42,10 +40,11 @@ class DoMath(object):
         summoner name:
             ...
         """
-        self.team = []
         self.teams  = []
-        self.dictCopy = copy.copy(summonerDict)
-        self.builder(summonerDict)
+        team = []
+        self.builder(summonerDict, team)
+        print('\nPOST BUILDER\n')
+        print(summonerDict)
 
         if best_team_power > 0:
             return (summoners[0] + ',' + final_champ_zero + ',' + final_role_zero + ',' + summoners[1] + ',' + final_champ_one + ',' + final_role_one + ',' + summoners[2] + ',' + final_champ_two + ','
@@ -65,28 +64,28 @@ class DoMath(object):
                 print('Got summoner 4s champ')
             return ('An ideal team could not be found')    
 
-    def builder(self, summonerDict):
+    def builder(self, summonerDict, team):
         for summonerName in summonerDict.keys():
+            print('TRYING {}'.format(summonerName))
             for mastered_champs in summonerDict[summonerName].values():
                 for champ_info in mastered_champs.values():
                     for role_info in champ_info.values():
                         for role in role_info.keys():
                             print(summonerName, champ_info.keys()[0], role)
-                            if summonerName not in self.team \
-                                and champ_info.keys()[0] not in self.team \
-                                and role not in self.team:
-                                self.team.append(summonerName)
-                                self.team.append(champ_info.keys()[0])
-                                self.team.append(role)
-                                if len(self.team) == 15:
+                            if summonerName not in team \
+                                and champ_info.keys()[0] not in team \
+                                and role not in team \
+                                and role in self.valid_roles:
+                                team.append(summonerName)
+                                team.append(champ_info.keys()[0])
+                                team.append(role)
+                                if len(team) == 15:
                                     print('HEY WE GOT ONE')
-                                    print('\t{}'.format(self.team))
-                                    self.teams.append(self.team)
-                                    self.team = self.team[:-3]
-                                    print('\t{}'.format(self.team))
+                                    print('\t{}'.format(team))
+                                    self.teams.append(team)
                                     print('continuing...')
-                                    self.builder(self.dictCopy)
+                                    team = team[:-3]
+                                    continue
                                 print('popping...')
-                                self.dictCopy.pop(summonerName)
-                                self.builder(self.dictCopy)
-                                print(self.team)
+                                summonerDict.pop(summonerName)
+                                self.builder(summonerDict, team)
