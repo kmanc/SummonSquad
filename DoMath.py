@@ -45,7 +45,7 @@ class DoMath(object):
             for mastered_champs in summonerDict[summonerName].values():
                 for champ_info in mastered_champs.values():
                     for role_info in champ_info.values():
-                        print(summonerName, champ_info)
+                        print(summonerName, mastered_champs)
 
         if best_team_power > 0:
             return (summoners[0] + ',' + final_champ_zero + ',' + final_role_zero + ',' + summoners[1] + ',' + final_champ_one + ',' + final_role_one + ',' + summoners[2] + ',' + final_champ_two + ','
@@ -55,8 +55,6 @@ class DoMath(object):
             print('There was a failure in DoMath.py')
             if summoner_zero_champ:
                 print('Got summoner 0s champ')
-            else:
-                print('Nobody\'s champ was found')
             if summoner_one_champ:
                 print('Got summoner 1s champ')
             if summoner_two_champ:
