@@ -29,20 +29,18 @@ def main():
         summoners[name] = summoners[name].lower()
         summoners[name] = summoners[name].replace(" ", "")
 
-    summonerList = []
+    summoner_data = {}
     data_grabber = GetData()
     computations = DoMath()
     
-    # Get a list of the summoners and their respective champion/mastery data
+    # Create a dict of the summoners and their respective champion/mastery data
     for player in summoners:
-        summoner_data = data_grabber._gimme_data(player, champs, region)
-        summonerList.append(summoner_data)
+        summoner_data[player] = data_grabber._gimme_data(player, champs, region)
 
-    print(summonerList)
     # Get the squad
     # Build the dream
     try:
-        dream_team = computations._compute_team(summonerList, summoners)
+        dream_team = computations._compute_team(summoner_data)
     except:
         exit('You woke up, the dream is gone')
         
