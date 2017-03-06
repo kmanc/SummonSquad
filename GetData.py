@@ -23,7 +23,7 @@ class GetData(object):
     
         # Parse the output and make sure we have both a person's summoner name and id
         summoner_id = (summoner_response[current_summoner]['id'])
-        summoner_name = (summoner_response[current_summoner]['name'])
+        summoner_name = str(summoner_response[current_summoner]['name'])
     
         # Get a summoner's top X champion mastery data
         try:
@@ -105,17 +105,16 @@ class GetData(object):
         # Compile all the data that we have pulled so far into one place
         try:
             # Put summoner id as a first level key
-            structured_data[summoner_id] = {}
+            structured_data[(summoner_name, summoner_id)] = {}
             # Put champion id as a second level key and the champion name as third level
             # Then put role as the fourth level and the points as the final value
             for champion_id in champ_role_timeinrole.keys():
-                structured_data[summoner_id][champion_id] = {}
-                structured_data[summoner_id][champion_id][champion_name[champion_id]] = {}
+                structured_data[(summoner_name, summoner_id)][(champion_name[champion_id], champion_id)] = {}
                 for role in champ_role_timeinrole[champion_id]:
-                    structured_data[summoner_id][champion_id][champion_name[champion_id]][str(role)] = \
+                    structured_data[(summoner_name, summoner_id)][(champion_name[champion_id], champion_id)][str(role)] = \
                     champ_role_timeinrole[champion_id][role] * champ_points_pair[champion_id]
-                if (len(structured_data[summoner_id][champion_id][champion_name[champion_id]].keys())) == 0:
-                    structured_data[summoner_id][champion_id][champion_name[champion_id]] = {'None': 0}
+                if (len(structured_data[(summoner_name, summoner_id)][(champion_name[champion_id], champion_id)].keys())) == 0:
+                    structured_data[(summoner_name, summoner_id)][(champion_name[champion_id], champion_id)] = {'None': 0}
 
         except:
             exit('Error structuing the champion data for {}'.format(current_summoner))

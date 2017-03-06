@@ -4,88 +4,134 @@ class DoMath(object):
     
         # A couple of initializations for later use
         self.valid_roles = ['MID', 'TOP', 'JUNGLE', 'DUO_CARRY', 'DUO_SUPPORT']
-        best_team_power = -1
-        summonerExperienceDict = {}
+        self.summonerExperienceDict = {}
 
         # Find total mastery points per summoner (take the total points for each champion, and sum them)    
-        for summonerName in summonerDict.keys():
-            summonerExperienceDict[summonerName] = 0
-            for mastered_champs in summonerDict[summonerName].values():
-                for champ_info in mastered_champs.values():
-                    for role_info in champ_info.values():
-                        for rolescore in role_info.values():
-                            summonerExperienceDict[summonerName] += rolescore
+        for summonerInfo in summonerDict.keys():
+            self.summonerExperienceDict[summonerInfo[0]] = 0
+            for champInfo in summonerDict[summonerInfo].keys():
+                for champRole in summonerDict[summonerInfo][champInfo].keys():
+                    self.summonerExperienceDict[summonerInfo[0]] += summonerDict[summonerInfo][champInfo][champRole]
 
         # First we make sure we don't divide by zero at any point down the road           
-        for summonerName in summonerExperienceDict.keys():
-            if summonerExperienceDict[summonerName] == 0:
-                summonerExperienceDict[summonerName] = 1
+        for summonerName in self.summonerExperienceDict.keys():
+            if self.summonerExperienceDict[summonerName] == 0:
+                self.summonerExperienceDict[summonerName] = 1
 
         # Iterate through team combinations and find the "valid" ones (ones with each of the 5 positions)
         # summonerDict structure
         """
-        summoner name:
-            summoner id:
-                champion id:
-                    champion name:
-                        role: points
-                        role: points
-                        role: points
-                        ...
-                champion id:
-                    champion name:
-                        role: points
-                        ...
+        summoner name, summoner id:
+            champion name, champion id:
+                role: points
+                role: points
+                role: points
                 ...
-        summoner name:
+            champion name, champion id:
+                role: points
+                ...
+            ...
+        summoner name, summoner id:
             ...
         """
-        self.teams  = []
-        team = []
-        self.builder(summonerDict, team)
-        print('\nPOST BUILDER\n')
-        print(summonerDict)
+        self.teamChamps  = []
+        self.teamRoles = []
+        self.bestScore = -1
+        outString = self.builder(summonerDict)
+        return outString
 
-        if best_team_power > 0:
-            return (summoners[0] + ',' + final_champ_zero + ',' + final_role_zero + ',' + summoners[1] + ',' + final_champ_one + ',' + final_role_one + ',' + summoners[2] + ',' + final_champ_two + ','
-                                + final_role_two + ',' + summoners[3] + ',' + final_champ_three + ',' + final_role_three + ',' + summoners[4] + ',' + final_champ_four + ',' + final_role_four + ',' 
-                                + str(champ_id_array[0]) + ',' + str(champ_id_array[1]) + ',' + str(champ_id_array[2]) + ',' + str(champ_id_array[3]) + ',' + str(champ_id_array[4]))
-        else:
-            print('There was a failure in DoMath.py')
-            if summoner_zero_champ:
-                print('Got summoner 0s champ')
-            if summoner_one_champ:
-                print('Got summoner 1s champ')
-            if summoner_two_champ:
-                print('Got summoner 2s champ')
-            if summoner_three_champ:
-                print('Got summoner 3s champ')
-            if summoner_four_champ:
-                print('Got summoner 4s champ')
-            return ('An ideal team could not be found')    
-
-    def builder(self, summonerDict, team):
-        for summonerName in summonerDict.keys():
-            print('TRYING {}'.format(summonerName))
-            for mastered_champs in summonerDict[summonerName].values():
-                for champ_info in mastered_champs.values():
-                    for role_info in champ_info.values():
-                        for role in role_info.keys():
-                            print(summonerName, champ_info.keys()[0], role)
-                            if summonerName not in team \
-                                and champ_info.keys()[0] not in team \
-                                and role not in team \
-                                and role in self.valid_roles:
-                                team.append(summonerName)
-                                team.append(champ_info.keys()[0])
-                                team.append(role)
-                                if len(team) == 15:
-                                    print('HEY WE GOT ONE')
-                                    print('\t{}'.format(team))
-                                    self.teams.append(team)
-                                    print('continuing...')
-                                    team = team[:-3]
+    def builder(self, summonerDict):
+        summoner0 = summonerDict.keys()[0]
+        summoner1 = summonerDict.keys()[1]
+        summoner2 = summonerDict.keys()[2]
+        summoner3 = summonerDict.keys()[3]
+        summoner4 = summonerDict.keys()[4]
+        # Summoner 0
+        for champs0 in summonerDict[summoner0]:
+            self.teamChamps = []
+            # Add the champion to the champ list
+            self.teamChamps.append(champs0[0])
+            for roles0 in summonerDict[summoner0][champs0]:
+                self.teamRoles = []
+                # Check to see if we have a valid role
+                if roles0 not in self.valid_roles:
+                    continue
+                # Add the tole to the role list
+                self.teamRoles.append(roles0)
+                for champs1 in summonerDict[summoner1]:
+                    self.teamChamps = self.teamChamps[:1]
+                    if champs1[0] in self.teamChamps:
+                        continue
+                    self.teamChamps.append(champs1[0])
+                    for roles1 in summonerDict[summoner1][champs1]:
+                        self.teamRoles = self.teamRoles[:1]
+                        if roles1 not in self.valid_roles or roles1 in self.teamRoles:
+                            continue
+                        self.teamRoles.append(roles1)
+                        for champs2 in summonerDict[summoner2]:
+                            self.teamChamps = self.teamChamps[:2]
+                            if champs2[0] in self.teamChamps:
+                                continue
+                            self.teamChamps.append(champs2[0])
+                            for roles2 in summonerDict[summoner2][champs2]:
+                                self.teamRoles = self.teamRoles[:2]
+                                if roles2 not in self.valid_roles or roles2 in self.teamRoles:
                                     continue
-                                print('popping...')
-                                summonerDict.pop(summonerName)
-                                self.builder(summonerDict, team)
+                                self.teamRoles.append(roles2)  
+                                for champs3 in summonerDict[summoner3]:
+                                    self.teamChamps = self.teamChamps[:3]
+                                    if champs3[0] in self.teamChamps:
+                                        continue
+                                    self.teamChamps.append(champs3[0])
+                                    for roles3 in summonerDict[summoner3][champs3]:
+                                        self.teamRoles = self.teamRoles[:3]
+                                        if roles3 not in self.valid_roles or roles3 in self.teamRoles:
+                                            continue
+                                        self.teamRoles.append(roles3)
+                                        for champs4 in summonerDict[summoner4]:
+                                            self.teamChamps = self.teamChamps[:4]
+                                            if champs4[0] in self.teamChamps:
+                                                continue
+                                            self.teamChamps.append(champs4[0])
+                                            for roles4 in summonerDict[summoner4][champs4]:
+                                                self.teamRoles = self.teamRoles[:4]
+                                                if roles4 not in self.valid_roles or roles4 in self.teamRoles:
+                                                    continue
+                                                self.teamRoles.append(roles4)
+                                                #####################################    
+                                                #####################################
+                                                #           WE GOT A TEAM           #
+                                                #####################################
+                                                #####################################
+                                                summoner0Points = summonerDict[summoner0][champs0][roles0] / self.summonerExperienceDict[self.summonerExperienceDict.keys()[0]]
+                                                summoner1Points = summonerDict[summoner1][champs1][roles1] / self.summonerExperienceDict[self.summonerExperienceDict.keys()[1]] 
+                                                summoner2Points = summonerDict[summoner2][champs2][roles2] / self.summonerExperienceDict[self.summonerExperienceDict.keys()[2]] 
+                                                summoner3Points = summonerDict[summoner3][champs3][roles3] / self.summonerExperienceDict[self.summonerExperienceDict.keys()[3]]
+                                                summoner4Points = summonerDict[summoner4][champs4][roles4] / self.summonerExperienceDict[self.summonerExperienceDict.keys()[4]]
+                                                currentTeamPower = summoner0Points + summoner1Points + summoner2Points + summoner3Points + summoner4Points
+                                                if currentTeamPower > self.bestScore:
+                                                    self.bestScore = currentTeamPower
+                                                    idealChamp0 = champs0[0]
+                                                    idealRole0 = roles0
+                                                    idealChamp1 = champs1[0]
+                                                    idealRole1 = roles1 
+                                                    idealChamp2 = champs2[0]
+                                                    idealRole2 = roles2 
+                                                    idealChamp3 = champs3[0]
+                                                    idealRole3 = roles3 
+                                                    idealChamp4 = champs4[0]
+                                                    idealRole4 = roles4
+
+        if self.bestScore > 0:
+            return ('{0}, {1}, {2}, '
+                    '{3}, {4}, {5}, '
+                    '{6}, {7}, {8}, '
+                    '{9}, {10}, {11}, '
+                    '{12}, {13}, {14}'.format(
+                         summoner0[0], idealChamp0, idealRole0,
+                         summoner1[0], idealChamp1, idealRole1,
+                         summoner2[0], idealChamp2, idealRole2,
+                         summoner3[0], idealChamp3, idealRole3,
+                         summoner4[0], idealChamp4, idealRole4))
+        else:
+            return 'An ideal team was not found'

@@ -11,7 +11,10 @@ def main():
     args = parser.parse_args()
     
     # Make sure the inputs are there 
-    if len(args.summoners) != 5 or args.region == None or args.champs == None:
+    if args.summoners == None or args.region == None or args.champs == None:
+        print(parser.usage)
+        exit(0)
+    if len(args.summoners) != 5:
         print(parser.usage)
         exit(0)
     summoners = args.summoners
@@ -36,7 +39,8 @@ def main():
     
     # Create a dict of the summoners and their respective champion/mastery data
     for player in summoners:
-        summoner_data[player] = data_grabber._gimme_data(player, champs)
+        #summoner_data[player] = data_grabber._gimme_data(player, champs)
+        summoner_data.update(data_grabber._gimme_data(player, champs))
 
     # Get the squad
     # Build the dream
@@ -47,7 +51,7 @@ def main():
         
     # Output for the website
     print (dream_team)
-    return (summonerList, summoners)    
+    #return (summonerList, summoners)    
     
 if __name__ == '__main__':
     main()
