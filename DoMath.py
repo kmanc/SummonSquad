@@ -5,9 +5,11 @@ class DoMath(object):
         # A couple of initializations for later use
         self.valid_roles = ['MID', 'TOP', 'JUNGLE', 'DUO_CARRY', 'DUO_SUPPORT']
         self.summonerExperienceDict = {}
+        #self.summonerOrder = []
 
         # Find total mastery points per summoner (take the total points for each champion, and sum them)    
         for summonerInfo in summonerDict.keys():
+            #self.summonerOrder.append(summonerInfo)
             self.summonerExperienceDict[summonerInfo[0]] = 0
             for champInfo in summonerDict[summonerInfo].keys():
                 for champRole in summonerDict[summonerInfo][champInfo].keys():
@@ -36,8 +38,12 @@ class DoMath(object):
         """
         self.teamChamps  = []
         self.teamRoles = []
+        #self.champScores = []
+        #self.teamString = ''
         self.bestScore = -1
         outString = self.builder(summonerDict)
+        #self.recursiveBuilder(summonerDict, self.summonerOrder.pop())
+        #print(self.teamString)
         return outString
 
     def builder(self, summonerDict):
@@ -123,11 +129,11 @@ class DoMath(object):
                                                     idealRole4 = roles4
 
         if self.bestScore > 0:
-            return ('{0}, {1}, {2}, '
-                    '{3}, {4}, {5}, '
-                    '{6}, {7}, {8}, '
-                    '{9}, {10}, {11}, '
-                    '{12}, {13}, {14}'.format(
+            return ('{0},{1},{2},'
+                    '{3},{4},{5},'
+                    '{6},{7},{8},'
+                    '{9},{10},{11},'
+                    '{12},{13},{14}'.format(
                          summoner0[0], idealChamp0, idealRole0,
                          summoner1[0], idealChamp1, idealRole1,
                          summoner2[0], idealChamp2, idealRole2,
@@ -135,3 +141,33 @@ class DoMath(object):
                          summoner4[0], idealChamp4, idealRole4))
         else:
             return 'An ideal team was not found'
+
+    def recursiveBuilder(self, summonerDict, summoner):
+        for champs in summonerDict[summoner]:
+            if champs[0] in self.teamChamps:
+                continue
+            self.teamChamps.append(champs[0])
+            print('c')
+            for role in summonerDict[summoner][champs]:
+                print('e')
+                if role not in self.valid_roles or role in self.teamRoles:
+                    continue
+                self.teamRoles.append(role)
+                print('a')
+                self.champScores.append(summonerDict[summoner][champs][roles] / 
+                                        self.summonerExperienceDict[summoner])
+                if len(self.teamRoles) == 5 and len(self.teamChamps) == 5 and len(self.champScores) == 5:
+                    if sum(self.champScores) > self.bestScore:
+                        self.bestScore = sum(champScores)
+                        self.teamString = ('{0},{1},{2},'
+                                           '{3},{4},{5},'
+                                           '{6},{7},{8},'
+                                           '{9},{10},{11},'
+                                           '{12},{13},{14}'.format(
+                                            self.summonerOrder[0], self.teamChamps[0], self.teamRoles[0],
+                                            self.summonerOrder[1], self.teamChamps[1], self.teamRoles[1],
+                                            self.summonerOrder[2], self.teamChamps[2], self.teamRoles[2],
+                                            self.summonerOrder[3], self.teamChamps[3], self.teamRoles[3],
+                                            self.summonerOrder[4], self.teamChamps[4], self.teamRoles[4]))
+                else:
+                    recursiveBuilder(summonerDict, self.summonerOrder.pop())
