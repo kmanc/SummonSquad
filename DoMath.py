@@ -139,7 +139,7 @@ class DoMath(object):
                     '{6},{7},{8},'
                     '{9},{10},{11},'
                     '{12},{13},{14},'
-                    '{15},{16},{17}'.format(
+                    '{15},{16},{17},{18},{19}'.format(
                          summoner0[0], idealChamp0, idealRole0,
                          summoner1[0], idealChamp1, idealRole1,
                          summoner2[0], idealChamp2, idealRole2,
