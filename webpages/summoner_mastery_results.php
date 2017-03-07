@@ -62,6 +62,7 @@
 			 </h4>
 			<h2 class="error"><?php 
 				if ($status != 0) {
+					echo '$script output' . $script;
 					echo 'Status error:' . $status . '. Something went wrong.<br> Make sure all of your summoner names are spelled correctly.<br> Press the back button or click <a href="../index.html"><button class="buttonAdd">   Here   </button></a> to go back';
 				}
 //				else {
