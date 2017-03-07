@@ -51,6 +51,7 @@ def main():
         
     # Output for the website
     print (dream_team)
+    return dream_team
     #return (summonerList, summoners)    
     
 if __name__ == '__main__':
