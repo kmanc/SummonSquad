@@ -35,12 +35,18 @@
 				}
 
 				//temp fix to get rid of double quotes around KogMaw's name (rito pls)
+				// KEVIN COMMENT
+				// why are we iterating $data_array here, and not $champ?
+				// gonna try to change this to see if that fixes things
+				// END
 				
-				$k = 1;
-				for ($i = 1; $i <= 13; $i += 3) {
+				#$k = 1;
+				#for ($i = 1; $i <= 13; $i += 1) {
+				for ($i = 1; $i <= 5; $i += 1) {
 					$pattern = "/\"/"; 
 					$replace = ""; 
-					$fix_quote[$k] = preg_replace($pattern,$replace,$data_array[$i]);
+					//$fix_quote[$k] = preg_replace($pattern,$replace,$data_array[$i]);
+					$fix_quote[$i] = preg_replace($pattern,$replace,$champ[$i]);
 					$k++;
 				}
 

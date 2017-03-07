@@ -118,14 +118,19 @@ class DoMath(object):
                                                 if currentTeamPower > self.bestScore:
                                                     self.bestScore = currentTeamPower
                                                     idealChamp0 = champs0[0]
+                                                    idealChamp0Id = champs0[1]
                                                     idealRole0 = roles0
                                                     idealChamp1 = champs1[0]
+                                                    idealChamp1Id = champs1[1]
                                                     idealRole1 = roles1 
                                                     idealChamp2 = champs2[0]
+                                                    idealChamp2Id = champs2[1]
                                                     idealRole2 = roles2 
                                                     idealChamp3 = champs3[0]
+                                                    idealChamp3Id = champs3[1]
                                                     idealRole3 = roles3 
                                                     idealChamp4 = champs4[0]
+                                                    idealChamp4Id = champs4[1]
                                                     idealRole4 = roles4
 
         if self.bestScore > 0:
@@ -133,12 +138,15 @@ class DoMath(object):
                     '{3},{4},{5},'
                     '{6},{7},{8},'
                     '{9},{10},{11},'
-                    '{12},{13},{14}'.format(
+                    '{12},{13},{14},'
+                    '{15},{16},{17}'.format(
                          summoner0[0], idealChamp0, idealRole0,
                          summoner1[0], idealChamp1, idealRole1,
                          summoner2[0], idealChamp2, idealRole2,
                          summoner3[0], idealChamp3, idealRole3,
-                         summoner4[0], idealChamp4, idealRole4))
+                         summoner4[0], idealChamp4, idealRole4,
+                         idealChamp0Id, idealChamp1Id, idealChamp2Id,
+                         idealChamp3Id, idealChamp4Id))
         else:
             return 'An ideal team was not found'
 
@@ -163,7 +171,8 @@ class DoMath(object):
                                            '{3},{4},{5},'
                                            '{6},{7},{8},'
                                            '{9},{10},{11},'
-                                           '{12},{13},{14}'.format(
+                                           '{12},{13},{14},'
+                                           '{15},{16},{17}'.format(
                                             self.summonerOrder[0], self.teamChamps[0], self.teamRoles[0],
                                             self.summonerOrder[1], self.teamChamps[1], self.teamRoles[1],
                                             self.summonerOrder[2], self.teamChamps[2], self.teamRoles[2],
