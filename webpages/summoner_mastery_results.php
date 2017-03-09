@@ -15,7 +15,7 @@
 				//make sure input to python script is formatted correctly
 
 				for ($i = 1; $i <= 5; $i += 1) {
-					$sani[$i] = str_replace(' ','',$_POST["sum$i"]);
+					$sani[$i] = str_replace(' ','',$_POST["sum{$i}"]);
 				}
 
 
@@ -68,7 +68,10 @@
 			 </h4>
 			<h2 class="error"><?php 
 				if ($status != 0) {
-					echo '$script output' . $script;
+					echo '$script run' . $script;
+					echo '\n';
+					echo '$results from script' . $results;
+					echo '\n';
 					echo 'Status error:' . $status . '. Something went wrong.<br> Make sure all of your summoner names are spelled correctly.<br> Press the back button or click <a href="../index.html"><button class="buttonAdd">   Here   </button></a> to go back';
 				}
 //				else {
