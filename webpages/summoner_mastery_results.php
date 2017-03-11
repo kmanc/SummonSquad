@@ -23,7 +23,8 @@
 				$python = '/usr/bin/python3.4';
 				$script = $python . " " . $path . " -s " . $sani[1] . " " . $sani[2] . " " . $sani[3] . " " . $sani[4] . " " . $sani[5] . " -r " . $_POST["region"] . " -c " . $_POST["champnum"];
 				$command = escapeshellcmd($script);
-				$results = exec($command, $my_output, $status);
+				//$results = exec($command, $my_output, $status);
+				$results = shell_exec($command);
 				$data_array = explode(",", $results);
 
 				//get the properly formatted bgs for the champions
