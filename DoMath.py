@@ -47,11 +47,12 @@ class DoMath(object):
         return outString
 
     def builder(self, summonerDict):
-        summoner0 = summonerDict.keys()[0]
-        summoner1 = summonerDict.keys()[1]
-        summoner2 = summonerDict.keys()[2]
-        summoner3 = summonerDict.keys()[3]
-        summoner4 = summonerDict.keys()[4]
+        keyList = list(summonerDict.keys())
+        summoner0 = keyList[0]
+        summoner1 = keyList[1]
+        summoner2 = keyList[2]
+        summoner3 = keyList[3]
+        summoner4 = keyList[4]
         # Summoner 0
         for champs0 in summonerDict[summoner0]:
             self.teamChamps = []
@@ -109,11 +110,11 @@ class DoMath(object):
                                                 #           WE GOT A TEAM           #
                                                 #####################################
                                                 #####################################
-                                                summoner0Points = summonerDict[summoner0][champs0][roles0] / self.summonerExperienceDict[self.summonerExperienceDict.keys()[0]]
-                                                summoner1Points = summonerDict[summoner1][champs1][roles1] / self.summonerExperienceDict[self.summonerExperienceDict.keys()[1]] 
-                                                summoner2Points = summonerDict[summoner2][champs2][roles2] / self.summonerExperienceDict[self.summonerExperienceDict.keys()[2]] 
-                                                summoner3Points = summonerDict[summoner3][champs3][roles3] / self.summonerExperienceDict[self.summonerExperienceDict.keys()[3]]
-                                                summoner4Points = summonerDict[summoner4][champs4][roles4] / self.summonerExperienceDict[self.summonerExperienceDict.keys()[4]]
+                                                summoner0Points = summonerDict[summoner0][champs0][roles0] / self.summonerExperienceDict[summoner0[0]]
+                                                summoner1Points = summonerDict[summoner1][champs1][roles1] / self.summonerExperienceDict[summoner1[0]] 
+                                                summoner2Points = summonerDict[summoner2][champs2][roles2] / self.summonerExperienceDict[summoner2[0]] 
+                                                summoner3Points = summonerDict[summoner3][champs3][roles3] / self.summonerExperienceDict[summoner3[0]]
+                                                summoner4Points = summonerDict[summoner4][champs4][roles4] / self.summonerExperienceDict[summoner4[0]]
                                                 currentTeamPower = summoner0Points + summoner1Points + summoner2Points + summoner3Points + summoner4Points
                                                 if currentTeamPower > self.bestScore:
                                                     self.bestScore = currentTeamPower
@@ -150,7 +151,7 @@ class DoMath(object):
         else:
             return 'An ideal team was not found'
 
-    def recursiveBuilder(self, summonerDict, summoner):
+"""    def recursiveBuilder(self, summonerDict, summoner):
         for champs in summonerDict[summoner]:
             if champs[0] in self.teamChamps:
                 continue
@@ -179,4 +180,4 @@ class DoMath(object):
                                             self.summonerOrder[3], self.teamChamps[3], self.teamRoles[3],
                                             self.summonerOrder[4], self.teamChamps[4], self.teamRoles[4]))
                 else:
-                    recursiveBuilder(summonerDict, self.summonerOrder.pop())
+                    recursiveBuilder(summonerDict, self.summonerOrder.pop())"""
