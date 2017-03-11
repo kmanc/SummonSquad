@@ -69,11 +69,13 @@
 			<h2 class="error"><?php 
 				if ($status != 0) {
 					echo 'script run: ' . $script;
-					echo "\n";
+					echo "<br>";
+					echo 'command run: ' . $command;
+					echo "<br>";
 					echo 'results from script: ' . $results;
-					echo "\n";
+					echo "<br>";
 					echo 'myoutput array: ' . $my_output;
-					echo "\n";
+					echo "<br>";
 					echo 'Status error: ' . $status . '. Something went wrong.<br> Make sure all of your summoner names are spelled correctly.<br> Press the back button or click <a href="../index.html"><button class="buttonAdd">   Here   </button></a> to go back';
 				}
 //				else {
