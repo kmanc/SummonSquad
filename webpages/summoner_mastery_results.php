@@ -23,8 +23,15 @@
 				$script = $python . " " . $path . " -s " . $sani[1] . " " . $sani[2] . " " . $sani[3] . " " . $sani[4] . " " . $sani[5] . " -r " . $_POST["region"] . " -c " . $_POST["champnum"];
 				$command = escapeshellcmd($script);
 				$results = exec($command, $my_output, $status);
-				//$results = shell_exec($command);
 				$data_array = explode(",", $results);
+
+				//make sure dictionaries havent messed up order
+
+				$n = 1;
+				for ($i = 0; $i <= 12; $i += 3) {
+					$summonerName[$n] = str_replace(array('"', ' '), '' , $data_array[$i]);
+					$n++;
+				}
 
 				//get the properly formatted bgs for the champions
 
@@ -35,12 +42,14 @@
 				}
 				//temp fix to get rid of double quotes around KogMaw's name (rito pls)
 				
-				$k = 1;
-				for ($i = 1; $i <= 13; $i += 3) {
+				//$k = 1;
+				//for ($i = 1; $i <= 13; $i += 3) {
+					for ($i = 1; $i <= 5; $i += 1) {
 					$pattern = "/\"/"; 
 					$replace = ""; 
-					$fix_quote[$k] = preg_replace($pattern,$replace,$data_array[$i]);
-					$k++;
+					//$fix_quote[$k] = preg_replace($pattern,$replace,$data_array[$i]);
+					$fix_quote[$i] = preg_replace($pattern,$replace,$champ[$i]);
+					//$k++;
 				}
 				//standardize role names, e.g. DUO_CARRY turns to Carry, JUNGLE turns to Jungle
 				$m = 1;
@@ -85,7 +94,7 @@
 					<div id="summ1">
 							<?php
 								echo '<p class="bot_text">';
-								echo $_POST['sum1'];
+								echo $summonerName[1];
 								echo '<br>' . $fix_quote[1];
 								echo '<br>' . $role[1];
 								echo '</p>';
@@ -93,7 +102,7 @@
 					</div><div id="summ2">
 							<?php
 								echo '<p class="bot_text">';
-								echo $_POST['sum2'];
+								echo $summonerName[2];
 								echo '<br>' . $fix_quote[2];
 								echo '<br>' . $role[2];
 								echo '</p>';
@@ -101,7 +110,7 @@
 					</div><div id="summ3">
 							<?php
 								echo '<p class="bot_text">';
-								echo $_POST['sum3'];
+								echo $summonerName[3];
 								echo '<br>' . $fix_quote[3];
 								echo '<br>' . $role[3];
 								echo '</p>';
@@ -109,7 +118,7 @@
 					</div><div id="summ4">
 							<?php
 								echo '<p class="bot_text">';
-								echo $_POST['sum4'];
+								echo $summonerName[4];
 								echo '<br>' . $fix_quote[4];
 								echo '<br>' . $role[4];
 								echo '</p>';
@@ -117,7 +126,7 @@
 					</div><div id="summ5">
 							<?php
 								echo '<p class="bot_text">';
-								echo $_POST['sum5'];
+								echo $summonerName[5];
 								echo '<br>' . $fix_quote[5];
 								echo '<br>' . $role[5];
 								echo '</p>';
