@@ -25,7 +25,7 @@
 				$results = exec($command, $my_output, $status);
 				$data_array = explode(",", $results);
 
-				//make sure dictionaries havent messed up order
+				//make sure dictionaries havent messed up order of summoner names (hint: they have)
 
 				$n = 1;
 				for ($i = 0; $i <= 12; $i += 3) {
@@ -42,14 +42,10 @@
 				}
 				//temp fix to get rid of double quotes around KogMaw's name (rito pls)
 				
-				//$k = 1;
-				//for ($i = 1; $i <= 13; $i += 3) {
-					for ($i = 1; $i <= 5; $i += 1) {
+				for ($i = 1; $i <= 5; $i += 1) {
 					$pattern = "/\"/"; 
 					$replace = ""; 
-					//$fix_quote[$k] = preg_replace($pattern,$replace,$data_array[$i]);
 					$fix_quote[$i] = preg_replace($pattern,$replace,$champ[$i]);
-					//$k++;
 				}
 				//standardize role names, e.g. DUO_CARRY turns to Carry, JUNGLE turns to Jungle
 				$m = 1;
@@ -70,23 +66,23 @@
 			<div class="summoners">
 				<div class="player1">
 					<p class="p1">
-						<?php echo strip_tags($_POST['sum1']); ?>
+						<?php echo strip_tags($summonerName[1]); ?>
 					</p>
 				</div><div class="player2">
 					<p class="p2">
-						<?php echo strip_tags($_POST['sum2']); ?>
+						<?php echo strip_tags($summonerName[2]); ?>
 					</p>
 				</div><div class="player3">
 					<p class="p3">
-						<?php echo strip_tags($_POST['sum3']); ?>
+						<?php echo strip_tags($summonerName[3]); ?>
 					</p>
 				</div><div class="player4">
 					<p class="p4">
-						<?php echo strip_tags($_POST['sum4']); ?>
+						<?php echo strip_tags($summonerName[4]); ?>
 					</p>
 				</div><div class="player5">
 					<p class="p5">
-						<?php echo strip_tags($_POST['sum5']); ?>
+						<?php echo strip_tags($summonerName[5]); ?>
 					</p>
 				</div>
 			</div>
