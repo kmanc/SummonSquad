@@ -8,5 +8,5 @@ In the future we want to do a few things to make our tool more realistic.  For i
 
 There are a few issues that we are working through, and hope to have solved soon(ish):
 
-    -You have to have played ranked in order for us to know what role you play a champion in (because the api does not give               us role information for normal games)
-    -We made this in 10 days, so bugs pop up now and then.  We could actually really sue your help...if you see one, let us               know so we can squash it!!
+* You have to have played ranked in order for us to know what role you play a champion in (because the api does not give us role information for normal games).  We have some awesome ideas for using normal game data, but until/unless the api can give us historical game data, we are out of luck
+* We made this in 10 days, so bugs pop up now and then.  We could actually really use your help...if you see one, let us know so we can squash it!!
