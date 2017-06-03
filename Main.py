@@ -11,7 +11,7 @@ def main():
     args = parser.parse_args()
     
     # Make sure the inputs are there 
-    if args.summoners == None or args.region == None or args.champs == None:
+    if args.summoners is None or args.region is None or args.champs is None:
         print(parser.usage)
         exit(0)
     if len(args.summoners) != 5:
@@ -28,24 +28,23 @@ def main():
         champs = 20
     
     # Normalize summoner names (no spaces, no upper case) because the api can get cranky if you don't
-    for name in range(len(summoners)):
-        summoners[name] = summoners[name].lower()
-        summoners[name] = summoners[name].replace(" ", "")
+    summoners = [name.lower().replace(" ", "") for name in summoners]
 
     summoner_data = {}
     data_grabber = GetData()
     data_grabber._setup(region)
-    buildTeam = DoMath()
+
     
     # Create a dict of the summoners and their respective champion/mastery data
     for player in summoners:
         #summoner_data[player] = data_grabber._gimme_data(player, champs)
         summoner_data.update(data_grabber._gimme_data(player, champs))
 
+    build_team = DoMath()
     # Get the squad
     # Build the dream
     try:
-        dream_team = buildTeam._compute_team(summoner_data)
+        dream_team = build_team._compute_team(summoner_data)
     except:
         exit('You woke up, the dream is gone')
         
