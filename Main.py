@@ -32,19 +32,19 @@ def main():
 
     summoner_data = {}
     data_grabber = GetData()
-    data_grabber._setup(region)
+    data_grabber.setup(region)
 
     
     # Create a dict of the summoners and their respective champion/mastery data
     for player in summoners:
         #summoner_data[player] = data_grabber._gimme_data(player, champs)
-        summoner_data.update(data_grabber._gimme_data(player, champs))
+        summoner_data.update(data_grabber.gimme_data(player, champs))
 
     build_team = DoMath()
     # Get the squad
     # Build the dream
     try:
-        dream_team = build_team._compute_team(summoner_data)
+        dream_team = build_team.compute_team(summoner_data)
     except:
         exit('You woke up, the dream is gone')
         
