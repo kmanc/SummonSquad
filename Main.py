@@ -31,9 +31,7 @@ def main():
     summoners = [name.lower().replace(" ", "") for name in summoners]
 
     summoner_data = {}
-    data_grabber = GetData()
-    data_grabber.setup(region)
-
+    data_grabber = GetData(region)
     
     # Create a dict of the summoners and their respective champion/mastery data
     for player in summoners:
@@ -49,7 +47,7 @@ def main():
         exit('You woke up, the dream is gone')
         
     # Output for the website
-    print (dream_team)
+    print(dream_team)
     return dream_team
     
 if __name__ == '__main__':
