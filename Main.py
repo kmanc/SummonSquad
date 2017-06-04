@@ -19,13 +19,13 @@ def main():
         exit(0)
     summoners = args.summoners
     region = args.region
-    champs = args.champs
+    num_champs = args.champs
 
     # Set max and min for champs
-    if champs < 5:
-        champs = 5
-    if champs > 20:
-        champs = 20
+    if num_champs < 5:
+        num_champs = 5
+    if num_champs > 20:
+        num_champs = 20
     
     # Normalize summoner names (no spaces, no upper case) because the api can get cranky if you don't
     summoners = [name.lower().replace(" ", "") for name in summoners]
@@ -36,7 +36,12 @@ def main():
     # Create a dict of the summoners and their respective champion/mastery data
     for player in summoners:
         #summoner_data[player] = data_grabber._gimme_data(player, champs)
-        summoner_data.update(data_grabber.gimme_data(player, champs))
+        summoner_id, summoner_name = data_grabber.get_summoner_data(player)
+        champ_points_pair = data_grabber.get_summoners_mastery(summoner_id, summoner_name, num_champs)
+        champ_counters = data_grabber.lanes_and_roles(summoner_id, summoner_name, champ_points_pair)
+        data_grabber.percentages(champ_counters)
+        structured_data = data_grabber.data_compile(summoner_id, summoner_name, champ_counters, champ_points_pair)
+        summoner_data.update(structured_data)
 
     build_team = DoMath()
     # Get the squad
