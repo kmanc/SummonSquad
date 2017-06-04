@@ -1,19 +1,15 @@
 from RiotAPI import RiotAPI
 from idToName import idToNameDict
+from collections import Counter
 import time
+
 
 class GetData(object):
     
-    def _setup(self, region):
+    def __init__(self, region):
         self.api = RiotAPI(region)
     
-    def _gimme_data(self, current_summoner, champs):
-        
-        champ_points_pair = {}
-        champList = []
-        champ_role_timeinrole = {}
-        structured_data = {}
-        champion_name = {}
+    def get_summoner_data(self, current_summoner):
        
         # Get summoner data, or tell us it couldn't be found
         try:
@@ -24,99 +20,96 @@ class GetData(object):
         # Parse the output and make sure we have both a person's summoner name and id
         summoner_id = (summoner_response[current_summoner]['id'])
         summoner_name = str(summoner_response[current_summoner]['name'])
-    
-        # Get a summoner's top X champion mastery data
+
+        return summoner_id, summoner_name
+
+    def get_summoners_mastery(self, summoner_id, summoner_name, num_champs):
+        # Get a summoner's top <num_champs> champion mastery data
         try:
-            mastery_response = self.api.get_top_mastery_data(summoner_id, champs)
+            mastery_response = self.api.get_top_mastery_data(summoner_id, num_champs)
         except:
-            exit('Could not get champion mastery data for {}'.format(current_summoner))
-    
+            exit('Could not get champion mastery data for {}'.format(summoner_name))
+
         # Compile the stuff we care about into a dictionary (namely that champion id and its associated score)
-        for x, val in enumerate(mastery_response):
-            try:
-                champ_points_pair[val['championId']] = val['championPoints']
-            except:
-                exit('We encountered a problem parsing champion mastery data for {}'.format(current_summoner))
-    
-        # Get data about regarding the lane the champion is being played in by checking the summoner's arnked history
-        for key in champ_points_pair:
-            champList.append(key)
         try:
-            lane_response = self.api.get_champion_role(summoner_id, champList)
+            champ_points_pair = {item['championId']: item['championPoints'] for item in mastery_response}
+        except:
+            exit('We encountered a problem parsing champion mastery data for {}'.format(summoner_name))
+
+        return champ_points_pair
+
+    def lanes_and_roles(self, summoner_id, summoner_name, champ_points_pair):
+        # Get data about regarding the lane the champion is being played in by checking the summoner's ranked history
+        champ_list = [key for key in champ_points_pair]
+        try:
+            lane_response = self.api.get_champion_role(summoner_id, champ_list)
             while lane_response == {'status': {'status_code': 429, 'message': '429'}}:
                 #print('429 code')
                 time.sleep(5)
-                lane_response = self.api.get_champion_role(summoner_id, champList)
+                lane_response = self.api.get_champion_role(summoner_id, champ_list)
 
         except:
-            exit('Error trying to determine what lane one of the champions was played in by {}'.format(current_summoner))
-    
-        # Figure out what roles the champion is being played in, and for how many games (eg. mid 10 times, support 4 times)
-        match_check = 'matches'
-        if match_check in lane_response:
-            for x, val in enumerate(lane_response['matches']):
-                key_test = val['champion']
-                if ('lane' in val):
-                    if (val['lane'] == 'BOTTOM'):
-                        role = val['role']
-                    else:
-                        role = val['lane']
-                    if (val['lane'] == 'MID' and val['role'] == 'DUO_SUPPORT'):
-                        role = 'NONE'
-                    if (val['lane'] == 'TOP' and val['role'] == 'DUO_SUPPORT'):
-                        role = 'NONE'
-                    if key_test not in champ_role_timeinrole:
-                        champ_role_timeinrole[key_test] = {}
-                    else:
-                        if role in champ_role_timeinrole[key_test]:
-                            champ_role_timeinrole[key_test][role] += 1
-                        else:
-                            champ_role_timeinrole[key_test][role] = 1
-    
+            exit('Error trying to determine what lane one of the champions was played in by {}'.format(summoner_name))
+
+        list_of_games = lane_response['matches']
+        champ_role_time_in_role = {}
+        for game in list_of_games:
+            game_champion_id = game['champion']
+            if 'lane' in game:
+                lane_played = game['lane'].upper()
+                if lane_played == 'BOTTOM':
+                    role_played = game['role']
+                else:
+                    role_played = lane_played
+                if ((lane_played == 'MID' and role_played =='DUO_SUPPORT') or
+                    (lane_played == 'TOP' and role_played =='DUO_SUPPORT') or
+                    (role_played == 'NONE')):
+                    role_played = 'NONE'
+                    continue
+                if game_champion_id not in champ_role_time_in_role:
+                    champ_role_time_in_role[game_champion_id] = Counter()
+                champ_role_time_in_role[game_champion_id][role_played] += 1
+
+        return champ_role_time_in_role
+
+    def percentages(self, champ_counters):
         # Get percentage of games played in each role per champion (eg 33% top, 50% jungle, 17% support)
         # Bonus points if you can tell us what champions might fit that above percentage distribution
-        
-        #########################################
-        #### UNCOMMENT THE BELOW FOR SOME INSIGHT INTO THE CRASHES.  SOMETIMES A SUMMONER WILL HAVE NO CHAMPION/MASTERY PAIRS
-        #########################################
-        #print(champ_role_timeinrole)
-        """if not champ_role_timeinrole:
-            print('SOMEBODYs FUCKING CHAMP DICTIONARY IS FUCKING EMPTY...WHY')
-            print()
-            print(current_summoner)
-            print()"""
-        for id_key in champ_role_timeinrole:
+
+        for id_key, count_dict in champ_counters.items():
             role_games = 0
-            for role_key in champ_role_timeinrole[id_key]:
-                role_games += champ_role_timeinrole[id_key][role_key]
-            for role_key in champ_role_timeinrole[id_key]:
+            for role_name, role_count in count_dict.items():
+                role_games += role_count
+            for role_name, role_count in count_dict.items():
                 if role_games > 0:
-                    champ_role_timeinrole[id_key][role_key] /= float(role_games)
+                    champ_counters[id_key][role_name] /= float(role_games)
                 else:
-                    champ_role_timeinrole[id_key][role_key] /= float(1)
-                    
-        # Get the champion name for later use, because 'champion 34' doesn't mean much to people
-        for champIdConvert in champ_points_pair:
-            try:
-                champion_name[champIdConvert] = idToNameDict[champIdConvert]
-            except:
-                exit('Could not get the name of the champ with id {}'.format(champIdConvert))
-        
+                    champ_counters[id_key][role_name] /= float(1)
+
+        return champ_counters
+
+    def data_compile(self, summoner_id, summoner_name, champ_counters, champ_points_pair):
         # Compile all the data that we have pulled so far into one place
+        structured_data = {}
+
+        # Get the champion name for later use, because 'champion 35' doesn't mean much to people
+        champion_name_dict = {champ_id: idToNameDict[champ_id] for champ_id in champ_counters}
+
         try:
-            # Put summoner id as a first level key
+            # The tuple summoner name, summoner id is the first level key
             structured_data[(summoner_name, summoner_id)] = {}
-            # Put champion id as a second level key and the champion name as third level
-            # Then put role as the fourth level and the points as the final value
-            for champion_id in champ_role_timeinrole.keys():
-                structured_data[(summoner_name, summoner_id)][(champion_name[champion_id], champion_id)] = {}
-                for role in champ_role_timeinrole[champion_id]:
-                    structured_data[(summoner_name, summoner_id)][(champion_name[champion_id], champion_id)][str(role)] = \
-                    champ_role_timeinrole[champion_id][role] * champ_points_pair[champion_id]
-                if (len(structured_data[(summoner_name, summoner_id)][(champion_name[champion_id], champion_id)].keys())) == 0:
-                    structured_data[(summoner_name, summoner_id)][(champion_name[champion_id], champion_id)] = {'None': 0}
+            # The tuple champion name, champion id is the second level key
+            for champion_id, counter_info in champ_counters.items():
+                this_champ_name = champion_name_dict[champion_id]
+                structured_data[(summoner_name, summoner_id)][(this_champ_name, champion_id)] = {}
+            # Role is the third level key
+                for role, percent in counter_info.items():
+                    structured_data[(summoner_name, summoner_id)][(this_champ_name, champion_id)][role] = \
+                        percent * champ_points_pair[champion_id]
+                if (len(structured_data[(summoner_name, summoner_id)][(this_champ_name, champion_id)].keys())) == 0:
+                    structured_data[(summoner_name, summoner_id)][(this_champ_name, champion_id)] = {'None': 0}
 
         except:
-            exit('Error structuing the champion data for {}'.format(current_summoner))
+            exit('Error structuring the champion data for {}'.format(summoner_name))
 
         return structured_data
