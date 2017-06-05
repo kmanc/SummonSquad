@@ -46,7 +46,8 @@ def main():
     # Get the squad
     # Build the dream
     try:
-        dream_team = build_team.compute_team(summoner_data)
+        all_teams = build_team.build_teams(summoner_data)
+        dream_team = build_team.find_best(all_teams)
     except:
         exit('You woke up, the dream is gone')
         
