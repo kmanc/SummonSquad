@@ -94,6 +94,8 @@ class GetData(object):
 
         # Get the champion name for later use, because 'champion 35' doesn't mean much to people
         champion_name_dict = {champ_id: idToNameDict[champ_id] for champ_id in champ_counters}
+        Person = namedtuple('Person', ['role', 'points', 'summoner_name', 'summoner_id'])
+        Champ = namedtuple('Champ', ['name', 'id'])
 
         try:
             # Attempt at more performant structure
@@ -101,11 +103,11 @@ class GetData(object):
             # The tuple champion name, champion id is the key
             for champion_id, counter_info in champ_counters.items():
                 this_champ_name = champion_name_dict[champion_id]
-                structured_data[(this_champ_name, champion_id)] = []
+                champ_info = Champ(this_champ_name, champion_id)
+                structured_data[champ_info] = []
                 # The tuple role, points, summoner name, summoner id is the value
                 for role, percent in counter_info.items():
                     points = percent * champ_points_pair[champion_id]
-                    Person = namedtuple('Person', ['role', 'points', 'summoner_name', 'summoner_id'])
                     person_info = Person(role, points, summoner_name, summoner_id)
                     structured_data[(this_champ_name, champion_id)].append(person_info)
 
