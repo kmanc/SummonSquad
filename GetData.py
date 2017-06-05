@@ -1,6 +1,6 @@
 from RiotAPI import RiotAPI
 from idToName import idToNameDict
-from collections import Counter
+from collections import Counter, namedtuple
 import time
 
 
@@ -96,18 +96,18 @@ class GetData(object):
         champion_name_dict = {champ_id: idToNameDict[champ_id] for champ_id in champ_counters}
 
         try:
-            # The tuple summoner name, summoner id is the first level key
-            structured_data[(summoner_name, summoner_id)] = {}
-            # The tuple champion name, champion id is the second level key
+            # Attempt at more performant structure
+            structured_data = {}
+            # The tuple champion name, champion id is the key
             for champion_id, counter_info in champ_counters.items():
                 this_champ_name = champion_name_dict[champion_id]
-                structured_data[(summoner_name, summoner_id)][(this_champ_name, champion_id)] = {}
-            # Role is the third level key
+                structured_data[(this_champ_name, champion_id)] = []
+                # The tuple role, points, summoner name, summoner id is the value
                 for role, percent in counter_info.items():
-                    structured_data[(summoner_name, summoner_id)][(this_champ_name, champion_id)][role] = \
-                        percent * champ_points_pair[champion_id]
-                if (len(structured_data[(summoner_name, summoner_id)][(this_champ_name, champion_id)].keys())) == 0:
-                    structured_data[(summoner_name, summoner_id)][(this_champ_name, champion_id)] = {'None': 0}
+                    points = percent * champ_points_pair[champion_id]
+                    Person = namedtuple('Person', ['role', 'points', 'summoner_name', 'summoner_id'])
+                    person_info = Person(role, points, summoner_name, summoner_id)
+                    structured_data[(this_champ_name, champion_id)].append(person_info)
 
         except:
             exit('Error structuring the champion data for {}'.format(summoner_name))
