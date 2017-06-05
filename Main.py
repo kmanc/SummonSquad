@@ -32,16 +32,15 @@ def main():
 
     summoner_data = {}
     data_grabber = GetData(region)
-    
-    # Create a dict of the summoners and their respective champion/mastery data
+    # Create a of champions and the summoners that play them (includes score based on mastery)
     for player in summoners:
-        #summoner_data[player] = data_grabber._gimme_data(player, champs)
         summoner_id, summoner_name = data_grabber.get_summoner_data(player)
         champ_points_pair = data_grabber.get_summoners_mastery(summoner_id, summoner_name, num_champs)
         champ_counters = data_grabber.lanes_and_roles(summoner_id, summoner_name, champ_points_pair)
         data_grabber.percentages(champ_counters)
         structured_data = data_grabber.data_compile(summoner_id, summoner_name, champ_counters, champ_points_pair)
-        summoner_data.update(structured_data)
+        allkeys = {key for key in list(summoner_data.keys()) + list(structured_data.keys())}
+        summoner_data = {key: summoner_data.get(key, []) + structured_data.get(key, []) for key in allkeys}
 
     build_team = DoMath()
     # Get the squad
