@@ -38,22 +38,42 @@ def main():
         champ_points_pair = data_grabber.get_summoners_mastery(summoner_id, summoner_name, num_champs)
         champ_counters = data_grabber.lanes_and_roles(summoner_id, summoner_name, champ_points_pair)
         data_grabber.percentages(champ_counters)
-        structured_data = data_grabber.data_compile(summoner_id, summoner_name, champ_counters, champ_points_pair)
-        allkeys = {key for key in list(summoner_data.keys()) + list(structured_data.keys())}
-        summoner_data = {key: summoner_data.get(key, []) + structured_data.get(key, []) for key in allkeys}
+        summoner_data[summoner_name] = data_grabber.data_compile(summoner_name, champ_counters, champ_points_pair)
 
     build_team = DoMath()
     # Get the squad
     # Build the dream
+    # Using a basic genetic algorithm, we go through possible teams and find the best one we can
     try:
-        all_teams = build_team.build_teams(summoner_data)
-        dream_team = build_team.find_best(all_teams)
+        population = build_team.populate_generation(summoner_data, 200)
+        population = build_team.mutate(population, summoner_data)
+        health = 0
+        new_health = 1
+        while health / new_health < .99:
+            health = build_team.grade_generation(population)
+            population = build_team.evolve(population)
+            new_health = build_team.grade_generation(population)
+
+        dream_team = population[0]
+        # Parse the final output for the website
+        formatted_dream_team = ('{0},{1},{2},{3},{4},{5},{6},{7},{8},{9},{10},'
+                                '{11},{12},{13},{14},{15},{16},{17},{18},{19}'.format(dream_team[0][4], dream_team[0][0],
+                                                                                      dream_team[0][2], dream_team[1][4],
+                                                                                      dream_team[1][0], dream_team[1][2],
+                                                                                      dream_team[2][4], dream_team[2][0],
+                                                                                      dream_team[2][2], dream_team[3][4],
+                                                                                      dream_team[3][0], dream_team[3][2],
+                                                                                      dream_team[4][4], dream_team[4][0],
+                                                                                      dream_team[4][2], dream_team[0][1],
+                                                                                      dream_team[1][1], dream_team[2][1],
+                                                                                      dream_team[3][1], dream_team[4][1] ))
+
     except:
         exit('You woke up, the dream is gone')
         
     # Output for the website
-    print(dream_team)
-    return dream_team
+    print(formatted_dream_team)
+    return formatted_dream_team
     
 if __name__ == '__main__':
     main()
