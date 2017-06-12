@@ -88,30 +88,32 @@ class GetData(object):
 
         return champ_counters
 
-    def data_compile(self, summoner_id, summoner_name, champ_counters, champ_points_pair):
+    def data_compile(self, summoner_name, champ_counters, champ_points_pair):
         # Compile all the data that we have pulled so far into one place
-        structured_data = {}
+        structured_data = []
 
         # Get the champion name for later use, because 'champion 35' doesn't mean much to people
         champion_name_dict = {champ_id: idToNameDict[champ_id] for champ_id in champ_counters}
-        Person = namedtuple('Person', ['role', 'points', 'summoner_name', 'summoner_id'])
-        Champ = namedtuple('Champ', ['name', 'id'])
+        Champ = namedtuple('Champ', ['name', 'id', 'role', 'points', 'player'])
 
         try:
-            # Attempt at more performant structure
-            structured_data = {}
-            # The tuple champion name, champion id is the key
-            for champion_id, counter_info in champ_counters.items():
-                this_champ_name = champion_name_dict[champion_id]
-                champ_info = Champ(this_champ_name, champion_id)
-                structured_data[champ_info] = []
-                # The tuple role, points, summoner name, summoner id is the value
-                for role, percent in counter_info.items():
-                    points = percent * champ_points_pair[champion_id]
-                    person_info = Person(role, points, summoner_name, summoner_id)
-                    structured_data[(this_champ_name, champion_id)].append(person_info)
+            # Create a list of things a person plays. A "thing" is a champion, role, points tuple
+            # So one champion played in two roles will count as two things
+            for id, name in champion_name_dict.items():
+                if len(champ_counters[id]) == 1:
+                    multiplier = 1
+                elif len(champ_counters[id]) > 1:
+                    multiplier = 1.25
+                else:
+                    exit('The champion has no listed roles')
+                for role, percentage in champ_counters[id].items():
+                    if role.upper() not in ['DUO_CARRY', 'DUO_SUPPORT', 'JUNGLE', 'MID', 'TOP']:
+                        continue
+                    points = int(percentage * multiplier * champ_points_pair[id])
+                    champ_tuple = Champ(name, id, role, points, summoner_name)
+                    structured_data.append(champ_tuple)
 
         except:
-            exit('Error structuring the champion data for {}'.format(summoner_name))
+            exit('Error structuring the champion data for current summoner')
 
         return structured_data
