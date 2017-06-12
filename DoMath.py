@@ -1,183 +1,108 @@
+from random import randrange, random
+
 class DoMath(object):
     
-    def _compute_team(self, summonerDict):
-    
-        # A couple of initializations for later use
-        self.valid_roles = ['MID', 'TOP', 'JUNGLE', 'DUO_CARRY', 'DUO_SUPPORT']
-        self.summonerExperienceDict = {}
-        #self.summonerOrder = []
+    def build_candidate(self, summoner_data):
+        # Build a team of champions from the champion pools of the summoners we are checking
+        # Returns the team if all roles are accounted for, or None if not
 
-        # Find total mastery points per summoner (take the total points for each champion, and sum them)    
-        for summonerInfo in summonerDict.keys():
-            #self.summonerOrder.append(summonerInfo)
-            self.summonerExperienceDict[summonerInfo[0]] = 0
-            for champInfo in summonerDict[summonerInfo].keys():
-                for champRole in summonerDict[summonerInfo][champInfo].keys():
-                    self.summonerExperienceDict[summonerInfo[0]] += summonerDict[summonerInfo][champInfo][champRole]
+        team = []
+        for summoner in summoner_data:
+            selection = randrange(len(summoner_data[summoner]))
+            # champ_to_add is a tuple where [0]=champ-name [1]=id, [2]=role, [3]=points, [4]=summoner-playing
+            champ_to_add = summoner_data[summoner][selection]
+            team.append(champ_to_add)
 
-        # First we make sure we don't divide by zero at any point down the road           
-        for summonerName in self.summonerExperienceDict.keys():
-            if self.summonerExperienceDict[summonerName] == 0:
-                self.summonerExperienceDict[summonerName] = 1
+        # Make sure we have a valid team, and return None if we don't
+        return self.validate_team(team)
 
-        # Iterate through team combinations and find the "valid" ones (ones with each of the 5 positions)
-        # summonerDict structure
-        """
-        summoner name, summoner id:
-            champion name, champion id:
-                role: points
-                role: points
-                role: points
-                ...
-            champion name, champion id:
-                role: points
-                ...
-            ...
-        summoner name, summoner id:
-            ...
-        """
-        self.teamChamps  = []
-        self.teamRoles = []
-        #self.champScores = []
-        #self.teamString = ''
-        self.bestScore = -1
-        outString = self.builder(summonerDict)
-        #self.recursiveBuilder(summonerDict, self.summonerOrder.pop())
-        #print(self.teamString)
-        return outString
+    def populate_generation(self, summoner_data, count):
+        # Creates <count> valid (not None) candidate teams and adds them t a list
 
-    def builder(self, summonerDict):
-        keyList = list(summonerDict.keys())
-        summoner0 = keyList[0]
-        summoner1 = keyList[1]
-        summoner2 = keyList[2]
-        summoner3 = keyList[3]
-        summoner4 = keyList[4]
-        # Summoner 0
-        for champs0 in summonerDict[summoner0]:
-            self.teamChamps = []
-            # Add the champion to the champ list
-            self.teamChamps.append(champs0[0])
-            for roles0 in summonerDict[summoner0][champs0]:
-                self.teamRoles = []
-                # Check to see if we have a valid role
-                if roles0 not in self.valid_roles:
+        generation = []
+        while len(generation) < count:
+            candidate = self.build_candidate(summoner_data)
+            if candidate is not None:
+                generation.append(candidate)
+
+        return generation
+
+    def fitness(self, candidate):
+        # Sums the mastery score total for all of the champions selected in a candidate team
+
+        # champ is a tuple where [0]=champ-name [1]=id, [2]=role, [3]=points, [4]=summoner-playing
+        return sum( [champ[3] for champ in candidate ] )
+
+    def grade_generation(self, population):
+        # Gives the average score of all the candidate teams in a generation
+
+        generation_score = sum( [self.fitness(candidate) for candidate in population] )
+        return generation_score / len(population)
+
+    def evolve(self, population, retain=0.25, random_select=.06):
+        # Evolves the generation to get a better team
+
+        # Create a list of tuples (score, team)
+        scored = [ (self.fitness(candidate), candidate) for candidate in population]
+        # Sort it by score but then throw away the score because I don't care anymore
+        scored = [team_tuple[1] for team_tuple in sorted(scored, reverse=True)]
+        # Keep the top retain%
+        num_keepers = int(len(population) * retain)
+        parents = scored[:num_keepers]
+
+        # Avoid local maxmimum by randomly keeping some of the low scorers
+        for candidate in scored[num_keepers:]:
+            if random_select > random():
+                parents.append(candidate)
+
+        # Create next generation candidates using parents
+        parents_length = len(parents)
+        need_to_create = len(population) - parents_length
+        children = []
+        while len(children) < need_to_create:
+            dad = randrange(parents_length)
+            mom = randrange(parents_length)
+            if dad != mom:
+                dad = parents[dad]
+                mom = parents[mom]
+                half = int(len(dad) / 2)
+                child = dad[:half] + mom[half:]
+                if self.validate_team(child) is None:
+                    need_to_create -= 1
                     continue
-                # Add the tole to the role list
-                self.teamRoles.append(roles0)
-                for champs1 in summonerDict[summoner1]:
-                    self.teamChamps = self.teamChamps[:1]
-                    if champs1[0] in self.teamChamps:
-                        continue
-                    self.teamChamps.append(champs1[0])
-                    for roles1 in summonerDict[summoner1][champs1]:
-                        self.teamRoles = self.teamRoles[:1]
-                        if roles1 not in self.valid_roles or roles1 in self.teamRoles:
-                            continue
-                        self.teamRoles.append(roles1)
-                        for champs2 in summonerDict[summoner2]:
-                            self.teamChamps = self.teamChamps[:2]
-                            if champs2[0] in self.teamChamps:
-                                continue
-                            self.teamChamps.append(champs2[0])
-                            for roles2 in summonerDict[summoner2][champs2]:
-                                self.teamRoles = self.teamRoles[:2]
-                                if roles2 not in self.valid_roles or roles2 in self.teamRoles:
-                                    continue
-                                self.teamRoles.append(roles2)  
-                                for champs3 in summonerDict[summoner3]:
-                                    self.teamChamps = self.teamChamps[:3]
-                                    if champs3[0] in self.teamChamps:
-                                        continue
-                                    self.teamChamps.append(champs3[0])
-                                    for roles3 in summonerDict[summoner3][champs3]:
-                                        self.teamRoles = self.teamRoles[:3]
-                                        if roles3 not in self.valid_roles or roles3 in self.teamRoles:
-                                            continue
-                                        self.teamRoles.append(roles3)
-                                        for champs4 in summonerDict[summoner4]:
-                                            self.teamChamps = self.teamChamps[:4]
-                                            if champs4[0] in self.teamChamps:
-                                                continue
-                                            self.teamChamps.append(champs4[0])
-                                            for roles4 in summonerDict[summoner4][champs4]:
-                                                self.teamRoles = self.teamRoles[:4]
-                                                if roles4 not in self.valid_roles or roles4 in self.teamRoles:
-                                                    continue
-                                                self.teamRoles.append(roles4)
-                                                #####################################    
-                                                #####################################
-                                                #           WE GOT A TEAM           #
-                                                #####################################
-                                                #####################################
-                                                summoner0Points = summonerDict[summoner0][champs0][roles0] / self.summonerExperienceDict[summoner0[0]]
-                                                summoner1Points = summonerDict[summoner1][champs1][roles1] / self.summonerExperienceDict[summoner1[0]] 
-                                                summoner2Points = summonerDict[summoner2][champs2][roles2] / self.summonerExperienceDict[summoner2[0]] 
-                                                summoner3Points = summonerDict[summoner3][champs3][roles3] / self.summonerExperienceDict[summoner3[0]]
-                                                summoner4Points = summonerDict[summoner4][champs4][roles4] / self.summonerExperienceDict[summoner4[0]]
-                                                currentTeamPower = summoner0Points + summoner1Points + summoner2Points + summoner3Points + summoner4Points
-                                                if currentTeamPower > self.bestScore:
-                                                    self.bestScore = currentTeamPower
-                                                    idealChamp0 = champs0[0]
-                                                    idealChamp0Id = champs0[1]
-                                                    idealRole0 = roles0
-                                                    idealChamp1 = champs1[0]
-                                                    idealChamp1Id = champs1[1]
-                                                    idealRole1 = roles1 
-                                                    idealChamp2 = champs2[0]
-                                                    idealChamp2Id = champs2[1]
-                                                    idealRole2 = roles2 
-                                                    idealChamp3 = champs3[0]
-                                                    idealChamp3Id = champs3[1]
-                                                    idealRole3 = roles3 
-                                                    idealChamp4 = champs4[0]
-                                                    idealChamp4Id = champs4[1]
-                                                    idealRole4 = roles4
+                children.append(child)
 
-        if self.bestScore > 0:
-            return ('{0},{1},{2},'
-                    '{3},{4},{5},'
-                    '{6},{7},{8},'
-                    '{9},{10},{11},'
-                    '{12},{13},{14},'
-                    '{15},{16},{17},{18},{19}'.format(
-                         summoner0[0], idealChamp0, idealRole0,
-                         summoner1[0], idealChamp1, idealRole1,
-                         summoner2[0], idealChamp2, idealRole2,
-                         summoner3[0], idealChamp3, idealRole3,
-                         summoner4[0], idealChamp4, idealRole4,
-                         idealChamp0Id, idealChamp1Id, idealChamp2Id,
-                         idealChamp3Id, idealChamp4Id))
+        parents.extend(children)
+        return parents
+
+    def mutate(self, population, summoner_data, mutate=.01):
+        # Introduce mutation to better avoid locals
+
+        for team in population:
+            if mutate > random():
+                team_test = None
+                while team_test is None:
+                    # Pick a person to mutate on
+                    pos_to_mutate = randrange(len(team))
+                    # Mutate them by selecting a new champ for them
+                    # Remember the tuple has [0]=champ-name [1]=id, [2]=role, [3]=points, [4]=summoner-playing
+                    mutating_summoner = team[pos_to_mutate][4]
+                    new_selection = randrange(len(summoner_data[mutating_summoner]))
+                    new_champ = summoner_data[mutating_summoner][new_selection]
+                    team[pos_to_mutate] = new_champ
+                    team_test = self.validate_team(team)
+
+        return population
+
+    def validate_team(self, team):
+        # Make sure that a candidate team has exactly one of each summoner, one of each role, and one of each
+        # champion. Remember the tuple has [0]=champ-name [1]=id, [2]=role, [3]=points, [4]=summoner-playing
+
+        champions = {info[0] for info in team}
+        roles = {info[2] for info in team}
+        players = {info[4] for info in team}
+
+        if len(champions) == 5 and len(roles) == 5 and len(players) == 5:
+            return team
         else:
-            return 'An ideal team was not found'
-
-"""    def recursiveBuilder(self, summonerDict, summoner):
-        for champs in summonerDict[summoner]:
-            if champs[0] in self.teamChamps:
-                continue
-            self.teamChamps.append(champs[0])
-            print('c')
-            for role in summonerDict[summoner][champs]:
-                print('e')
-                if role not in self.valid_roles or role in self.teamRoles:
-                    continue
-                self.teamRoles.append(role)
-                print('a')
-                self.champScores.append(summonerDict[summoner][champs][roles] / 
-                                        self.summonerExperienceDict[summoner])
-                if len(self.teamRoles) == 5 and len(self.teamChamps) == 5 and len(self.champScores) == 5:
-                    if sum(self.champScores) > self.bestScore:
-                        self.bestScore = sum(champScores)
-                        self.teamString = ('{0},{1},{2},'
-                                           '{3},{4},{5},'
-                                           '{6},{7},{8},'
-                                           '{9},{10},{11},'
-                                           '{12},{13},{14},'
-                                           '{15},{16},{17}'.format(
-                                            self.summonerOrder[0], self.teamChamps[0], self.teamRoles[0],
-                                            self.summonerOrder[1], self.teamChamps[1], self.teamRoles[1],
-                                            self.summonerOrder[2], self.teamChamps[2], self.teamRoles[2],
-                                            self.summonerOrder[3], self.teamChamps[3], self.teamRoles[3],
-                                            self.summonerOrder[4], self.teamChamps[4], self.teamRoles[4]))
-                else:
-                    recursiveBuilder(summonerDict, self.summonerOrder.pop())"""
+            return None
