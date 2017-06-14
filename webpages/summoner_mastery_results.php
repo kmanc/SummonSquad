@@ -40,13 +40,7 @@
 					$champ[$j] = str_replace(array('"', ' ', '.', "'"), '' , $data_array[$i]);
 					$j++;
 				}
-				//temp fix to get rid of double quotes around KogMaw's name (rito pls)
-				
-				for ($i = 1; $i <= 5; $i += 1) {
-					$pattern = "/\"/"; 
-					$replace = ""; 
-					$fix_quote[$i] = preg_replace($pattern,$replace,$champ[$i]);
-				}
+
 				//standardize role names, e.g. DUO_CARRY turns to Carry, JUNGLE turns to Jungle
 				$m = 1;
 				for ($i = 2; $i <=14; $i += 3){
