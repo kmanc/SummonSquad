@@ -37,7 +37,7 @@
 
 				$j = 1;
 				for ($i = 1; $i <= 13; $i += 3) {
-					$champ[$j] = str_replace(array('"', ' '), '' , $data_array[$i]);
+					$champ[$j] = str_replace(array('"', ' ', '.'), '' , $data_array[$i]);
 					$j++;
 				}
 				//temp fix to get rid of double quotes around KogMaw's name (rito pls)
