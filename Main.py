@@ -74,9 +74,10 @@ def main():
 
     except:
         exit('You woke up, the dream is gone')
-        
+
+    # Output for me testing at the command line
+    #print(formatted_dream_team)
     # Output for the website
-    print(formatted_dream_team)
     return formatted_dream_team
     
 if __name__ == '__main__':
