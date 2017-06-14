@@ -1,6 +1,6 @@
-from GetData import GetData
-from DoMath import DoMath
+import GetData, DoMath
 import argparse
+
 
 def main():
 
@@ -22,37 +22,35 @@ def main():
     num_champs = args.champs
 
     # Set max and min for champs
-    if num_champs < 5:
-        num_champs = 5
-    if num_champs > 20:
-        num_champs = 20
+    if num_champs < 15:
+        num_champs = 15
+    if num_champs > 30:
+        num_champs = 30
     
     # Normalize summoner names (no spaces, no upper case) because the api can get cranky if you don't
     summoners = [name.lower().replace(" ", "") for name in summoners]
 
     summoner_data = {}
-    data_grabber = GetData(region)
     # Create a of champions and the summoners that play them (includes score based on mastery)
     for player in summoners:
-        summoner_id, summoner_name = data_grabber.get_summoner_data(player)
-        champ_points_pair = data_grabber.get_summoners_mastery(summoner_id, summoner_name, num_champs)
-        champ_counters = data_grabber.lanes_and_roles(summoner_id, summoner_name, champ_points_pair)
-        data_grabber.percentages(champ_counters)
-        summoner_data[summoner_name] = data_grabber.data_compile(summoner_name, champ_counters, champ_points_pair)
+        summoner_id, summoner_name, account_id = GetData.get_summoner_data(player, region)
+        champ_points_pair = GetData.get_summoners_mastery(summoner_id, summoner_name, num_champs, region)
+        champ_counters = GetData.lanes_and_roles(account_id, summoner_name, champ_points_pair, region)
+        GetData.percentages(champ_counters)
+        summoner_data[summoner_name] = GetData.data_compile(summoner_name, champ_counters, champ_points_pair, region)
 
-    build_team = DoMath()
     # Get the squad
     # Build the dream
     # Using a basic genetic algorithm, we go through possible teams and find the best one we can
     try:
-        population = build_team.populate_generation(summoner_data, 200)
-        population = build_team.mutate(population, summoner_data)
+        population = DoMath.populate_generation(summoner_data, 200)
+        population = DoMath.mutate(population, summoner_data)
         health = 0
         new_health = 1
         while health / new_health < .99:
-            health = build_team.grade_generation(population)
-            population = build_team.evolve(population)
-            new_health = build_team.grade_generation(population)
+            health = DoMath.grade_generation(population)
+            population = DoMath.evolve(population)
+            new_health = DoMath.grade_generation(population)
 
         dream_team = population[0]
         # Parse the final output for the website
