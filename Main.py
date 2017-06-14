@@ -30,6 +30,9 @@ def main():
     # Normalize summoner names (no spaces, no upper case) because the api can get cranky if you don't
     summoners = [name.lower().replace(" ", "") for name in summoners]
 
+    # Get a dictionary that maps champion id to champion name
+    champ_id_to_name = API.champion_lookup(region)
+
     summoner_data = {}
     # Create a of champions and the summoners that play them (includes score based on mastery)
     for player in summoners:
@@ -37,7 +40,8 @@ def main():
         champ_points_pair = GetData.get_summoners_mastery(summoner_id, summoner_name, num_champs, region)
         champ_counters = GetData.lanes_and_roles(account_id, summoner_name, champ_points_pair, region)
         GetData.percentages(champ_counters)
-        summoner_data[summoner_name] = GetData.data_compile(summoner_name, champ_counters, champ_points_pair, region)
+        summoner_data[summoner_name] = GetData.data_compile(summoner_name, champ_counters,
+                                                            champ_id_to_name, champ_points_pair)
 
     # Get the squad
     # Build the dream

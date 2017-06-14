@@ -84,12 +84,11 @@ def percentages(champ_counters):
     return champ_counters
 
 
-def data_compile(summoner_name, champ_counters, champ_points_pair, region):
+def data_compile(summoner_name, champ_counters, champ_id_to_name, champ_points_pair):
     # Compile all the data that we have pulled so far into one place
     structured_data = []
 
     # Get the champion name for later use, because 'champion 35' doesn't mean much to people
-    champ_id_to_name = API.champion_lookup(region)
     champ_id_to_name = {key: value['name'] for key, value in champ_id_to_name.items()}
     Champ = namedtuple('Champ', ['name', 'id', 'role', 'points', 'player'])
 
