@@ -32,6 +32,8 @@ def main():
 
     # Get a dictionary that maps champion id to champion name
     champ_id_to_name = API.champion_lookup(region)
+    # Get the champion name for later use, because 'champion 35' doesn't mean much to people
+    champ_id_to_name = {key: value['name'] for key, value in champ_id_to_name.items()}
 
     summoner_data = {}
     # Create a of champions and the summoners that play them (includes score based on mastery)
