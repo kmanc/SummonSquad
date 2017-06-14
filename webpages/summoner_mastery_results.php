@@ -44,7 +44,7 @@
 				//standardize role names, e.g. DUO_CARRY turns to Carry, JUNGLE turns to Jungle
 				$m = 1;
 				for ($i = 2; $i <=14; $i += 3){
-					$role[$m] = ucfirst(strtolower(preg_replace('/DUO_/', '', $data_array[$i])));
+					$role[$m] = ucfirst(strtolower(str_replace(array('/DUO_/'), '', $data_array[$i])));
 					$m++;
 				}
 				?>
