@@ -93,7 +93,7 @@
 							<?php
 								echo '<p class="bot_text">';
 								echo $summonerName[2];
-								echo '<br>' . $data_array[2];
+								echo '<br>' . $data_array[4];
 								echo '<br>' . $role[2];
 								echo '</p>';
 							?>
@@ -101,7 +101,7 @@
 							<?php
 								echo '<p class="bot_text">';
 								echo $summonerName[3];
-								echo '<br>' . $data_array[3];
+								echo '<br>' . $data_array[7];
 								echo '<br>' . $role[3];
 								echo '</p>';
 							?>
@@ -109,7 +109,7 @@
 							<?php
 								echo '<p class="bot_text">';
 								echo $summonerName[4];
-								echo '<br>' . $data_array[4];
+								echo '<br>' . $data_array[10];
 								echo '<br>' . $role[4];
 								echo '</p>';
 							?>
@@ -117,7 +117,7 @@
 							<?php
 								echo '<p class="bot_text">';
 								echo $summonerName[5];
-								echo '<br>' . $data_array[5];
+								echo '<br>' . $data_array[13];
 								echo '<br>' . $role[5];
 								echo '</p>';
 							?>
