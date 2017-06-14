@@ -75,7 +75,8 @@ def main():
         exit('You woke up, the dream is gone')
 
     # Output for me testing at the command line
-    #print(formatted_dream_team)
+    # Why does this need the print statement to work? Looks like I need to learn some php
+    print(formatted_dream_team)
     # Output for the website
     return formatted_dream_team
     
