@@ -60,17 +60,16 @@ def main():
 
         dream_team = population[0]
         # Parse the final output for the website
-        formatted_dream_team = ('{0},{1},{2},{3},{4},{5},{6},{7},{8},{9},{10},'
-                                '{11},{12},{13},{14},{15},{16},{17},{18},{19}'.format(dream_team[0][4], dream_team[0][0],
-                                                                                      dream_team[0][2], dream_team[1][4],
-                                                                                      dream_team[1][0], dream_team[1][2],
-                                                                                      dream_team[2][4], dream_team[2][0],
-                                                                                      dream_team[2][2], dream_team[3][4],
-                                                                                      dream_team[3][0], dream_team[3][2],
-                                                                                      dream_team[4][4], dream_team[4][0],
-                                                                                      dream_team[4][2], dream_team[0][1],
-                                                                                      dream_team[1][1], dream_team[2][1],
-                                                                                      dream_team[3][1], dream_team[4][1] ))
+        formatted_dream_team = ('{0},{1},{2},{3},{4},'
+                                '{5},{6},{7},{8},{9},'
+                                '{10},{11},{12},{13},{14},'
+                                '{15},{16},{17},{18},{19}'.format(dream_team[0][4], dream_team[0][0], dream_team[0][2],
+                                                                  dream_team[1][4], dream_team[1][0], dream_team[1][2],
+                                                                  dream_team[2][4], dream_team[2][0], dream_team[2][2],
+                                                                  dream_team[3][4], dream_team[3][0], dream_team[3][2],
+                                                                  dream_team[4][4], dream_team[4][0], dream_team[4][2],
+                                                                  dream_team[0][1], dream_team[1][1], dream_team[2][1],
+                                                                  dream_team[3][1], dream_team[4][1], ))
 
     except:
         exit('You woke up, the dream is gone')
