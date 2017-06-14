@@ -49,7 +49,7 @@ def main():
     # Build the dream
     # Using a basic genetic algorithm, we go through possible teams and find the best one we can
     try:
-        population = DoMath.populate_generation(summoner_data, 200)
+        population = DoMath.populate_generation(summoner_data, 2500)
         population = DoMath.mutate(population, summoner_data)
         health = 0
         new_health = 1
