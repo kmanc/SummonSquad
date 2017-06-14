@@ -3,7 +3,7 @@
   <meta charset="utf-8">
   <link href='https://fonts.googleapis.com/css?family=Gentium+Basic:400,700italic' rel='stylesheet' type='text/css'>
   <link href='/webpages/riot.css' rel='stylesheet' type='text/css'>
-  <title>About DreamTeam.gg</title>
+  <title>About Summonsquad.com</title>
 	<script src="scripts/jquery.js"></script>
 	<script src="scripts/summoner_stuff.js"></script>
 </head>
@@ -13,7 +13,9 @@
 	<br>
 	<h3>What is this thing?</h3>
 	<div class="about">
-		<p> SummonSquad.com is a site where you can enter 5 summoner names, and it generates the best possible team, based on Mastery Points.  Taking into consideration 6 champions will be banned and unusable, there's a little over <span style="font-weight: bold"> 27 billion </span> possible team compositions(27,018,002,880 to be exact). You don't want to have to sift through all of those to find the best possible team, do you? SummonSquad puts each person in their strongest position, with their best champion in that position.  If there are two people who are both top tier junglers, but one of them is garbage everywhere else and the other is pretty good in Mid, then it will put the first person in jungle and the second in mid. The goal of this site is to do all the hard thinking about best possible combinations so you and your team don't have to. <br>Let us know what you think about it! <br><br>
+		<p> SummonSquad.com is a site where you can enter 5 summoner names, and you are given the best possible team based on Mastery Points. You don't want to have to sift through every possible composition to find the best possible team, do you? SummonSquad aims to put each person in their strongest position, with their best champion in that position.  If there are two people who are both top tier junglers, but one of them is garbage everywhere else and the other is pretty good in Mid, then it will put the first person in jungle and the second in mid. The goal of this site is to do all the hard thinking about best possible combinations so you and your team don't have to. <br>Let us know what you think about it! <br><br>
+
+			If you're interested in the implementation of the team building code, reach out to KmancXC on LoL! It uses a basic genetic algorithm to seed team comps and then evolve the seed list until the improvement from one evolution to the next is negligible. We think it's pretty cool =D
 
 			Developed by KmancXC and Jiaxsun
 		</p>
@@ -21,7 +23,7 @@
 	<h3>How did we do it?</h3>
 	<div class="about2">
 		
-		<p> Kmancxc did most of the back end programming, which is basically all in python. His goal was to create a webapp where 5 ranked summoners could put in their names, and our app would generate the best possible team based on mastery of champions. Kmancxc asked me if I wanted to help, and I thought it would be a fun learning experience, so I did. In addition to helping Kmancxc bugfix and work through some logic issues, I designed and implemented the user interface. The index page simply takes the summoner names as variables and passes them to the python script, where we use the Riot API to pull all the relevant data and organize it. Currently, it simply returns the summoner name, the champion, and the role. These strings are formatted on the front end to display correctly, and are at the bottom of the second page. When you hover over a summoner, it changes the background of the website to the champion for that summoner. If we have more time (we'll probably continue working on it after the contest), we will add more interesting information about the masteries for the champions (for instance: giving champions who are currently considered strong a bonus point multiplier to give them a better chance of appearing in your team, and allowing users to enter which champions have been banned or picked so that the "dream team" can be adjusted if need be), and make the site look better graphically. All in all, we're happy with how it turned out! <br>
+		<p> Kmancxc did the back end programming, which is all in python. His goal was to create a webapp where 5 ranked summoners could put in their names, and the app would generate the best possible team based on mastery of champions. Kmancxc asked me if I wanted to help, and I thought it would be a fun learning experience, so I did. In addition to helping Kmancxc bugfix and work through some logic issues, I designed and implemented the user interface. The index page simply takes the summoner names as variables and passes them to the python script, where we use the Riot API to pull all the relevant data and organize it. Currently, it simply returns the summoner name, the champion, and the role. These strings are formatted on the front end to display correctly, and are at the bottom of the second page. When you hover over a summoner, it changes the background of the website to the champion for that summoner. <br>
 
 			Jiaxsun and Kmancxc
 		</p>
