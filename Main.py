@@ -40,7 +40,7 @@ def main():
     for player in summoners:
         summoner_id, summoner_name, account_id = GetData.get_summoner_data(player, region)
         champ_points_pair = GetData.get_summoners_mastery(summoner_id, summoner_name, num_champs, region)
-        champ_counters = GetData.lanes_and_roles(account_id, summoner_name, champ_points_pair, region)
+        champ_counters = GetData.lanes_and_roles(account_id, summoner_name, champ_points_pair, champ_id_to_name, region)
         GetData.percentages(champ_counters)
         summoner_data[summoner_name] = GetData.data_compile(summoner_name, champ_counters,
                                                             champ_id_to_name, champ_points_pair)
