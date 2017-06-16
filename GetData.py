@@ -65,8 +65,11 @@ def lanes_and_roles(account_id, summoner_name, champ_points_pair, champ_id_to_na
                     role_played == 'NONE' or
                     role_played == 'SOLO' or
                     role_played == 'DUO'):
-                champ_name = champ_id_to_name[str(champ_id)]
-                role_played = backups[champ_name]
+                if str(champ_id) in backups:
+                    champ_name = champ_id_to_name[str(champ_id)]
+                    role_played = backups[champ_name]
+                else:
+                    continue
             if champ_id not in champ_role_time_in_role:
                 champ_role_time_in_role[champ_id] = Counter()
             champ_role_time_in_role[champ_id][role_played] += 1
