@@ -41,38 +41,42 @@ def get_summoners_mastery(summoner_id, summoner_name, num_champs, region):
 def lanes_and_roles(account_id, summoner_name, champ_points_pair, champ_id_to_name, region):
     # Get data about regarding the lane the champion is being played in by checking the summoner's ranked history
     champ_list = [key for key in champ_points_pair]
+    champ_role_time_in_role = {}
     try:
         lane_response = API.match_history(account_id, champ_list, region)
 
     except:
         exit('Error trying to determine what lane one of the champions was played in by {}'.format(summoner_name))
 
-    list_of_games = lane_response['matches']
-    champ_role_time_in_role = {}
-    for game in list_of_games:
-        champ_id = game['champion']
-        if 'lane' in game:
-            lane_played = game['lane'].upper()
+    try:
+        list_of_games = lane_response['matches']
+        for game in list_of_games:
+            champ_id = game['champion']
+            if 'lane' in game:
+                lane_played = game['lane'].upper()
 
-            if lane_played == 'BOTTOM':
-                role_played = game['role']
-            else:
-                role_played = lane_played
-            # If the API returns something that doesn't make any sense, make a guess as to where that champ
-            # was played based off of hard coded values in BackupLaneGuess
-            if ((lane_played == 'MID' and role_played =='DUO_SUPPORT') or
-                    (lane_played == 'TOP' and role_played =='DUO_SUPPORT') or
-                    role_played == 'NONE' or
-                    role_played == 'SOLO' or
-                    role_played == 'DUO'):
-                if str(champ_id) in backups:
-                    champ_name = champ_id_to_name[str(champ_id)]
-                    role_played = backups[champ_name]
+                if lane_played == 'BOTTOM':
+                    role_played = game['role']
                 else:
-                    continue
-            if champ_id not in champ_role_time_in_role:
-                champ_role_time_in_role[champ_id] = Counter()
-            champ_role_time_in_role[champ_id][role_played] += 1
+                    role_played = lane_played
+                # If the API returns something that doesn't make any sense, make a guess as to where that champ
+                # was played based off of hard coded values in BackupLaneGuess
+                if ((lane_played == 'MID' and role_played =='DUO_SUPPORT') or
+                        (lane_played == 'TOP' and role_played =='DUO_SUPPORT') or
+                        role_played == 'NONE' or
+                        role_played == 'SOLO' or
+                        role_played == 'DUO'):
+                    if str(champ_id) in backups:
+                        champ_name = champ_id_to_name[str(champ_id)]
+                        role_played = backups[champ_name]
+                    else:
+                        continue
+                if champ_id not in champ_role_time_in_role:
+                    champ_role_time_in_role[champ_id] = Counter()
+                champ_role_time_in_role[champ_id][role_played] += 1
+
+    except:
+        pass
 
     # If the person hasn't played ranked, make a guess as to where they should play that champion based off
     # of hard coded values in BackupLaneGuess
