@@ -44,7 +44,7 @@
 				//standardize role names, e.g. DUO_CARRY turns to Carry, JUNGLE turns to Jungle
 				$m = 1;
 				for ($i = 2; $i <=14; $i += 3){
-					$role[$m] = ucfirst(strtolower(str_replace(array('/DUO_/'), '', $data_array[$i])));
+					$role[$m] = ucfirst(strtolower(preg_replace('/DUO_/', '', $data_array[$i])));
 					$m++;
 				}
 				?>
@@ -85,7 +85,7 @@
 							<?php
 								echo '<p class="bot_text">';
 								echo $summonerName[1];
-								echo '<br>' . $fix_quote[1];
+								echo '<br>' . $data_array[1];
 								echo '<br>' . $role[1];
 								echo '</p>';
 							?>
@@ -93,7 +93,7 @@
 							<?php
 								echo '<p class="bot_text">';
 								echo $summonerName[2];
-								echo '<br>' . $fix_quote[2];
+								echo '<br>' . $data_array[4];
 								echo '<br>' . $role[2];
 								echo '</p>';
 							?>
@@ -101,7 +101,7 @@
 							<?php
 								echo '<p class="bot_text">';
 								echo $summonerName[3];
-								echo '<br>' . $fix_quote[3];
+								echo '<br>' . $data_array[7];
 								echo '<br>' . $role[3];
 								echo '</p>';
 							?>
@@ -109,7 +109,7 @@
 							<?php
 								echo '<p class="bot_text">';
 								echo $summonerName[4];
-								echo '<br>' . $fix_quote[4];
+								echo '<br>' . $data_array[10];
 								echo '<br>' . $role[4];
 								echo '</p>';
 							?>
@@ -117,7 +117,7 @@
 							<?php
 								echo '<p class="bot_text">';
 								echo $summonerName[5];
-								echo '<br>' . $fix_quote[5];
+								echo '<br>' . $data_array[13];
 								echo '<br>' . $role[5];
 								echo '</p>';
 							?>
