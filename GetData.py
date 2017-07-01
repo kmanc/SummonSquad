@@ -5,16 +5,15 @@ from collections import Counter, namedtuple
 
 def get_summoner_data(current_summoner, region):
 
-    # Get summoner data, or tell us it couldn't be found
     try:
+        # Get summoner data, or tell us it couldn't be found
         summoner_response = API.summoner_lookup(current_summoner, region)
+        # Parse the output and make sure we have both a person's summoner name and id
+        summoner_id = summoner_response['id']
+        summoner_name = summoner_response['name']
+        account_id = summoner_response['accountId']
     except:
-        exit('Summoner name {} does not exist'.format(current_summoner))
-
-    # Parse the output and make sure we have both a person's summoner name and id
-    summoner_id = summoner_response['id']
-    summoner_name = summoner_response['name']
-    account_id = summoner_response['accountId']
+        raise KeyError('Summoner "{0}" does not exist'.format(current_summoner))
 
     return summoner_id, summoner_name, account_id
 
