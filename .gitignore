@@ -8,3 +8,4 @@ DoMath_REMOTE_3153.py
 KeyAPI.py
 /Misc
 *.txt
+!requirements.txt
