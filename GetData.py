@@ -13,7 +13,7 @@ def get_summoner_data(current_summoner, region):
         summoner_name = summoner_response['name']
         account_id = summoner_response['accountId']
     except:
-        raise KeyError('Summoner "{0}" does not exist'.format(current_summoner))
+        raise KeyError('Summoner "{0}" does not exist in the {1} region'.format(current_summoner, region))
 
     return summoner_id, summoner_name, account_id
 
