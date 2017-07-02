@@ -1,3 +1,58 @@
 <html>
+    <body>
+        <table border="0" cellpadding="10">
+              <h1>About</h1>
+        </table>
+        <div class="about">
+            <p>
+                SummonSquad.com is a site where you can enter 5 summoner names, and you are given the best possible
+                team based on Mastery Points.
+                <br>
+                You don't want to have to sift through every possible composition to find the best possible team, do you?
+                <br>
+                SummonSquad aims to put each person in their strongest position, with their best champion in that position.
+                <br>
+                If there are two people who are both top tier junglers, but one of them is garbage everywhere else and
+                the other is a pretty good mid laner, then it will put the first person in jungle and the second in mid.
+                The goal of this site is to do all the theorycrafting about best possible combinations so you and your
+                team don't have to.
+                <br>
+                Let us know what you think about it!
+                <br>
+                <br>
+                If you're interested in the implementation of the team building code, reach out to KmancXC on LoL!
+                <br>
+                <br>
+                It uses a basic genetic algorithm to seed team comps and then evolve the seed list until the improvement
+                from one evolution to the next is negligible.
+                <br>
+                We think it's pretty cool =D
+                <br>
+                <br>
+                Developed by KmancXC and Jiaxsun
+            </p>
+	    </div>
+        <div class="about2">
+            <p>
+                Kmancxc did the back end programming, which is all in python. His goal was to create an app where 5
+                summoners could put in their names, and the app would generate the best possible team based on mastery
+                of champions.
+                <br>
+                <br>
+                Kmancxc asked me if I wanted to help, and I thought it would be a fun learning experience,
+                so I did. In addition to helping Kmancxc bugfix and work through some logic issues, I designed and
+                implemented the user interface. The index page simply takes the summoner names as variables and passes
+                them to the backend script, where we use the Riot API to pull all the relevant data and organize it.
+                Currently, it simply returns the summoner name, the champion, and the role. This is formatted on the
+                front end to display correctly, and are at the bottom of the second page. When you hover over a
+                summoner, it changes the background of the website to the champion for that summoner.
+                <br>
 
+                Jiaxsun and Kmancxc
+            </p>
+	    </div>
+        <form method="post">
+            <button type="submit" name="button" class="btn btn-default" value="home">Home</button>
+        </form>
+    </body>
 </html>
