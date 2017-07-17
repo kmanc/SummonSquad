@@ -10,50 +10,40 @@
         </table>
         <div class="about">
             <p>
-                SummonSquad.com is a site where you can enter 5 summoner names, and you are given the best possible
-                team based on Mastery Points.
+                SummonSquad is a website that allows you to reach your full League of Legends potential by building
+                you the ideal team.
                 <br>
-                You don't want to have to sift through every possible composition to find the best possible team, do you?
-                <br>
-                SummonSquad aims to put each person in their strongest position, with their best champion in that position.
-                <br>
-                If there are two people who are both top tier junglers, but one of them is garbage everywhere else and
-                the other is a pretty good mid laner, then it will put the first person in jungle and the second in mid.
-                The goal of this site is to do all the theorycrafting about best possible combinations so you and your
-                team don't have to.
+                There are 5 players on each team, and over 130 champions...trust us when we say there are a lot of
+                possible team comps. Don't worry though, we'll give you the best one and let you focus on playing.
                 <br>
                 Let us know what you think about it!
                 <br>
                 <br>
-                If you're interested in the implementation of the team building code, reach out to KmancXC on LoL!
+                If you're interested in the implementation of the team building code, reach out to "KmancXC" or
+                "F O R C I N it" on LoL!
                 <br>
                 <br>
-                It uses a basic genetic algorithm to seed team comps and then evolve the seed list until the improvement
-                from one evolution to the next is negligible.
+                It uses a basic genetic algorithm to seed team comps and then improve on the seed teams until the i
+                improvement from one iteration to the next is negligible (ie, we found the ideal team).
                 <br>
                 We think it's pretty cool =D
                 <br>
                 <br>
-                Developed by KmancXC and Jiaxsun
+                Developed by Jiaxsun and KmancXC
             </p>
 	    </div>
         <div class="about2">
             <p>
-                Kmancxc did the back end programming, which is all in python. His goal was to create an app where 5
-                summoners could put in their names, and the app would generate the best possible team based on mastery
-                of champions.
+                KmancXC did most of the back-end teambuilding code, which is written all in Python. It was originally
+                designed as a command line script because that's all he knew how to do, but he recently migrated the
+                entire site to a Flask app for maintainability and future development purposes.
                 <br>
                 <br>
-                Kmancxc asked me if I wanted to help, and I thought it would be a fun learning experience,
-                so I did. In addition to helping Kmancxc bugfix and work through some logic issues, I designed and
-                implemented the user interface. The index page simply takes the summoner names as variables and passes
-                them to the backend script, where we use the Riot API to pull all the relevant data and organize it.
-                Currently, it simply returns the summoner name, the champion, and the role. This is formatted on the
-                front end to display correctly, and are at the bottom of the second page. When you hover over a
-                summoner, it changes the background of the website to the champion for that summoner.
+                Jiaxsun did pretty much all of the formatting and website setup from getting an EC2 instance to host
+                the site on to maintaining the environment. He also did the webbsite design and formatting which was
+                originally in PHP (again, all he knew at the time) but was recently migrated to Javascript and Jinja
+                templating to integrate better with the Flask framework.
                 <br>
-
-                Jiaxsun and Kmancxc
             </p>
 	    </div>
         <form method="post">
