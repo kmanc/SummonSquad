@@ -1,15 +1,83 @@
 <html>
+    <head>
+        <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='riot.css') }}" />
+        <link href='https://fonts.googleapis.com/css?family=Gentium+Basic:400,700italic' rel='stylesheet' type='text/css'>
+        <script src="{{ url_for('static', filename='scripts/jquery.js') }}"></script>
+    </head>
     <body>
-        <table border="0" cellpadding="10">
-              <h1>Results</h1>
-        </table>
-        {% for item in results %}
-            <br>
-            <h4>{{ item }}</h4>
-            <br>
-        {% endfor %}
+        <div class="summoners">
+            {% set count = 1 -%}
+            {% for champNameFix in results %}
+            <div class="player{{ count + loop.index0 }}">
+                <p class="p{{ count + loop.index0 }}">
+                    {{ champNameFix[2].name.replace("'","").replace(" ", "") }}
+                </p>
+            </div>
+            {% endfor %}
+        </div>
+        <div class="readText">
+            {% set count = 1 -%}
+            {% for champList in results %}
+            <div id="summ{{ count + loop.index0 }}">
+                <p class="bot_text">
+                    {{ champList[0] }}
+                    <br>{{ champList[1] }}
+                    <br>{{ champList[2].name }}
+                </p>
+            </div>
+            {% endfor %}
+        </div>
         <form method="post">
             <button type="submit" name="button" class="btn btn-default" value="home">Home</button>
         </form>
+        <script>
+            $(document).ready(function(){
+                {% if results %}
+                var name = `{{ results[0][2].name.replace("'", "").replace(" ", "") }}`
+                $('html').css({
+                    "background" : "url('/static/img/bg/" + name + ".jpg') no-repeat center center fixed",
+                    'background-position' : '50% 10%',
+                    '-webkit-background-size' : 'cover',
+                    '-moz-background-size' : 'cover',
+                    '-o-background-size' : 'cover',
+                    'background-size' : 'cover',
+                })
+                {% endif %}
+                {% set count = 1 -%}
+                {% for champBg in results %}
+                $('div#summ{{ count + loop.index0 }}').hover(function(){
+                    var name = `{{ champBg[2].name.replace("'", "").replace(" ", "") }}`
+                    console.log('champ names,', name)
+                    $('html').css({
+                        "background" : "url('/static/img/bg/" + name + ".jpg') no-repeat center center fixed",
+                        'background-position' : '50% 10%',
+                        '-webkit-background-size' : 'cover',
+                        '-moz-background-size' : 'cover',
+                        '-o-background-size' : 'cover',
+                        'background-size' : 'cover',
+                        'transition-duration': '.3s'
+                    })
+                })
+                $('div#summ{{ count + loop.index0 }}').mouseenter(function(){
+                    $('p.p{{ count + loop.index0 }}').css({
+                        'color' : 'rgba(230,230,230,1)',
+                        'transition-duration': '.4s',
+                    })
+                    $('div.player{{ count + loop.index0 }}').css({
+                        'background-color' : 'rgba(0,0,0,.4)',
+                    })
+                })
+                $('div#summ{{ count + loop.index0 }}').mouseleave(function(){
+                    $('p.p{{ count + loop.index0 }}').css({
+                        'color' : 'rgba(0,0,0,0)',
+                        'transition-duration': '.4s',
+                    })
+                    $('div.player{{ count + loop.index0 }}').css({
+                        'background-color' : 'rgba(0,0,0,0)',
+                    })
+                })
+                {% endfor %}
+            })
+        </script>
     </body>
 </html>

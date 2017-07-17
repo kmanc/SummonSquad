@@ -73,11 +73,11 @@ def results():
             err_message = str(inst)[1:-1]
             return redirect(url_for('.error', values=err_message))
         dream_team = build_team(summoner_data)
-        answer0 = [dream_team[0].player, dream_team[0].role, dream_team[0].name, dream_team[0].id]
-        answer1 = [dream_team[1].player, dream_team[1].role, dream_team[1].name, dream_team[1].id]
-        answer2 = [dream_team[2].player, dream_team[2].role, dream_team[2].name, dream_team[2].id]
-        answer3 = [dream_team[3].player, dream_team[3].role, dream_team[3].name, dream_team[3].id]
-        answer4 = [dream_team[4].player, dream_team[4].role, dream_team[4].name, dream_team[4].id]
+        answer0 = [dream_team[0].player, dream_team[0].role, dream_team[0], dream_team[0].id]
+        answer1 = [dream_team[1].player, dream_team[1].role, dream_team[1], dream_team[1].id]
+        answer2 = [dream_team[2].player, dream_team[2].role, dream_team[2], dream_team[2].id]
+        answer3 = [dream_team[3].player, dream_team[3].role, dream_team[3], dream_team[3].id]
+        answer4 = [dream_team[4].player, dream_team[4].role, dream_team[4], dream_team[4].id]
         team = [answer0, answer1, answer2, answer3, answer4]
 
         return render_template('results.html', results=team)
@@ -85,7 +85,7 @@ def results():
     if request.method == 'POST':
         if request.form['button'] == 'home':
             return redirect(url_for('.front_page'))
-        
+
 
 def gather_info(summoners, champ_count, champ_id_to_name, region):
     summoner_data = {}
