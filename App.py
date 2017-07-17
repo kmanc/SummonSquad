@@ -85,7 +85,7 @@ def results():
     if request.method == 'POST':
         if request.form['button'] == 'home':
             return redirect(url_for('.front_page'))
-        
+
 
 def gather_info(summoners, champ_count, champ_id_to_name, region):
     summoner_data = {}
