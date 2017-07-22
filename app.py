@@ -18,8 +18,11 @@ def front_page():
             summoner5 = request.form['sum5'].lower().replace(" ", "")
             region = request.form['region']
             champ_count = request.form['champions']
+            picked_list = []
+            banned_list = []
             return redirect(url_for('.results', sum1=summoner1, sum2=summoner2, sum3=summoner3, sum4=summoner4,
-                                    sum5=summoner5, region=region, champnum=champ_count))
+                                    sum5=summoner5, region=region, champnum=champ_count, picked=picked_list,
+                                    banned=banned_list))
 
         if request.form['button'] == 'about':
             return redirect(url_for('.about'))
@@ -54,9 +57,18 @@ def results():
         summoner3 = request.args['sum3']
         summoner4 = request.args['sum4']
         summoner5 = request.args['sum5']
-        summoners = [summoner1, summoner2, summoner3, summoner4, summoner5]
         region = request.args['region']
         champ_count = int(request.args['champnum'])
+        try:
+            picked_list = set(request.args['picked'].split(','))
+        except KeyError:
+            picked_list = set()
+        try:
+            banned_list = set(request.args['banned'].split(','))
+        except KeyError:
+            banned_list = set()
+        summoners = [summoner1, summoner2, summoner3, summoner4, summoner5]
+
         if region not in ['NA', 'BR', 'EUNE', 'EUW', 'JP', 'KR', 'LAN', 'LAS', 'OCE', 'TR', 'RU']:
             return redirect(url_for('.error', values='Region not valid'))
 
@@ -73,7 +85,7 @@ def results():
         except KeyError as inst:
             err_message = str(inst)[1:-1]
             return redirect(url_for('.error', values=err_message))
-        dream_team = build_team(summoner_data)
+        dream_team = build_team(summoner_data, picked_list, banned_list)
         answer0 = [dream_team[0].player, dream_team[0].role, dream_team[0], dream_team[0].id]
         answer1 = [dream_team[1].player, dream_team[1].role, dream_team[1], dream_team[1].id]
         answer2 = [dream_team[2].player, dream_team[2].role, dream_team[2], dream_team[2].id]
@@ -101,14 +113,14 @@ def gather_info(summoners, champ_count, champ_id_to_name, region):
     return summoner_data
 
 
-def build_team(summoner_data):
-    population = do_math.populate_generation(summoner_data, 5000)
+def build_team(summoner_data, picked_list, banned_list):
+    population = do_math.populate_generation(summoner_data, 5000, picked_list, banned_list)
     health = 0
     new_health = 1
     while health / new_health < .995:
         health = do_math.grade_generation(population)
-        population = do_math.evolve(population)
-        population = do_math.mutate(population, summoner_data)
+        population = do_math.evolve(population, picked_list, banned_list)
+        population = do_math.mutate(population, summoner_data, picked_list, banned_list)
         new_health = do_math.grade_generation(population)
 
     dream_team = population[0]

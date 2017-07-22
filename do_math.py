@@ -1,7 +1,7 @@
 from random import randrange, random
 
     
-def build_candidate(summoner_data):
+def build_candidate(summoner_data, picked_list, banned_list):
     # Build a team of champions from the champion pools of the summoners we are checking
     # Returns the team if all roles are accounted for, or None if not
 
@@ -13,15 +13,15 @@ def build_candidate(summoner_data):
         team.append(champ_to_add)
 
     # Make sure we have a valid team, and return None if we don't
-    return validate_team(team)
+    return validate_team(team, picked_list, banned_list)
 
 
-def populate_generation(summoner_data, count):
+def populate_generation(summoner_data, count, picked_list, banned_list):
     # Creates <count> valid (not None) candidate teams and adds them t a list
 
     generation = []
     while len(generation) < count:
-        candidate = build_candidate(summoner_data)
+        candidate = build_candidate(summoner_data, picked_list, banned_list)
         if candidate is not None:
             generation.append(candidate)
 
@@ -42,7 +42,7 @@ def grade_generation(population):
     return generation_score / len(population)
 
 
-def evolve(population, retain=0.25, random_select=.06):
+def evolve(population, picked_list, banned_list, retain=0.25, random_select=.06):
     # Evolves the generation to get a better team
 
     # Create a list of tuples (score, team)
@@ -70,7 +70,7 @@ def evolve(population, retain=0.25, random_select=.06):
             mom = parents[mom]
             half = int(len(dad) / 2)
             child = dad[:half] + mom[half:]
-            if validate_team(child) is None:
+            if validate_team(child, picked_list, banned_list) is None:
                 need_to_create -= 1
                 continue
             children.append(child)
@@ -79,7 +79,7 @@ def evolve(population, retain=0.25, random_select=.06):
     return parents
 
 
-def mutate(population, summoner_data, mutate=.02):
+def mutate(population, summoner_data, picked_list, banned_list, mutate=.02):
     # Introduce mutation to better avoid locals
     for team in population[1:]:
         if mutate > random():
@@ -94,7 +94,7 @@ def mutate(population, summoner_data, mutate=.02):
                 new_champ = summoner_data[mutating_summoner][new_selection]
                 old_champ = team[pos_to_mutate]
                 team[pos_to_mutate] = new_champ
-                team_test = validate_team(team)
+                team_test = validate_team(team, picked_list, banned_list)
                 # If the mutation makes an invalid team, revert the mutation
                 if team_test is None:
                     team[pos_to_mutate] = old_champ
@@ -102,11 +102,15 @@ def mutate(population, summoner_data, mutate=.02):
     return population
 
 
-def validate_team(team):
+def validate_team(team, picked_list, banned_list):
     # Make sure that a candidate team has exactly one of each summoner, one of each role, and one of each
     # champion. Remember the tuple has [0]=champ-name [1]=id, [2]=role, [3]=points, [4]=summoner-playing
 
     champions = {info[0] for info in team}
+    if not picked_list.issubset(champions):
+        return None
+    if not banned_list.isdisjoint(champions):
+        return None
     roles = {info[2] for info in team}
     players = {info[4] for info in team}
 
