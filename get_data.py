@@ -23,7 +23,7 @@ def get_summoners_mastery(summoner_id, summoner_name, num_champs, region):
     try:
         mastery_response = api_calls.champion_mastery(summoner_id, num_champs, region)
     except:
-        exit('Could not get champion mastery data for {}'.format(summoner_name, num_champs))
+        raise KeyError('Could not get champion mastery data for {}'.format(summoner_name))
 
     # Compile the stuff we care about into a dictionary (namely that champion id and its associated score)
     # Bonus multiplier for level 7/level 6 champions
@@ -38,7 +38,7 @@ def get_summoners_mastery(summoner_id, summoner_name, num_champs, region):
         champ_points_pair = {item['championId']: int(item['championPoints'] * multiplier[item['championLevel']])
                              for item in mastery_response}
     except:
-        exit('We encountered a problem parsing champion mastery data for {}'.format(summoner_name))
+        raise KeyError('We encountered a problem parsing champion mastery data for {}'.format(summoner_name))
 
     return champ_points_pair
 
@@ -51,7 +51,8 @@ def lanes_and_roles(account_id, summoner_name, champ_points_pair, champ_id_to_na
         lane_response = api_calls.match_history(account_id, champ_list, region)
 
     except:
-        exit('Error trying to determine what lane one of the champions was played in by {}'.format(summoner_name))
+        raise KeyError('Error trying to determine what lane one of the champions was played in by {}'.format
+                       (summoner_name))
 
     try:
         list_of_games = lane_response['matches']
@@ -140,6 +141,6 @@ def data_compile(summoner_name, champ_counters, champ_id_to_name, champ_points_p
                 structured_data.append(champ_tuple)
 
     except:
-        exit('Error structuring the champion data for current summoner')
+        raise KeyError('Error structuring the champion data for {}'.format(summoner_name))
 
     return structured_data
