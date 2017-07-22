@@ -52,6 +52,7 @@ backups = {
             'Kassadin': 'MID',
             'Katarina': 'MID',
             'Kayle': 'MID',
+            'Kayn': 'JUNGLE',
             'Kennen': 'TOP',
             "Kha'Zix": 'JUNGLE',
             'Kindred': 'JUNGLE',
