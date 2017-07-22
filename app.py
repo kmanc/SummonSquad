@@ -11,17 +11,15 @@ def front_page():
 
     if request.method == 'POST':
         if request.form['button'] == 'submit':
-            summoner1 = request.form['sum1']
-            summoner2 = request.form['sum2']
-            summoner3 = request.form['sum3']
-            summoner4 = request.form['sum4']
-            summoner5 = request.form['sum5']
-            summoners = [summoner1, summoner2, summoner3, summoner4, summoner5]
-            values = [name.lower().replace(" ", "") for name in summoners]
-            values.append(request.form['region'])
-            values.append(request.form['champions'])
-            list_as_string = ','.join(values)
-            return redirect(url_for('.results', values=list_as_string))
+            summoner1 = request.form['sum1'].lower().replace(" ", "")
+            summoner2 = request.form['sum2'].lower().replace(" ", "")
+            summoner3 = request.form['sum3'].lower().replace(" ", "")
+            summoner4 = request.form['sum4'].lower().replace(" ", "")
+            summoner5 = request.form['sum5'].lower().replace(" ", "")
+            region = request.form['region']
+            champ_count = request.form['champions']
+            return redirect(url_for('.results', sum1=summoner1, sum2=summoner2,
+                                    sum3=summoner3, sum4=summoner4, sum5=summoner5, region=region, champnum=champ_count))
 
         if request.form['button'] == 'about':
             return redirect(url_for('.about'))
@@ -51,11 +49,14 @@ def error():
 @app.route("/results", methods=['GET', 'POST'])
 def results():
     if request.method == 'GET':
-        list_as_string = request.args['values']
-        values = list_as_string.split(',')
-        summoners = values[:5]
-        region = values[5]
-        champ_count = int(values[6])
+        summoner1 = request.args['sum1']
+        summoner2 = request.args['sum2']
+        summoner3 = request.args['sum3']
+        summoner4 = request.args['sum4']
+        summoner5 = request.args['sum5']
+        summoners = [summoner1, summoner2, summoner3, summoner4, summoner5]
+        region = request.args['region']
+        champ_count = int(request.args['champnum'])
         if region not in ['NA', 'BR', 'EUNE', 'EUW', 'JP', 'KR', 'LAN', 'LAS', 'OCE', 'TR', 'RU']:
             return redirect(url_for('.error', values='Region not valid'))
 
