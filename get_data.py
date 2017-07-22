@@ -28,7 +28,13 @@ def get_summoners_mastery(summoner_id, summoner_name, num_champs, region):
     # Compile the stuff we care about into a dictionary (namely that champion id and its associated score)
     # Bonus multiplier for level 7/level 6 champions
     try:
-        multiplier = {7: 1.5, 6: 1.2, 5: 1, 4: 1, 3: 1, 2: 1, 1: 1}
+        multiplier = {7: 1.5,
+                      6: 1.2,
+                      5: 1,
+                      4: 1,
+                      3: 1,
+                      2: 1,
+                      1: 1}
         champ_points_pair = {item['championId']: int(item['championPoints'] * multiplier[item['championLevel']])
                              for item in mastery_response}
     except:
