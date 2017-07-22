@@ -18,8 +18,8 @@ def front_page():
             summoner5 = request.form['sum5'].lower().replace(" ", "")
             region = request.form['region']
             champ_count = request.form['champions']
-            return redirect(url_for('.results', sum1=summoner1, sum2=summoner2,
-                                    sum3=summoner3, sum4=summoner4, sum5=summoner5, region=region, champnum=champ_count))
+            return redirect(url_for('.results', sum1=summoner1, sum2=summoner2, sum3=summoner3, sum4=summoner4,
+                                    sum5=summoner5, region=region, champnum=champ_count))
 
         if request.form['button'] == 'about':
             return redirect(url_for('.about'))
