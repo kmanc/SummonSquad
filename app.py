@@ -102,13 +102,13 @@ def gather_info(summoners, champ_count, champ_id_to_name, region):
 
 
 def build_team(summoner_data):
-    population = do_math.populate_generation(summoner_data, 2500)
-    population = do_math.mutate(population, summoner_data)
+    population = do_math.populate_generation(summoner_data, 5000)
     health = 0
     new_health = 1
-    while health / new_health < .99:
+    while health / new_health < .995:
         health = do_math.grade_generation(population)
         population = do_math.evolve(population)
+        population = do_math.mutate(population, summoner_data)
         new_health = do_math.grade_generation(population)
 
     dream_team = population[0]
