@@ -56,12 +56,16 @@ def lanes_and_roles(account_id, summoner_name, champ_points_pair, champ_id_to_na
     try:
         list_of_games = lane_response['matches']
         for game in list_of_games:
+            # Skip TT games
+            if game['queue'] == 41:
+                continue
             champ_id = game['champion']
             if 'lane' in game:
                 lane_played = game['lane'].upper()
 
                 if lane_played == 'BOTTOM':
                     role_played = game['role']
+
                 else:
                     role_played = lane_played
                 # If the API returns something that doesn't make any sense, make a guess as to where that champ
