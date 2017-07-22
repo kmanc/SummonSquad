@@ -81,7 +81,7 @@ def evolve(population, retain=0.25, random_select=.06):
 
 def mutate(population, summoner_data, mutate=.02):
     # Introduce mutation to better avoid locals
-    for team in population:
+    for team in population[1:]:
         if mutate > random():
             team_test = None
             while team_test is None:
