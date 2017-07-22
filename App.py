@@ -1,4 +1,4 @@
-import GetData, DoMath, API
+import get_data, do_math, api_calls
 from flask import Flask, render_template, request, redirect, url_for
 
 app = Flask(__name__)
@@ -63,7 +63,7 @@ def results():
             return redirect(url_for('.error', values='Champ count not valid'))
 
         # Get a dictionary that maps champion id to champion name
-        champ_id_to_name = API.champion_lookup(region)
+        champ_id_to_name = api_calls.champion_lookup(region)
         # Get the champion name for later use, because 'champion 35' doesn't mean much to people
         champ_id_to_name = {key: value['name'] for key, value in champ_id_to_name.items()}
 
@@ -90,25 +90,25 @@ def results():
 def gather_info(summoners, champ_count, champ_id_to_name, region):
     summoner_data = {}
     for player in summoners:
-        summoner_id, summoner_name, account_id = GetData.get_summoner_data(player, region)
-        champ_points_pair = GetData.get_summoners_mastery(summoner_id, summoner_name, champ_count, region)
-        champ_counters = GetData.lanes_and_roles(account_id, summoner_name, champ_points_pair, champ_id_to_name, region)
-        GetData.percentages(champ_counters)
-        summoner_data[summoner_name] = GetData.data_compile(summoner_name, champ_counters,
+        summoner_id, summoner_name, account_id = get_data.get_summoner_data(player, region)
+        champ_points_pair = get_data.get_summoners_mastery(summoner_id, summoner_name, champ_count, region)
+        champ_counters = get_data.lanes_and_roles(account_id, summoner_name, champ_points_pair, champ_id_to_name, region)
+        get_data.percentages(champ_counters)
+        summoner_data[summoner_name] = get_data.data_compile(summoner_name, champ_counters,
                                                             champ_id_to_name, champ_points_pair)
 
     return summoner_data
 
 
 def build_team(summoner_data):
-    population = DoMath.populate_generation(summoner_data, 2500)
-    population = DoMath.mutate(population, summoner_data)
+    population = do_math.populate_generation(summoner_data, 2500)
+    population = do_math.mutate(population, summoner_data)
     health = 0
     new_health = 1
     while health / new_health < .99:
-        health = DoMath.grade_generation(population)
-        population = DoMath.evolve(population)
-        new_health = DoMath.grade_generation(population)
+        health = do_math.grade_generation(population)
+        population = do_math.evolve(population)
+        new_health = do_math.grade_generation(population)
 
     dream_team = population[0]
 

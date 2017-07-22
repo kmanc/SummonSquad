@@ -1,5 +1,5 @@
-import API
-from BackupLaneGuess import backups
+import api_calls
+from backup_lane_guesses import backups
 from collections import Counter, namedtuple
 
 
@@ -7,7 +7,7 @@ def get_summoner_data(current_summoner, region):
 
     try:
         # Get summoner data, or tell us it couldn't be found
-        summoner_response = API.summoner_lookup(current_summoner, region)
+        summoner_response = api_calls.summoner_lookup(current_summoner, region)
         # Parse the output and make sure we have both a person's summoner name and id
         summoner_id = summoner_response['id']
         summoner_name = summoner_response['name']
@@ -21,7 +21,7 @@ def get_summoner_data(current_summoner, region):
 def get_summoners_mastery(summoner_id, summoner_name, num_champs, region):
     # Get a summoner's top <num_champs> champion mastery data
     try:
-        mastery_response = API.champion_mastery(summoner_id, num_champs, region)
+        mastery_response = api_calls.champion_mastery(summoner_id, num_champs, region)
     except:
         exit('Could not get champion mastery data for {}'.format(summoner_name, num_champs))
 
@@ -42,7 +42,7 @@ def lanes_and_roles(account_id, summoner_name, champ_points_pair, champ_id_to_na
     champ_list = [key for key in champ_points_pair]
     champ_role_time_in_role = {}
     try:
-        lane_response = API.match_history(account_id, champ_list, region)
+        lane_response = api_calls.match_history(account_id, champ_list, region)
 
     except:
         exit('Error trying to determine what lane one of the champions was played in by {}'.format(summoner_name))
