@@ -79,9 +79,8 @@ def evolve(population, retain=0.25, random_select=.06):
     return parents
 
 
-def mutate(population, summoner_data, mutate=.01):
+def mutate(population, summoner_data, mutate=.02):
     # Introduce mutation to better avoid locals
-
     for team in population:
         if mutate > random():
             team_test = None
@@ -93,8 +92,12 @@ def mutate(population, summoner_data, mutate=.01):
                 mutating_summoner = team[pos_to_mutate][4]
                 new_selection = randrange(len(summoner_data[mutating_summoner]))
                 new_champ = summoner_data[mutating_summoner][new_selection]
+                old_champ = team[pos_to_mutate]
                 team[pos_to_mutate] = new_champ
                 team_test = validate_team(team)
+                # If the mutation makes an invalid team, revert the mutation
+                if team_test is None:
+                    team[pos_to_mutate] = old_champ
 
     return population
 
