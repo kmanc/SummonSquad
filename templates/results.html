@@ -21,8 +21,10 @@
             <div id="summ{{ count + loop.index0 }}">
                 <p class="bot_text">
                     {{ champList[0] }}
-                    <br>{{ champList[1] }}
-                    <br>{{ champList[2].name }}
+                    <br>
+                    {{ champList[1].replace('_', ' ').title() }}
+                    <br>
+                    {{ champList[2].name }}
                 </p>
             </div>
             {% endfor %}
@@ -47,7 +49,6 @@
                 {% for champBg in results %}
                 $('div#summ{{ count + loop.index0 }}').hover(function(){
                     var name = `{{ champBg[2].name.replace("'", "").replace(" ", "") }}`
-                    console.log('champ names,', name)
                     $('html').css({
                         "background" : "url('/static/img/bg/" + name + ".jpg') no-repeat center center fixed",
                         'background-position' : '50% 10%',
