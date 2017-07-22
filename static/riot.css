@@ -34,18 +34,6 @@ button
   text-decoration: none;
 }
 
-.buttonAdd:hover
-{
-  color: #3CB371;
-  transition-duration: .4s;
-}
-
-.buttonBanned:hover
-{
-  color: #EA4C44;
-  transition-duration: .4s;
-}
-
 div.about, .about2
 {
   display: block;
