@@ -14,8 +14,8 @@ button
 {
   font-family: 'Gentium Basic', serif;
   background-color: transparent;
-  display:block;
-  margin:auto;
+  display: block;
+  margin: auto;
   color: #888888;
   outline: none;
   border: 1px;
@@ -32,6 +32,18 @@ button
   background: transparent;
   outline: none;
   text-decoration: none;
+}
+
+.resultButton
+{
+  color: white;
+  background-color: Transparent;
+  background-repeat: no-repeat;
+  border: none;
+  cursor: pointer;
+  overflow: hidden;
+  outline: none;
+  display: inline-block;
 }
 
 div.about, .about2
@@ -349,8 +361,6 @@ p.p1, .p2, .p3, .p4, .p5
   background-color: transparent;
   transition-duration: .4s;
 }
-
-
 
 select
 {
