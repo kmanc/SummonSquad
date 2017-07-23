@@ -46,6 +46,11 @@ button
   display: inline-block;
 }
 
+.pickban
+{
+  display: inline-block;
+}
+
 div.about, .about2
 {
   display: block;
@@ -252,15 +257,6 @@ input#champnum[type="number"]
   cursor: pointer;
 }
 
-input#pick1, #pick2, #pick3, #pick4, #pick5, #banned1, #banned2, #banned3, #banned4, #banned5
-{
-  color: #DDDDDD;
-  outline:none;
-  text-decoration: none;
-  border: none;
-  background-color: transparent;
-}
-
 input[type="number"]::-webkit-inner-spin-button,
 input[type="number"]::-webkit-outer-spin-button
 {
@@ -349,6 +345,7 @@ p.bot_text
   margin: auto;
   text-align: center;
   line-height: 50px;
+
   color: #DDDDDD;
 }
 

@@ -25,6 +25,11 @@
                     {{ champList[1].replace('_', ' ').title() }}
                     <br>
                     {{ champList[2].name }}
+                    <br>
+                    <form action="" class="pickban">
+                        <input type="radio" name="pb" value="picked">Picked
+                        <input type="radio" name="pb" value="banned">Banned
+                    </form>
                 </p>
             </div>
             {% endfor %}
