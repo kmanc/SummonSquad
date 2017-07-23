@@ -29,9 +29,12 @@
             </div>
             {% endfor %}
         </div>
-        <form method="post">
-            <button type="submit" name="button" class="btn btn-default" value="home">Home</button>
-        </form>
+        <div align="center">
+            <form method="post">
+                <button class="resultButton" type="submit" name="button" value="home">Home</button>
+                <button class="resultButton" type="submit" name="button" value="recalculate">Recalculate</button>
+            </form>
+        </div>
         <script>
             $(document).ready(function(){
                 {% if results %}
