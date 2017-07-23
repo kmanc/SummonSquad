@@ -98,6 +98,25 @@ def results():
     if request.method == 'POST':
         if request.form['button'] == 'home':
             return redirect(url_for('.front_page'))
+        if request.form['button'] == 'recalculate':
+            summoner1 = request.args['sum1']
+            summoner2 = request.args['sum2']
+            summoner3 = request.args['sum3']
+            summoner4 = request.args['sum4']
+            summoner5 = request.args['sum5']
+            region = request.args['region']
+            champ_count = int(request.args['champnum'])
+            picked_list = ['Lee Sin']
+            banned_list = ['Rumble']
+            try:
+                assert len(picked_list) <= 5
+                assert len(banned_list) <= 15
+            except:
+                return redirect(url_for('.error', values='You tampered with the picked or banned list.'
+                                                         ' Please don\'t do that!'))
+            return redirect(url_for('.results', sum1=summoner1, sum2=summoner2, sum3=summoner3, sum4=summoner4,
+                                    sum5=summoner5, region=region, champnum=champ_count, picked=picked_list,
+                                    banned=banned_list))
 
 
 def gather_info(summoners, champ_count, champ_id_to_name, region):
