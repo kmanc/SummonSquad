@@ -43,12 +43,20 @@ button
   cursor: pointer;
   overflow: hidden;
   outline: none;
-  display: inline-block;
 }
 
 .pickban
 {
   display: inline-block;
+}
+
+
+div#topButtons
+{
+    margin-left: 10%;
+    margin-right: 10%;
+    display: flex;
+    justify-content: space-between;
 }
 
 div.about, .about2
@@ -345,8 +353,7 @@ p.bot_text
   margin: auto;
   text-align: center;
   line-height: 50px;
-
-  color: #DDDDDD;
+  color: #FFFFFF;
 }
 
 p.p1, .p2, .p3, .p4, .p5
