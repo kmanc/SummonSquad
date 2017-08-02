@@ -4,4 +4,4 @@ api_key.py
 /Misc
 *.txt
 !requirements.txt
-champion_dict.py
+champion_dict.json
