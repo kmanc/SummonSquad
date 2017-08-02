@@ -6,7 +6,7 @@ api_key = api_key.key
 args = {'api_key': api_key}
 
 dir_path = os.path.dirname(os.path.realpath(__file__))
-champ_file = '{0}/{1}'.format(dir_path, 'champion_dict.py')
+champ_file = '{0}/{1}'.format(dir_path, 'champion_dict.json')
 args['dataById'] = 'true'
 asset = api_constants.ASSETS['champion_lookup'].format(version=3)
 url = api_constants.URL['base'].format(region=region, asset=asset)
