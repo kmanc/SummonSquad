@@ -1,10 +1,26 @@
 <html>
+    <!-- I know this isn't the right way to do it, but when I put this in riot.css it won't apply :( -->
+    <style>
+        #topForm
+        {
+            margin-left: 20%;
+            margin-right: 20%;
+            display: flex;
+            justify-content: space-between;
+        }
+    </style>
     <head>
         <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='riot.css') }}" />
         <link href='https://fonts.googleapis.com/css?family=Gentium+Basic:400,700italic' rel='stylesheet' type='text/css'>
         <script src="{{ url_for('static', filename='scripts/jquery.js') }}"></script>
     </head>
     <body>
+        <div>
+            <form id="topForm">
+                <button class="resultButton" type="submit" name="button" value="home">Home</button>
+                <button class="resultButton" type="submit" name="button" value="recalculate">Recalculate</button>
+            </form>
+        </div>
         <div class="summoners">
             {% set count = 1 -%}
             {% for champNameFix in results %}
@@ -26,19 +42,14 @@
                     <br>
                     {{ champList[2].name }}
                     <br>
-                    <form action="" class="pickban">
+                    <form class="pickban">
                         <input type="radio" name="pb" value="picked">Picked
                         <input type="radio" name="pb" value="banned">Banned
                     </form>
+                    <br>
                 </p>
             </div>
             {% endfor %}
-        </div>
-        <div align="center">
-            <form method="post">
-                <button class="resultButton" type="submit" name="button" value="home">Home</button>
-                <button class="resultButton" type="submit" name="button" value="recalculate">Recalculate</button>
-            </form>
         </div>
         <script>
             $(document).ready(function(){
