@@ -1,4 +1,4 @@
-import get_data, do_math, api_calls
+import get_data, do_math, champion_dict
 from flask import Flask, render_template, request, redirect, url_for
 
 app = Flask(__name__)
@@ -59,6 +59,12 @@ def results():
         summoner5 = request.args['sum5']
         region = request.args['region']
         champ_count = int(request.args['champnum'])
+
+        # Get a dictionary that maps champion id to champion name
+        champ_id_to_name = champion_dict.champs
+        # Get the champion name for later use, because 'champion 35' doesn't mean much to people
+        champ_id_to_name = {key: value['name'] for key, value in champ_id_to_name.items()}
+
         try:
             picked_list = set(request.args['picked'].split(','))
         except KeyError:
@@ -74,11 +80,6 @@ def results():
 
         if champ_count < 15 or champ_count > 30:
             return redirect(url_for('.error', values='Champ count not valid'))
-
-        # Get a dictionary that maps champion id to champion name
-        champ_id_to_name = api_calls.champion_lookup(region)
-        # Get the champion name for later use, because 'champion 35' doesn't mean much to people
-        champ_id_to_name = {key: value['name'] for key, value in champ_id_to_name.items()}
 
         try:
             summoner_data = gather_info(summoners, champ_count, champ_id_to_name, region)
