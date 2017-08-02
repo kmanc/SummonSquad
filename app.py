@@ -1,5 +1,6 @@
-import get_data, do_math, champion_dict
+import get_data, do_math
 from flask import Flask, render_template, request, redirect, url_for
+import json, os
 
 app = Flask(__name__)
 
@@ -61,7 +62,10 @@ def results():
         champ_count = int(request.args['champnum'])
 
         # Get a dictionary that maps champion id to champion name
-        champ_id_to_name = champion_dict.champs
+        dir_path = os.path.dirname(os.path.realpath(__file__))
+        champ_file = '{0}/{1}'.format(dir_path, 'champion_dict.json')
+        with open(champ_file) as f:
+            champ_id_to_name = json.load(f)
         # Get the champion name for later use, because 'champion 35' doesn't mean much to people
         champ_id_to_name = {key: value['name'] for key, value in champ_id_to_name.items()}
 
