@@ -1,55 +1,42 @@
 <html>
-    <!-- I know this isn't the right way to do it, but when I put this in riot.css it won't apply :( -->
-    <style>
-        #topForm
-        {
-            margin-left: 20%;
-            margin-right: 20%;
-            display: flex;
-            justify-content: space-between;
-        }
-    </style>
     <head>
         <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='riot.css') }}" />
         <link href='https://fonts.googleapis.com/css?family=Gentium+Basic:400,700italic' rel='stylesheet' type='text/css'>
         <script src="{{ url_for('static', filename='scripts/jquery.js') }}"></script>
     </head>
     <body>
-        <div>
-            <form id="topForm" method="post">
-                <button class="resultButton" type="submit" name="button" value="home">Home</button>
-                <button class="resultButton" type="submit" name="button" value="recalculate">Recalculate</button>
-            </form>
-        </div>
         <div class="summoners">
-            {% set count = 1 -%}
-            {% for champNameFix in results %}
-            <div class="player{{ count + loop.index0 }}">
-                <p class="p{{ count + loop.index0 }}">
-                    {{ champNameFix[2].name.replace("'","").replace(" ", "") }}
-                </p>
-            </div>
-            {% endfor %}
-        </div>
-        <div class="readText">
-            {% set count = 1 -%}
-            {% for champList in results %}
-            <div id="summ{{ count + loop.index0 }}">
-                <p class="bot_text">
-                    {{ champList[0] }}
-                    <br>
-                    {{ champList[1].replace('_', ' ').title() }}
-                    <br>
-                    {{ champList[2].name }}
-                    <br>
-                    <form class="pickban">
-                        <input type="radio" name="pb" value="picked">Picked
-                        <input type="radio" name="pb" value="banned">Banned
-                    </form>
-                    <br>
-                </p>
-            </div>
-            {% endfor %}
+            <form class="pickban" method="post">
+                <div class="players">
+                    {% set count = 1 -%}
+                    {% for champNameFix in results %}
+                    <div class="player{{ count + loop.index0 }}">
+                        <p class="p{{ count + loop.index0 }}">
+                            {{ champNameFix[2].name.replace("'","").replace(" ", "") }}
+                        </p>
+                    </div>
+                    {% endfor %}
+                </div>
+                <div class="readText">
+                        {% set count = 1 -%}
+                        {% for champList in results %}
+                        <div id="summ{{ count + loop.index0 }}">
+                            {{ champList[0] }}
+                            <br>
+                            {{ champList[1].replace('_', ' ').title() }}
+                            <br>
+                            {{ champList[2].name }}
+                            <br>
+                            <input type="radio" name="pb{{ count + loop.index0 }}" value="picked">Picked
+                            <input type="radio" name="pb{{ count + loop.index0 }}" value="banned">Banned
+                        </div>
+                        {% endfor %}
+                        <div class="navigation">
+                            <button class="resultButton" type="submit" name="button" value="home">Home</button>
+                            <button class="resultButton" type="submit" name="button" value="recalculate">Recalculate</button>
+                        </div>
+                </div>
+            </form>
         </div>
         <script>
             $(document).ready(function(){
