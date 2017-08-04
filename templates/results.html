@@ -27,8 +27,8 @@
                             <br>
                             {{ champList[2].name }}
                             <br>
-                            <input type="radio" name="pb{{ count + loop.index0 }}" value="picked">Picked
-                            <input type="radio" name="pb{{ count + loop.index0 }}" value="banned">Banned
+                            <input type="radio" name="pb{{ count + loop.index0 }}" value={{ champList[2].name + 'P'}}>Picked
+                            <input type="radio" name="pb{{ count + loop.index0 }}" value={{ champList[2].name + 'B'}}>Banned
                         </div>
                         {% endfor %}
                         <div class="navigation">
