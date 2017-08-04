@@ -5,3 +5,4 @@ api_key.py
 *.txt
 !requirements.txt
 champion_dict.json
+update_champs.py
