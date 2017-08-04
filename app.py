@@ -77,6 +77,13 @@ def results():
             banned_list = set(request.args['banned'].split(','))
         except KeyError:
             banned_list = set()
+        try:
+            assert len(picked_list) <= 5
+            assert len(banned_list) <= 15
+        except AssertionError:
+            return redirect(url_for('.error', values='You tampered with the picked or banned list.'
+                                                     ' Please don\'t do that!'))
+
         summoners = [summoner1, summoner2, summoner3, summoner4, summoner5]
 
         if region not in ['NA', 'BR', 'EUNE', 'EUW', 'JP', 'KR', 'LAN', 'LAS', 'OCE', 'TR', 'RU']:
@@ -111,14 +118,40 @@ def results():
             summoner5 = request.args['sum5']
             region = request.args['region']
             champ_count = int(request.args['champnum'])
-            picked_list = ['Lee Sin']
-            banned_list = ['Rumble']
+
             try:
-                assert len(picked_list) <= 5
-                assert len(banned_list) <= 15
-            except:
-                return redirect(url_for('.error', values='You tampered with the picked or banned list.'
-                                                         ' Please don\'t do that!'))
+                past_picked = set(request.args['picked'].split(','))
+            except KeyError:
+                past_picked = set()
+            try:
+                past_banned = set(request.args['banned'].split(','))
+            except KeyError:
+                past_banned = set()
+
+            try:
+                champ1 = request.form['pb1']
+            except KeyError:
+                champ1 = None
+            try:
+                champ2 = request.form['pb2']
+            except KeyError:
+                champ2 = None
+            try:
+                champ3 = request.form['pb3']
+            except KeyError:
+                champ3 = None
+            try:
+                champ4 = request.form['pb4']
+            except KeyError:
+                champ4 = None
+            try:
+                champ5 = request.form['pb5']
+            except KeyError:
+                champ5 = None
+            pb_list = [champ1, champ2, champ3, champ4, champ5]
+            pb_list = {value for value in pb_list if value is not None}
+            picked_list = ",".join([name[:-1] for name in pb_list if name[-1] == 'P'] + list(past_picked))
+            banned_list = ",".join([name[:-1] for name in pb_list if name[-1] == 'B'] + list(past_banned))
             return redirect(url_for('.results', sum1=summoner1, sum2=summoner2, sum3=summoner3, sum4=summoner4,
                                     sum5=summoner5, region=region, champnum=champ_count, picked=picked_list,
                                     banned=banned_list))
