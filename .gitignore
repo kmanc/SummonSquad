@@ -4,3 +4,5 @@ api_key.py
 /Misc
 *.txt
 !requirements.txt
+champion_dict.json
+update_champs.py

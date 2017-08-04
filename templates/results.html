@@ -6,32 +6,38 @@
     </head>
     <body>
         <div class="summoners">
-            {% set count = 1 -%}
-            {% for champNameFix in results %}
-            <div class="player{{ count + loop.index0 }}">
-                <p class="p{{ count + loop.index0 }}">
-                    {{ champNameFix[2].name.replace("'","").replace(" ", "") }}
-                </p>
-            </div>
-            {% endfor %}
+            <form class="pickban" method="post">
+                <div class="players">
+                    {% set count = 1 -%}
+                    {% for champNameFix in results %}
+                    <div class="player{{ count + loop.index0 }}">
+                        <p class="p{{ count + loop.index0 }}">
+                            {{ champNameFix[2].name.replace("'","").replace(" ", "") }}
+                        </p>
+                    </div>
+                    {% endfor %}
+                </div>
+                <div class="readText">
+                        {% set count = 1 -%}
+                        {% for champList in results %}
+                        <div id="summ{{ count + loop.index0 }}">
+                            {{ champList[0] }}
+                            <br>
+                            {{ champList[1].replace('_', ' ').title() }}
+                            <br>
+                            {{ champList[2].name }}
+                            <br>
+                            <input type="radio" name="pb{{ count + loop.index0 }}" value={{ champList[2].name + 'P'}}>Picked
+                            <input type="radio" name="pb{{ count + loop.index0 }}" value={{ champList[2].name + 'B'}}>Banned
+                        </div>
+                        {% endfor %}
+                        <div class="navigation">
+                            <button class="resultButton" type="submit" name="button" value="home">Home</button>
+                            <button class="resultButton" type="submit" name="button" value="recalculate">Recalculate</button>
+                        </div>
+                </div>
+            </form>
         </div>
-        <div class="readText">
-            {% set count = 1 -%}
-            {% for champList in results %}
-            <div id="summ{{ count + loop.index0 }}">
-                <p class="bot_text">
-                    {{ champList[0] }}
-                    <br>
-                    {{ champList[1].replace('_', ' ').title() }}
-                    <br>
-                    {{ champList[2].name }}
-                </p>
-            </div>
-            {% endfor %}
-        </div>
-        <form method="post">
-            <button type="submit" name="button" class="btn btn-default" value="home">Home</button>
-        </form>
         <script>
             $(document).ready(function(){
                 {% if results %}

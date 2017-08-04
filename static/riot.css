@@ -7,6 +7,8 @@ a
 
 body
 {
+  height: 100%;
+  overflow: auto;
   margin: 0 0 0 0;
 }
 
@@ -14,8 +16,8 @@ button
 {
   font-family: 'Gentium Basic', serif;
   background-color: transparent;
-  display:block;
-  margin:auto;
+  display: block;
+  margin: auto;
   color: #888888;
   outline: none;
   border: 1px;
@@ -32,6 +34,24 @@ button
   background: transparent;
   outline: none;
   text-decoration: none;
+}
+
+.resultButton
+{
+  color: white;
+  background-color: Transparent;
+  background-repeat: no-repeat;
+  border: none;
+  cursor: pointer;
+  overflow: hidden;
+  outline: none;
+}
+
+.pickban
+{
+  width: 100%
+  display: flex;
+  justify-content: space-between;
 }
 
 div.about, .about2
@@ -60,60 +80,69 @@ div#options
   vertical-align: bottom;
 }
 
+div.words
+{
+  height: 290px;
+}
+
+div.players
+{
+  display: block;
+  top: 0px:
+  height: 60px;
+  background-color: transparent;
+  width: 100%;
+}
+
 div.player1, .player2, .player3, .player4, .player5
 {
   display: block;
   position: absolute;
-  height: 90px;
-  margin-bottom: 0px;
-  background-color: transparent;
+  height: 60px;
   width: 100%;
+  background-color: transparent;
   transition-duration: .4s;
 }
 
 div.readText
 {
-  display: flex;
-  position: absolute;
-  bottom: 0;
+  display: block;
   width: 100%;
-  height: 150px;
-  margin: 0;
-  padding: 0;
+  height: 230px;
+  top: 60px;
+  font-weight: bold;
+  position: relative;
   text-align: center;
-  vertical-align: bottom;
   background-color: rgba(0,0,0,.7);
   z-index: 1;
 }
 
-div.results
+div.navigation
 {
-  width: 65%;
-  margin: auto;
-  background-color: #c1c1c1;
+  display: flex;
+  position: fixed;
+  bottom: 0;
+  height: 40px;
+  width: 100%
 }
 
 div.summoners
 {
-  display: block;
-  position: absolute;
+  display: inline;
+  position: fixed;
   bottom: 0px;
   width: 100%;
-  height: 90px;
-  margin-bottom: 150px;
-  vertical-align: bottom;
-  padding: 0;
+  height: 270px;
   bottom: 0;
-  left: 0;
 }
 
 div#summ1, #summ2, #summ3, #summ4, #summ5
 {
-  display: inline-flex;
+  display: inline-block;
+  *display: inline;
   width: 20%;
-  height: 100%;
-  margin: 0;
-  padding: auto;
+  float: left;
+  height: 160px;
   text-align: center;
   vertical-align: bottom;
   background-color: transparent;
@@ -240,15 +269,6 @@ input#champnum[type="number"]
   cursor: pointer;
 }
 
-input#pick1, #pick2, #pick3, #pick4, #pick5, #banned1, #banned2, #banned3, #banned4, #banned5
-{
-  color: #DDDDDD;
-  outline:none;
-  text-decoration: none;
-  border: none;
-  background-color: transparent;
-}
-
 input[type="number"]::-webkit-inner-spin-button,
 input[type="number"]::-webkit-outer-spin-button
 {
@@ -331,26 +351,28 @@ p
   color: #808080;
 }
 
-p.bot_text
+form.pickban
 {
+  position: relative;
   font-weight: bold;
-  margin: auto;
+  height: 100%;
+  width: 100%;
+  margin: 0;
+  bottom: 0;
   text-align: center;
-  line-height: 50px;
-  color: #DDDDDD;
+  line-height: 40px;
+  color: #FFFFFF;
 }
 
 p.p1, .p2, .p3, .p4, .p5
 {
   font-weight: bold;
-  font-size: 70px;
+  font-size: 60px;
   margin: 0;
   color: rgba(0,0,0,0);
   background-color: transparent;
   transition-duration: .4s;
 }
-
-
 
 select
 {
