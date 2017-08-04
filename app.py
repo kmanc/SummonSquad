@@ -150,8 +150,14 @@ def results():
                 champ5 = None
             pb_list = [champ1, champ2, champ3, champ4, champ5]
             pb_list = {value for value in pb_list if value is not None}
-            picked_list = ",".join([name[:-1] for name in pb_list if name[-1] == 'P'] + list(past_picked))
-            banned_list = ",".join([name[:-1] for name in pb_list if name[-1] == 'B'] + list(past_banned))
+            if past_picked == set({''}):
+                picked_list = ",".join([name[:-1] for name in pb_list if name[-1] == 'P'])
+            else:
+                picked_list = ",".join([name[:-1] for name in pb_list if name[-1] == 'P'] + list(past_picked))
+            if past_banned == set({''}):
+                banned_list = ",".join([name[:-1] for name in pb_list if name[-1] == 'B'])
+            else:
+                banned_list = ",".join([name[:-1] for name in pb_list if name[-1] == 'B'] + list(past_banned))
             return redirect(url_for('.results', sum1=summoner1, sum2=summoner2, sum3=summoner3, sum4=summoner4,
                                     sum5=summoner5, region=region, champnum=champ_count, picked=picked_list,
                                     banned=banned_list))
