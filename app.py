@@ -80,9 +80,18 @@ def results():
         try:
             assert len(picked_list) <= 5
             assert len(banned_list) <= 15
+            for champ in picked_list:
+                assert champ in champ_id_to_name.values()
+            for champ in banned_list:
+                assert champ in champ_id_to_name.values()
         except AssertionError:
             return redirect(url_for('.error', values='You tampered with the picked or banned list.'
                                                      ' Please don\'t do that!'))
+
+        if len(picked_list) > 0 or len(banned_list) > 0:
+            generation_size = 1000
+        else:
+            generation_size = 5000
 
         summoners = [summoner1, summoner2, summoner3, summoner4, summoner5]
 
@@ -97,7 +106,7 @@ def results():
         except KeyError as inst:
             err_message = str(inst)[1:-1]
             return redirect(url_for('.error', values=err_message))
-        dream_team = build_team(summoner_data, picked_list, banned_list)
+        dream_team = build_team(summoner_data, picked_list, banned_list, generation_size)
         answer0 = [dream_team[0].player, dream_team[0].role, dream_team[0], dream_team[0].id]
         answer1 = [dream_team[1].player, dream_team[1].role, dream_team[1], dream_team[1].id]
         answer2 = [dream_team[2].player, dream_team[2].role, dream_team[2], dream_team[2].id]
@@ -127,7 +136,6 @@ def results():
                 past_banned = set(request.args['banned'].split(','))
             except KeyError:
                 past_banned = set()
-
             try:
                 champ1 = request.form['pb1']
             except KeyError:
@@ -148,19 +156,28 @@ def results():
                 champ5 = request.form['pb5']
             except KeyError:
                 champ5 = None
+
             pb_list = [champ1, champ2, champ3, champ4, champ5]
             pb_list = {value for value in pb_list if value is not None}
-            if past_picked == set({''}):
+            if len(past_picked) == 0:
                 picked_list = ",".join([name[:-1] for name in pb_list if name[-1] == 'P'])
             else:
                 picked_list = ",".join([name[:-1] for name in pb_list if name[-1] == 'P'] + list(past_picked))
-            if past_banned == set({''}):
+            if len(past_banned) == 0:
                 banned_list = ",".join([name[:-1] for name in pb_list if name[-1] == 'B'])
             else:
                 banned_list = ",".join([name[:-1] for name in pb_list if name[-1] == 'B'] + list(past_banned))
-            return redirect(url_for('.results', sum1=summoner1, sum2=summoner2, sum3=summoner3, sum4=summoner4,
-                                    sum5=summoner5, region=region, champnum=champ_count, picked=picked_list,
-                                    banned=banned_list))
+
+            if picked_list != '' and banned_list != '':
+                return redirect(url_for('.results', sum1=summoner1, sum2=summoner2, sum3=summoner3, sum4=summoner4,
+                                        sum5=summoner5, region=region, champnum=champ_count, picked=picked_list,
+                                        banned=banned_list))
+            elif picked_list != '':
+                return redirect(url_for('.results', sum1=summoner1, sum2=summoner2, sum3=summoner3, sum4=summoner4,
+                                        sum5=summoner5, region=region, champnum=champ_count, picked=picked_list))
+            elif banned_list != '':
+                return redirect(url_for('.results', sum1=summoner1, sum2=summoner2, sum3=summoner3, sum4=summoner4,
+                                        sum5=summoner5, region=region, champnum=champ_count, banned=banned_list))
 
 
 def gather_info(summoners, champ_count, champ_id_to_name, region):
@@ -176,8 +193,8 @@ def gather_info(summoners, champ_count, champ_id_to_name, region):
     return summoner_data
 
 
-def build_team(summoner_data, picked_list, banned_list):
-    population = do_math.populate_generation(summoner_data, 5000, picked_list, banned_list)
+def build_team(summoner_data, picked_list, banned_list, generation_size):
+    population = do_math.populate_generation(summoner_data, generation_size, picked_list, banned_list)
     health = 0
     new_health = 1
     while health / new_health < .995:
