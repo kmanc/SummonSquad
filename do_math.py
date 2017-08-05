@@ -107,10 +107,6 @@ def validate_team(team, picked_list, banned_list):
     # champion. Remember the tuple has [0]=champ-name [1]=id, [2]=role, [3]=points, [4]=summoner-playing
 
     champions = {info[0] for info in team}
-    if picked_list == set({''}):
-        picked_list = set()
-    if banned_list == set({''}):
-        banned_list = set()
     if not picked_list.issubset(champions):
         return None
     if not banned_list.isdisjoint(champions):
