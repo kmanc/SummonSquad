@@ -88,10 +88,10 @@ def results():
             return redirect(url_for('.error', values='You tampered with the picked or banned list.'
                                                      ' Please don\'t do that!'))
 
-        if len(picked_list) > 0 or len(banned_list) > 0:
-            generation_size = 1000
-        else:
-            generation_size = 5000
+        # Generation size should be no smaller than 15, no larger than 5000
+        generation_size = min(5000, 15**(5 - len(picked_list)))
+        if generation_size == 1:
+            return redirect(url_for('.error', values='You already have your whole team picked? Our job is done here'))
 
         summoners = [summoner1, summoner2, summoner3, summoner4, summoner5]
 
