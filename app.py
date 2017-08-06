@@ -88,8 +88,8 @@ def results():
             return redirect(url_for('.error', values='You tampered with the picked or banned list.'
                                                      ' Please don\'t do that!'))
 
-        # Generation size should be no smaller than 15, no larger than 5000
-        generation_size = min(5000, 15**(5 - len(picked_list)))
+        # Generation size should scale with picks/bans
+        generation_size = min(5000, (champ_count-len(banned_list) - 1)**(5 - len(picked_list)))
         if generation_size == 1:
             return redirect(url_for('.error', values='You already have your whole team picked? Our job is done here'))
 
