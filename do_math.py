@@ -1,4 +1,5 @@
 from random import randrange, random
+import copy
 
     
 def build_candidate(summoner_data, picked_list, banned_list):
@@ -52,6 +53,7 @@ def evolve(population, picked_list, banned_list, retain=0.25, random_select=.06)
     # Keep the top retain%
     num_keepers = int(len(population) * retain)
     parents = scored[:num_keepers]
+    pop_copy = copy.copy(population)
 
     # Avoid local maxmimum by randomly keeping some of the low scorers
     for candidate in scored[num_keepers:]:
@@ -63,8 +65,11 @@ def evolve(population, picked_list, banned_list, retain=0.25, random_select=.06)
     need_to_create = len(population) - parents_length
     children = []
     while len(children) < need_to_create:
-        dad = randrange(parents_length)
-        mom = randrange(parents_length)
+        try:
+            dad = randrange(parents_length)
+            mom = randrange(parents_length)
+        except ValueError:
+            return pop_copy
         if dad != mom:
             dad = parents[dad]
             mom = parents[mom]
