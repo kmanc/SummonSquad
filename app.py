@@ -203,6 +203,7 @@ def build_team(summoner_data, picked_list, banned_list, generation_size):
         population = do_math.mutate(population, summoner_data, picked_list, banned_list)
         new_health = do_math.grade_generation(population)
 
-    dream_team = population[0]
+    sorted_end = [(do_math.fitness(candidate), candidate) for candidate in population]
+    sorted_end = [team_tuple[1] for team_tuple in sorted(sorted_end, reverse=True)]
 
-    return dream_team
+    return sorted_end[0]
