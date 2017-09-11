@@ -186,9 +186,9 @@ def gather_info(summoners, champ_count, champ_id_to_name, region):
         summoner_id, summoner_name, account_id = get_data.get_summoner_data(player, region)
         champ_points_pair = get_data.get_summoners_mastery(summoner_id, summoner_name, champ_count, region)
         champ_counters = get_data.lanes_and_roles(account_id, summoner_name, champ_points_pair, champ_id_to_name, region)
-        get_data.percentages(champ_counters)
+        champ_counters, total_games = get_data.percentages(champ_counters)
         summoner_data[summoner_name] = get_data.data_compile(summoner_name, champ_counters,
-                                                             champ_id_to_name, champ_points_pair)
+                                                             champ_id_to_name, champ_points_pair, total_games)
 
     return summoner_data
 
