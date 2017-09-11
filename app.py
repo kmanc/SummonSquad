@@ -186,9 +186,9 @@ def gather_info(summoners, champ_count, champ_id_to_name, region):
         summoner_id, summoner_name, account_id = get_data.get_summoner_data(player, region)
         champ_points_pair = get_data.get_summoners_mastery(summoner_id, summoner_name, champ_count, region)
         champ_counters = get_data.lanes_and_roles(account_id, summoner_name, champ_points_pair, champ_id_to_name, region)
-        get_data.percentages(champ_counters)
+        champ_counters, total_games = get_data.percentages(champ_counters)
         summoner_data[summoner_name] = get_data.data_compile(summoner_name, champ_counters,
-                                                             champ_id_to_name, champ_points_pair)
+                                                             champ_id_to_name, champ_points_pair, total_games)
 
     return summoner_data
 
@@ -203,6 +203,7 @@ def build_team(summoner_data, picked_list, banned_list, generation_size):
         population = do_math.mutate(population, summoner_data, picked_list, banned_list)
         new_health = do_math.grade_generation(population)
 
-    dream_team = population[0]
+    sorted_end = [(do_math.fitness(candidate), candidate) for candidate in population]
+    sorted_end = [team_tuple[1] for team_tuple in sorted(sorted_end, reverse=True)]
 
-    return dream_team
+    return sorted_end[0]
