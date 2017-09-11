@@ -57,8 +57,8 @@ def lanes_and_roles(account_id, summoner_name, champ_points_pair, champ_id_to_na
     try:
         list_of_games = lane_response['matches']
         for game in list_of_games:
-            # Skip TT games
-            if game['queue'] == 41:
+            # Skip non-SR games
+            if game['queue'] not in [2, 14, 4, 6, 42, 400, 410, 420, 430, 440]:
                 continue
             champ_id = game['champion']
             if 'lane' in game:
@@ -103,20 +103,22 @@ def percentages(champ_counters):
     # Get percentage of games played in each role per champion (eg 33% top, 50% jungle, 17% support)
     # Bonus points if you can tell us what champions might fit that above percentage distribution
 
+    total_games = dict()
     for id_key, count_dict in champ_counters.items():
-        role_games = 0
-        for role_name, role_count in count_dict.items():
-            role_games += role_count
-        for role_name, role_count in count_dict.items():
-            if role_games > 0:
-                champ_counters[id_key][role_name] /= float(role_games)
+        champ_games = 0
+        for role_count in count_dict.values():
+            champ_games += role_count
+        for role_name in count_dict.keys():
+            if champ_games > 0:
+                champ_counters[id_key][role_name] /= float(champ_games)
             else:
-                champ_counters[id_key][role_name] /= float(1)
+                champ_counters[id_key][role_name] = 0
+        total_games[id_key] = champ_games
 
-    return champ_counters
+    return champ_counters, total_games
 
 
-def data_compile(summoner_name, champ_counters, champ_id_to_name, champ_points_pair):
+def data_compile(summoner_name, champ_counters, champ_id_to_name, champ_points_pair, total_games):
     # Compile all the data that we have pulled so far into one place
     structured_data = []
 
@@ -136,7 +138,7 @@ def data_compile(summoner_name, champ_counters, champ_id_to_name, champ_points_p
                 if role.upper() not in ['DUO_CARRY', 'DUO_SUPPORT', 'JUNGLE', 'MID', 'TOP']:
                     continue
                 name = champ_id_to_name[str(champ_id)]
-                points = int(percentage * multiplier * champ_points_pair[champ_id])
+                points = int((percentage * multiplier * champ_points_pair[champ_id]) / total_games[champ_id])
                 champ_tuple = Champ(name, champ_id, role, points, summoner_name)
                 structured_data.append(champ_tuple)
 
